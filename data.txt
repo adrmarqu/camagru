@@ -17,3 +17,20 @@ Haz esto y casi seguro tienes +25:
 ✅ Idiomas
 (opcional) infinite scroll
 👉 Esto es más que suficiente
+
+Para textos pequeños
+
+<?php
+$password_input = '
+<label class="form-label" for="password">Contraseña:</label>
+<input class="form-input" type="password" name="password">
+';
+?>
+
+
+Para textos grandes
+
+ob_start();
+require 'input_usuario.php';  // HTML: <label>Usuario</label><input ...>
+require 'input_password.php';  // HTML: <label>Password</label><input ...>
+$form_fields = ob_get_clean(); // $form_fields contiene todo junto
