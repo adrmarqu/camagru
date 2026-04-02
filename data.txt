@@ -1,0 +1,19 @@
+/
+├── index.php (galería)
+├── login.php
+├── register.php
+├── verify.php
+├── reset_password.php
+├── editor.php
+├── settings.php
+├── logout.php
+
+
+Combinación recomendada (la óptima)
+Haz esto y casi seguro tienes +25:
+✅ AJAX (likes/comments)
+✅ Filtro por usuario
+✅ Live preview
+✅ Idiomas
+(opcional) infinite scroll
+👉 Esto es más que suficiente
