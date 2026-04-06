@@ -1,16 +1,25 @@
 <?php
 
-require_once __DIR__ . '/../views/view.php';
+require_once __DIR__ . '/AuthController.php';
 
-$val = $_GET['val'] ?? 0;
+const TPL_GAL = __DIR__ . '/../views/tpls/screens/gallery.tpl';
 
-if ($val == 1)
-    viewGallery();
-if ($val == 2)
-    viewLogin();
-if ($val == 3)
-    viewVerfify();
-if ($val == 4)
-    viewEditor();
-else
-    viewGallery();
+$page = $_GET['page'] ?? 'login';
+
+switch ($page)
+{
+    case 'gallery':
+        $html = getHtml(TPL_GAL, []);
+        showTPL("Gallery", $html);
+        break ;
+    case 'login':
+        $controller = new AuthController();
+        $controller->login();
+        break;
+    case 'signin':
+        $controller = new AuthController();
+        $controller->signin();
+        break;
+    default:
+        echo "Page not found";
+}

@@ -34,3 +34,31 @@ ob_start();
 require 'input_usuario.php';  // HTML: <label>Usuario</label><input ...>
 require 'input_password.php';  // HTML: <label>Password</label><input ...>
 $form_fields = ob_get_clean(); // $form_fields contiene todo junto
+
+
+Aquí tienes una lista clara de los campos típicos para cada uno de los 3 formularios:
+
+🔐 Formulario de Login
+Nombre de usuario o email
+Contraseña
+
+📝 Formulario de Registro
+Nombre de usuario
+Email
+Contraseña
+Confirmar contraseña
+Aceptar términos y condiciones
+
+⚙️ Formulario de Cambiar datos de la cuenta
+Nombre de usuario (opcional)
+Email (opcional)
+Contraseña actual
+Nueva contraseña
+Confirmar nueva contraseña
+
+💡 Opcionales (según nivel de seguridad)
+Puedes añadir en cualquiera:
+Recordar sesión (login)
+Verificación en dos pasos (2FA)
+Pregunta de seguridad
+Imagen de perfil

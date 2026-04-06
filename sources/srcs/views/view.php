@@ -1,93 +1,44 @@
 <?php
 
-const TPL_GAL = __DIR__ . '/tpls/screens/gallery.tpl';
-const TPL_EDI = __DIR__ . '/tpls/screens/editor.tpl';
-const TPL_LOG = __DIR__ . '/tpls/screens/login.tpl';
-const TPL_VER = __DIR__ . '/tpls/screens/verify.tpl';
-
-const TPL_TOP = __DIR__ . '/tpls/components/head.tpl';
-const TPL_HEA = __DIR__ . '/tpls/components/header.tpl';
-const TPL_FOO = __DIR__ . '/tpls/components/footer.tpl';
+const pageDir = __DIR__ . '/tpls/components/page/';
+const TPL_HEA = pageDir . 'header.tpl';
+const TPL_FOO = pageDir . 'footer.tpl';
 
 const TPL_PLACEHOLDER_PATTERN = '{{::%s::}}';
 
-function showTPL(array $data, string $fileName)
+require_once __DIR__ . '/utils.php';
+
+function getHtml(string $fileName, array $data): string
 {
     if (!is_readable($fileName))
     {
-        echo "It can't load the screen required";
+        echo "The file " . $fileName . " is not readable";
         exit();
     }
 
-    $html = file_get_contents(TPL_TOP);
-    $html .= file_get_contents(TPL_HEA);
-    $html .= file_get_contents($fileName);
-    $html .= file_get_contents(TPL_FOO);
+    $html = file_get_contents($fileName);
+    if ($html === false)
+    {
+        echo "Error to open " . $fileName;
+        exit();
+    }
 
     foreach ($data as $key => $value)
     {
         $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
         $html = str_replace($placeholder, (string)$value, $html);
     }
+    return $html;
+}
+
+function showTPL(string $page, string $content)
+{
+    $arr = getArrayData($page);
+
+    $html = getHtml(TPL_HEA, $arr);
+    $html .= $content;
+    $html .= getHtml(TPL_FOO, []);
+
     echo $html;
     exit();
-}
-
-function viewGallery()
-{
-    $arr = getArrayData("Gallery");
-    showTPL($arr, TPL_GAL);
-}
-
-function viewLogin()
-{
-    $arr = getArrayData("Login");
-    showTPL($arr, TPL_LOG);
-}
-
-function viewVerfify()
-{
-    $arr = getArrayData("Verify");
-    showTPL($arr, TPL_VER);
-}
-
-function viewEditor()
-{
-    $arr = getArrayData("Editor");
-    showTPL($arr, TPL_EDI);
-}
-
-function getArrayData(string $title, bool $login, bool $signin)
-{
-    /* Language */
-
-    $allowedLangs = ['en', 'ca', 'es'];
-    $lang = $_GET['lang'] ?? $_COOKIE['language'] ?? 'en'; 
-    if (!in_array($lang, $allowedLangs))
-        $lang = 'en';
-
-    /* Login - Signin */
-
-    if ($login === true || $signin === true)
-    {
-        $user = 'Nombre de usuario';
-        $pass = 'Contraseña';
-    }
-
-    /* if ($signin === true)
-    {
-        $email = 'Nombre de usuario sign';
-        $repeat = 'Nombre de usuario sign';
-    } */
-
-    $array = 
-    [
-        'language' => $lang,
-        'title' => $title,
-        'script' => null,
-        'formUser' => $user,
-        'formPass' => $pass
-    ];
-
-    return $array;
 }
