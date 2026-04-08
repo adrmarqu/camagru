@@ -4,4 +4,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./srcs:/var/www/html
+      - ./public:/var/www/html
+      - ./srcs:/var/www/srcs:ro
+      - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf
+    command: ["apache2-foreground"]

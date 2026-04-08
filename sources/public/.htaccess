@@ -1,0 +1,4 @@
+# Bloquear archivos sensibles
+<FilesMatch "\.(tpl|env)$">
+    Require all denied
+</FilesMatch>

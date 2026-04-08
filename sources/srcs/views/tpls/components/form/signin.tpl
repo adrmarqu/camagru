@@ -1,16 +1,16 @@
-<label for="formUser">{{::formUser::}}</label>
+<label for="signUser">{{::signUser::}}</label>
 <input type="text">
 
-<label for="formEmail">{{::formEmail::}}</label>
+<label for="signEmail">{{::signEmail::}}</label>
 <input type="email">
 
-<label for="formPass">{{::formPass::}}</label>
+<label for="signPass">{{::signPass::}}</label>
 <input type="password">
 
-<label for="formPassRep">{{::formPassRep::}}</label>
+<label for="signPassRep">{{::signPassRep::}}</label>
 <input type="password">
 
 <div>
     <input type="checkbox">
-    <label for="formTerms">{{::formTerms::}}</label>
+    <label for="signTerms">{{::signTerms::}}</label>
 </div>

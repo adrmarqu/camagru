@@ -1,44 +1,101 @@
 <?php
 
-const pageDir = __DIR__ . '/tpls/components/page/';
-const TPL_HEA = pageDir . 'header.tpl';
-const TPL_FOO = pageDir . 'footer.tpl';
-
 const TPL_PLACEHOLDER_PATTERN = '{{::%s::}}';
 
-require_once __DIR__ . '/utils.php';
-
-function getHtml(string $fileName, array $data): string
+class View
 {
-    if (!is_readable($fileName))
+    private string  $file;
+    private array   $variables = [];
+    private array   $includes = [];
+
+    public function __construct(string $file)
     {
-        echo "The file " . $fileName . " is not readable";
-        exit();
+        if (!is_readable($file))
+            throw new Exception("The file $file is not readable");
+        $this->file = $file;
     }
 
-    $html = file_get_contents($fileName);
-    if ($html === false)
+    /* Add variables that will be replaced in the end */
+    public function addVariables(array $vars): void
     {
-        echo "Error to open " . $fileName;
-        exit();
+        foreach ($vars as $key => $value)
+            $this->variables[$key] = $value;
     }
 
-    foreach ($data as $key => $value)
+    /* TPL = '.../views/tpl/' */
+    public function addIncludes(array $inc): void
     {
-        $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
-        $html = str_replace($placeholder, (string)$value, $html);
+        foreach ($inc as $key => $value)
+            $this->includes[$key] = TPL . $value;
     }
-    return $html;
-}
 
-function showTPL(string $page, string $content)
-{
-    $arr = getArrayData($page);
+    public function getHtml(): string
+    {
+        /* Create header + content + footer */
+        $html = $this->convertTpl(COMPONENTS . 'header.tpl');
+        $html .= $this->convertTpl($this->file);
+        $html .= $this->convertTpl(COMPONENTS . 'footer.tpl');
 
-    $html = getHtml(TPL_HEA, $arr);
-    $html .= $content;
-    $html .= getHtml(TPL_FOO, []);
+        /* Include other tpl */
+        $html = $this->setIncludes($html);
+        /* Replace variables */
+        $html = $this->setVariables($html);
+        return $html;
+    }
 
-    echo $html;
-    exit();
+    public function convertTpl(string $url): string
+    {
+        $html = file_get_contents($url);
+        if ($html === false)
+        {
+            echo "Error to open " . $url;
+            exit();
+        }
+        return $html;
+    }
+
+    private function setIncludes(string $html): string
+    {
+        foreach ($this->includes as $key => $value)
+        {
+            $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
+            $newHtml = $this->convertTpl($value);
+            $html = str_replace($placeholder, (string)$newHtml, $html);
+        }
+        return $html;
+    }
+
+    private function setVariables(string $html): string
+    {
+        foreach ($this->variables as $key => $value)
+        {
+            $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
+            $html = str_replace($placeholder, (string)$value, $html);
+        }
+        return $html;
+    }
+
+    private function setOutVariables(string $html, array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
+            $html = str_replace($placeholder, (string)$value, $html);
+        }
+        return $html;
+    }
+
+    public function getCss(array $links): string
+    {
+        $link = COMPONENTS . 'linkcss.tpl';
+        $link = $this->convertTpl($link);
+
+        $html = '';
+        foreach ($links as $css)
+        {
+            $tmp = $link;
+            $html .= $this->setOutVariables($tmp, ['nameCss' => $css]);
+        }
+        return empty($html) ? null : $html;
+    }
 }

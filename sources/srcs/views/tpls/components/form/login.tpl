@@ -1,5 +1,5 @@
-<label for="formUser">{{::formUserEmail::}}</label>
+<label for="logUser">{{::logUser::}}</label>
 <input type="text">
 
-<label for="formPass">{{::formPass::}}</label>
+<label for="logPass">{{::logPass::}}</label>
 <input type="password">

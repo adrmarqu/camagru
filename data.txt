@@ -62,3 +62,587 @@ Recordar sesión (login)
 Verificación en dos pasos (2FA)
 Pregunta de seguridad
 Imagen de perfil
+
+----------------------------------------------------------------------------
+
+🧩 1. Pantallas básicas (estructura global)
+Todas las páginas deben tener:
+Header (logo, navegación, login/logout)
+Main (contenido)
+Footer
+Responsive (móvil incluido)
+👤 2. Pantallas de usuario
+🔐 Registro (Sign Up)
+Debe tener:
+Email
+Username
+Password (con requisitos de seguridad)
+Validaciones (front + back)
+Después:
+Envío de email de confirmación con link único
+🔑 Login
+Username + password
+Botón login
+Link a:
+Recuperar contraseña
+🔁 Recuperar contraseña
+Input email
+Envío de email con link de reset
+⚙️ Perfil / Ajustes
+Solo usuarios logueados:
+Cambiar:
+Username
+Email
+Password
+Preferencia:
+Activar/desactivar emails de comentarios
+🚪 Logout
+Botón visible en todas las páginas
+Logout en 1 click
+🖼️ 3. Galería (pública)
+🌍 Página de galería
+Lista de imágenes (todas las de todos los usuarios)
+Ordenadas por fecha
+Paginación (mínimo 5 por página)
+Cada imagen debe tener:
+Imagen
+Autor (implícito o visible)
+Likes (solo usuarios logueados)
+Comentarios
+💬 Comentarios
+Solo usuarios logueados pueden comentar
+Al comentar:
+Se envía email al autor (por defecto activado)
+❤️ Likes
+Solo usuarios logueados
+Toggle like/unlike
+📸 4. Editor (la pantalla clave)
+🔒 Solo accesible si estás logueado
+Layout dividido en 2:
+🧍 Sección principal
+Preview de webcam
+Lista de imágenes superponibles (stickers)
+Botón "capturar"
+Reglas:
+No puedes hacer foto si no seleccionas un sticker
+Superposición final se hace en backend
+🖼️ Sidebar (lado)
+Miniaturas de tus fotos anteriores
+📤 Alternativa a webcam
+Subir imagen desde tu PC
+🗑️ Gestión de imágenes
+Puedes borrar:
+Solo tus propias imágenes
+🧱 5. Cosas importantes que afectan a TODAS las pantallas
+🔒 Seguridad (muy importante)
+Passwords encriptados
+Evitar:
+SQL injection
+XSS
+Subidas peligrosas
+📄 Formularios
+Validación completa (cliente + servidor)
+🐳 Deploy
+Contenedor (Docker o similar obligatorio)
+✅ Resumen rápido de pantallas
+Home / Galería (pública)
+Login
+Registro + confirmación email
+Recuperar contraseña
+Perfil / ajustes
+Editor (webcam + stickers)
+Vista de imagen (opcional separada o dentro de galería)
+
+----------------------------------------------------------------------------
+
+GALERÍA (página pública principal)
+🧱 Estructura visual
+Header
+Logo / nombre app
+Botón login / logout
+Acceso a editor (si logueado)
+Main
+Grid de imágenes (tipo Instagram)
+Paginación abajo
+Footer
+🧩 Cada “card” de imagen debe tener
+📸 Imagen
+Imagen final (resultado de composición)
+Tamaño uniforme (grid limpio)
+👤 Información
+Username del autor
+Fecha (opcional pero recomendable)
+❤️ Likes
+Botón like (icono corazón)
+Contador de likes
+Estado:
+Activo (si ya le diste like)
+Inactivo
+Lógica:
+Solo usuarios logueados pueden dar like
+1 like por usuario por imagen
+Toggle (like/unlike)
+💬 Comentarios
+Lista de comentarios (mínimo visible o colapsable)
+Cada comentario:
+Username
+Texto
+Fecha (opcional)
+Input para comentar:
+Solo si estás logueado
+Lógica:
+Al enviar comentario:
+Guardar en DB
+Enviar email al autor (si tiene activado)
+Sanitizar input (evitar XSS)
+📄 Paginación
+Mínimo 5 imágenes por página
+Botones:
+Anterior
+Siguiente
+(Opcional: números de página)
+Backend:
+Query con LIMIT + OFFSET
+🔐 Seguridad clave
+No permitir:
+HTML en comentarios
+Scripts
+Escapar todo output
+💡 Extras útiles (no bonus, pero recomendado)
+Click en imagen → vista detallada
+Lazy loading
+📸 EDITOR DE FOTOS (la parte más importante)
+🔒 Acceso
+Solo usuarios autenticados
+Si no:
+Redirección a login
+🧱 Layout general
+-------------------------------------
+|            HEADER                 |
+-------------------------------------
+|   WEBCAM / PREVIEW   |  SIDEBAR   |
+|                      |  thumbnails|
+|                      |            |
+-------------------------------------
+|            FOOTER                 |
+-------------------------------------
+🎥 Sección principal (core)
+📷 Webcam preview
+Uso de getUserMedia()
+Mostrar vídeo en tiempo real
+🖼️ Stickers (imágenes superponibles)
+Lista horizontal o lateral
+PNG con transparencia
+Comportamiento:
+Seleccionar uno
+Mostrarlo encima del preview
+🚫 Botón capturar
+Desactivado si:
+No hay sticker seleccionado
+Activado cuando:
+Hay sticker seleccionado
+📸 Captura
+Al hacer click:
+Capturar frame del vídeo
+Enviar al backend:
+Imagen base
+Sticker seleccionado
+Backend:
+Fusiona imágenes
+Guarda resultado
+⚠️ IMPORTANTE:
+La composición debe hacerse en servidor
+📤 Subida de imagen alternativa
+Input tipo file
+Permitir subir imagen local
+Validaciones:
+Tipo (jpg/png)
+Tamaño
+Sanitizar nombre
+🖼️ Sidebar (miniaturas)
+Lista de imágenes del usuario
+Cada una:
+Thumbnail
+Botón eliminar
+🗑️ Eliminar imágenes
+Solo el propietario puede borrar
+Confirmación antes de borrar
+🔁 Flujo completo
+Usuario entra
+Selecciona sticker
+Webcam o upload
+Captura
+Backend procesa
+Imagen aparece en sidebar y galería
+🔐 Seguridad
+Validar que:
+Usuario está logueado
+Archivo es imagen real
+Evitar:
+Subida de scripts
+Path traversal
+👤 PERFIL DE USUARIO
+🧱 Estructura
+Info del usuario
+Formularios de edición
+Preferencias
+📋 Datos visibles
+Username
+Email
+✏️ Edición de datos
+Username
+Input
+Validación:
+Único
+Longitud mínima
+Email
+Input
+Validación:
+Formato correcto
+Único
+Password
+Cambio de contraseña:
+Password actual
+Nueva password
+Confirmación
+Seguridad:
+Hash (bcrypt)
+Nunca guardar en texto plano
+⚙️ CONFIGURACIÓN (puede estar dentro de perfil)
+📧 Notificaciones
+Checkbox:
+“Recibir email al recibir comentarios”
+Default: activado
+🔒 Seguridad
+Confirmaciones:
+Cambio de email
+Cambio de password
+🧠 Lógica backend
+Tabla usuarios:
+email_notifications (boolean)
+🔐 COSAS TRANSVERSALES IMPORTANTES
+🧾 Validaciones
+Frontend + backend
+Nunca confiar solo en frontend
+🛡️ Seguridad obligatoria
+Debes evitar:
+SQL Injection
+XSS
+CSRF
+Subidas maliciosas
+🔑 Autenticación
+Sesiones
+Cookies seguras
+🗄️ Base de datos (mínimo esperado)
+users
+id
+username
+email
+password_hash
+email_notifications
+images
+id
+user_id
+path
+created_at
+likes
+id
+user_id
+image_id
+comments
+id
+user_id
+image_id
+content
+created_at
+🧠 RESUMEN CLAVE (modo examen)
+Galería = pública + likes + comentarios + paginación
+Editor = webcam + stickers + composición backend
+Perfil = editar datos + seguridad
+Config = emails de comentarios
+Todo = validado + seguro + responsive
+
+----------------------------------------------------------------------------
+
+🧭 1. LISTA COMPLETA DE SCREENS
+Te las separo por tipo:
+🌍 PÚBLICAS (sin login)
+1. 🖼️ Home / Galería
+Página principal
+Lista de imágenes
+Acceso a:
+Login
+Registro
+Ver imagen (detalle opcional)
+2. 🔐 Login
+Formulario login
+Links a:
+Registro
+Recuperar contraseña
+3. 📝 Registro
+Formulario de creación de cuenta
+Después:
+Pantalla de “revisa tu email”
+4. 📧 Confirmación de email
+Se accede desde link del correo
+Resultado:
+Cuenta activada → redirige a login
+5. 🔁 Recuperar contraseña
+Introducir email
+6. 🔑 Reset contraseña
+Desde link del email
+Nueva contraseña
+🔒 PRIVADAS (requieren login)
+7. 🖼️ Galería (misma que pública pero con extras)
+Igual que home pero:
+Puedes dar like
+Puedes comentar
+Acceso a editor
+Acceso a perfil
+8. 📸 Editor de fotos
+Webcam + stickers
+Subida de imagen
+Sidebar con tus fotos
+Acciones:
+Crear imagen
+Borrar imagen
+9. 👤 Perfil / Configuración
+Editar:
+Username
+Email
+Password
+Preferencias:
+Notificaciones email
+10. 🔍 Vista detalle de imagen (opcional pero recomendable)
+Imagen grande
+Comentarios completos
+Likes
+🔗 2. CÓMO SE CONECTAN (FLUJO)
+Ahora lo importante: cómo navega el usuario realmente
+🚶‍♂️ FLUJO USUARIO NO REGISTRADO
+Galería (Home)
+   ↓
+Login ─────→ Registro
+   ↓            ↓
+   ↓     Confirmación email
+   ↓            ↓
+   └────────→ Login
+También:
+Login → Recuperar contraseña → Reset → Login
+🔐 FLUJO USUARIO LOGUEADO
+Galería
+  ↓   ↓   ↓
+Editor Perfil Detalle imagen
+📸 FLUJO EDITOR (clave del proyecto)
+Editor
+  ↓
+Seleccionar sticker
+  ↓
+(Webcam o Upload)
+  ↓
+Capturar
+  ↓
+Backend procesa
+  ↓
+Imagen guardada
+  ↓
+Aparece en:
+   - Sidebar (editor)
+   - Galería
+❤️ FLUJO INTERACCIÓN EN GALERÍA
+Galería
+  ↓
+Like imagen
+  ↓
+Guardar en DB
+
+Galería
+  ↓
+Comentar
+  ↓
+Guardar comentario
+  ↓
+Enviar email al autor
+⚙️ FLUJO PERFIL
+Perfil
+  ↓
+Editar datos
+  ↓
+Guardar cambios
+
+Perfil
+  ↓
+Cambiar preferencias
+  ↓
+Actualizar DB
+🧠 3. ESTRUCTURA TIPO “MAPA MENTAL”
+                [Galería]
+                /   |   \
+               /    |    \
+        [Login] [Editor] [Detalle]
+           |        |
+     [Registro]     |
+           |        |
+     [Confirmación] |
+           |        |
+     [Login]        |
+                    |
+                 [Perfil]
+                    |
+             [Configuración]
+🧱 4. RUTAS RECOMENDADAS (MUY ÚTIL PARA IMPLEMENTAR)
+Te dejo una estructura típica:
+Públicas
+/ → Galería
+/login
+/register
+/confirm
+/forgot-password
+/reset-password
+Privadas
+/gallery (o misma /)
+/editor
+/profile
+/image/:id
+Acciones (backend)
+/like
+/comment
+/upload
+/delete-image
+⚠️ 5. REGLAS IMPORTANTES DE NAVEGACIÓN
+❌ Usuario NO logueado:
+NO puede entrar a /editor
+NO puede comentar ni dar like
+✔️ Usuario logueado:
+Acceso completo
+🔁 Redirecciones:
+No logueado → intenta editor → redirect a login
+Login correcto → redirect a galería
+🧩 6. RESUMEN CLAVE
+Pantallas mínimas obligatorias:
+Galería
+Login
+Registro + confirmación
+Recuperar contraseña
+Editor
+Perfil/configuración
+Conexiones clave:
+Todo gira alrededor de la galería
+Editor crea contenido → galería lo muestra
+Perfil gestiona usuario
+Login controla acceso
+
+----------------------------------------------------------------------------
+
+[Galería / Home]
+   |
+   |--(no logeado)--> [Login] ----> [Registro] ----> [Confirmación Email] ----> [Login]
+   |                         |
+   |                         └------> [Recuperar Password] ---> [Reset Password] ---> [Login]
+   |
+   |--(logeado)---------------------------------------------|
+   |                                                        |
+   v                                                        v
+[Detalle Imagen]                                     [Perfil / Configuración]
+   |                                                        |
+   |                                                        v
+   |                                                [Editar datos + preferencias]
+   |
+   v
+[Like / Comentario] (solo logeado)
+
+[Galería]
+   |
+   v
+[Editor]
+   |
+   v
+[Seleccionar Sticker]
+   |
+   v
+[Webcam o Upload]
+   |
+   v
+[Capturar Imagen]
+   |
+   v
+[Procesado Backend]
+   |
+   v
+[Imagen Guardada]
+   |
+   |------> [Sidebar Editor (mis fotos)]
+   |
+   └------> [Galería pública]
+
+
+           ┌───────────────┐
+           │   GALERÍA     │
+           └──────┬────────┘
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+   ┌────▼────┐        ┌─────▼─────┐
+   │  LOGIN  │        │  EDITOR   │
+   └────┬────┘        └─────┬─────┘
+        │                   │
+   ┌────▼────┐              │
+   │REGISTRO │              │
+   └────┬────┘              │
+        │                   │
+   ┌────▼────┐              │
+   │CONFIRMAR│              │
+   └─────────┘              │
+                            │
+                     ┌──────▼──────┐
+                     │   PERFIL    │
+                     └─────────────┘
+
+----------------------------------------------------------------------------
+
+❓ PREGUNTA 1: ¿EN QUÉ ORDEN HACER LAS PANTALLAS?
+Te lo digo como lo haría alguien que quiere aprobar sin morir:
+🥇 ORDEN ÓPTIMO (MUY IMPORTANTE)
+1. 🧱 Base del proyecto
+Layout (header, footer)
+Routing básico
+DB conexión
+2. 👤 Autenticación
+Registro
+Login
+Logout
+Confirmación email
+Reset password
+👉 Sin esto no puedes probar el resto
+3. 🗄️ Base de datos completa
+users
+images
+likes
+comments
+4. 📸 Editor (core del proyecto)
+Webcam preview
+Selección de sticker
+Captura
+Envío backend
+Guardar imagen
+👉 Esto es lo más importante del proyecto
+5. 🖼️ Galería
+Mostrar imágenes
+Paginación
+6. ❤️ Likes + 💬 comentarios
+Añadir lógica
+Emails
+7. 👤 Perfil / configuración
+Editar datos
+Preferencias
+8. 🛡️ Seguridad (mientras haces todo)
+Validaciones
+Sanitización
+🧠 Resumen clave:
+👉 Auth → Editor → Galería → Interacciones → Perfil
+
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------

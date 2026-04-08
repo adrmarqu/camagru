@@ -1,0 +1,29 @@
+form
+{
+    width: 70%;
+
+    margin: auto;
+    padding: 15px;
+    
+    border: 2px solid green;
+
+    display: flex;
+    flex-direction: column;
+}
+
+input
+{
+    padding: 10px;
+    border: 1px solid black;
+
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.reverse
+{
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}

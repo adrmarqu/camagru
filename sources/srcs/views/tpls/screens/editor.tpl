@@ -1,1 +1,3 @@
-<h1>Este es el editor</h1>
+<div>
+    <p></p>
+</div>
