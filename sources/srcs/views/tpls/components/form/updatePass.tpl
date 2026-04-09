@@ -1,8 +1,8 @@
-<label for="newCurrentPass">{{::newCurrentPass::}}</label>
-<input type="password">
+<label for="pass">{{::newCurrentPass::}}</label>
+<input type="password" name="pass">
 
-<label for="newNewPass">{{::newNewPass::}}</label>
-<input type="password">
+<label for="newPass">{{::newNewPass::}}</label>
+<input type="password" name="newPass">
 
-<label for="newPassRep">{{::newPassRep::}}</label>
-<input type="password">
+<label for="passRep">{{::newPassRep::}}</label>
+<input type="password" name="passRep">

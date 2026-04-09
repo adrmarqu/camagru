@@ -1,5 +1,5 @@
-<label for="newUser">{{::newUser::}}</label>
-<input type="text">
+<label for="user">{{::newUser::}}</label>
+<input type="text" name="user">
 
-<label for="newCurrentPass">{{::newCurrentPass::}}</label>
-<input type="password">
+<label for="pass">{{::newCurrentPass::}}</label>
+<input type="password" name="pass">

@@ -1,86 +1,102 @@
 const form = document.getElementById("form-cam");
+const output = document.getElementById("form-msg");
 
 const checkUser = (user) =>
 {
-    // empieza por letra
-    // minimo 3 letras
-    // maximo 20 letras
-    // que no tenga simbolos, solo letras, numeros
+    user = user.trim();
+
+    const userPattern = /^[a-zA-Z][a-zA-Z0-9_]{3,20}$/;
+
+    if (!userPattern.test(user))
+        return "El usuario tiene que estar entre 3 y 20 caracteres, solo puede tener letras, numeros o guiones bajos y ha de empezar por una letra";
+    
+    return null;
 };
 
 const checkEmail = (email) =>
 {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (!emailPattern.test(email))
+        return "Formato de correo incorrecto";
+    return null;
 };
 
 const checkPass = (pass, rep) =>
 {
-    const checkRepeat = (pass, rep) =>
-    {
-        if (pass !== rep)
-            err = "Password are not equal";
-    };
+    const passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-    // Check pass
+    if (!passPattern.test(pass))
+        return "La contraseña tiene que tener 8 caracteres, 1 mayuscula, 1 minuscula, 1 numero";
 
-    if (err === "")
-        checkRepeat(pass, rep);
+    if (!err && pass !== rep)
+        return "Passwords are not equal";
+    return null;
 };
 
 const checkTerm = (term) =>
 {
     if (!term)
-        err = "Necesitas aceptar los terminos";
+        return "Necesitas aceptar los terminos";
+    return null;
 };
 
 const checkForm = (e) =>
 {
     const checkSignin = () =>
     {
-        checkUser();
-        checkEmail();
-        checkPass();
-        checkTerm();
+        err = checkUser(form.user.value);
+        if (err) return err;
+
+        err = checkEmail(form.email.value);
+        if (err) return err;
+        
+        err = checkPass(form.pass.value, form.passRep.value);
+        if (err) return err;
+        
+        return checkTerm(form.terms.checked);
     };
 
     const checkupdateUser = () =>
     {
-        checkUser();
+        return checkUser(form.user.value);
     };
 
     const checkupdatePass = () =>
     {
-        checkPass();
+        return checkPass(form.pass.value, form.passRep.value);
     };
 
     const checkupdateEmail = () =>
     {
-        checkEmail();
+        return checkEmail(form.email.value);
     };
 
+    err = null;
     switch (form.type.value)
     {
         case 'login':
             break ;
         case 'signin':
-            checkSignin();
+            err = checkSignin();
             break ;
         case 'updateUser':
-            checkupdateUser();
+            err = checkupdateUser();
             break ;
         case 'updatePass':
-            checkupdatePass();
+            err = checkupdatePass();
             break ;
         case 'updateEmail':
-            checkupdateEmail();
+            err = checkupdateEmail();
             break ;
         default:
             err = "Unknown error";
     }
-    if (err !== "")
+    if (err)
     {
-        e.prevetDefault();
-        window.alert(err);
+        e.preventDefault();
+        output.innerHTML = err;
+        return ;
     }
 };
 

@@ -1,4 +1,5 @@
-<form action="app.php?page={{::page::}}" id="form-cam" method="post">
+<form action="index.php?page={{::page::}}" id="form-cam" method="post">
+    <output id="form-msg">{{::formMsg::}}</output>
     {{::formContent::}}
     <input type="hidden" name="type" value="{{::type::}}">
     <hr>

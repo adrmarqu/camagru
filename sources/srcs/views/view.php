@@ -85,17 +85,28 @@ class View
         return $html;
     }
 
-    public function getCss(array $links): string
+    private function getHeadFile(string $url, array $files): string
     {
-        $link = COMPONENTS . 'linkcss.tpl';
-        $link = $this->convertTpl($link);
-
+        static $idx = 0;
+        $url = $this->convertTpl($url);
         $html = '';
-        foreach ($links as $css)
+
+        foreach ($files as $fileName)
         {
-            $tmp = $link;
-            $html .= $this->setOutVariables($tmp, ['nameCss' => $css]);
+            $html .= $this->setOutVariables($url, ['name' => $fileName, 'v' => $idx++]);
         }
         return empty($html) ? null : $html;
+    }
+
+    public function getHeadLinks(array $files): string
+    {
+        $link = COMPONENTS . 'link.tpl';
+        return $this->getHeadFile($link, $files);
+    }
+
+    public function getHeadScripts(array $files): string
+    {
+        $link = COMPONENTS . 'script.tpl';
+        return $this->getHeadFile($link, $files);
     }
 }

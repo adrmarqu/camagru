@@ -17,13 +17,15 @@ down:
 # Reiniciar
 restart: down up
 
+re: down clean build up open
+
 # Ver logs
 logs:
 	$(DC) logs -f
 
 # Construir (por si luego usas Dockerfile)
 build:
-	$(DC) build
+	$(DC) build --no-cache
 
 # Acceder al contenedor (bash)
 bash:

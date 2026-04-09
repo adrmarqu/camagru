@@ -1,16 +1,16 @@
-<label for="signUser">{{::signUser::}}</label>
-<input type="text">
+<label for="user">{{::signUser::}}</label>
+<input type="text" name="user">
 
-<label for="signEmail">{{::signEmail::}}</label>
-<input type="email">
+<label for="email">{{::signEmail::}}</label>
+<input type="email" name="email">
 
-<label for="signPass">{{::signPass::}}</label>
-<input type="password">
+<label for="pass">{{::signPass::}}</label>
+<input type="password" name="pass">
 
-<label for="signPassRep">{{::signPassRep::}}</label>
-<input type="password">
+<label for="passRep">{{::signPassRep::}}</label>
+<input type="password" name="passRep">
 
 <div>
-    <input type="checkbox">
-    <label for="signTerms">{{::signTerms::}}</label>
+    <label for="terms">{{::signTerms::}}</label>
+    <input type="checkbox" name="terms">
 </div>
