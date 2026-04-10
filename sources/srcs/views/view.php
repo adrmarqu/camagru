@@ -11,7 +11,7 @@ class View
     public function __construct(string $file)
     {
         if (!is_readable($file))
-            throw new Exception("The file $file is not readable");
+            throw new Exception('The file $file is not readable');
         $this->file = $file;
     }
 
@@ -40,7 +40,8 @@ class View
         $html = $this->setIncludes($html);
         /* Replace variables */
         $html = $this->setVariables($html);
-        return $html;
+        
+        return $html ?? '';
     }
 
     public function convertTpl(string $url): string
@@ -48,10 +49,10 @@ class View
         $html = file_get_contents($url);
         if ($html === false)
         {
-            echo "Error to open " . $url;
+            echo 'Error to open ' . $url;
             exit();
         }
-        return $html;
+        return $html ?? '';
     }
 
     private function setIncludes(string $html): string
@@ -62,7 +63,7 @@ class View
             $newHtml = $this->convertTpl($value);
             $html = str_replace($placeholder, (string)$newHtml, $html);
         }
-        return $html;
+        return $html ?? '';
     }
 
     private function setVariables(string $html): string
@@ -72,20 +73,20 @@ class View
             $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
             $html = str_replace($placeholder, (string)$value, $html);
         }
-        return $html;
+        return $html ?? '';
     }
 
-    private function setOutVariables(string $html, array $data)
+    private function setOutVariables(string $html, array $data): string
     {
         foreach ($data as $key => $value)
         {
             $placeholder = sprintf(TPL_PLACEHOLDER_PATTERN, $key);
             $html = str_replace($placeholder, (string)$value, $html);
         }
-        return $html;
+        return $html ?? '';
     }
 
-    private function getHeadFile(string $url, array $files): string
+    private function getHeadFile(string $url, array $files): ?string
     {
         static $idx = 0;
         $url = $this->convertTpl($url);
@@ -95,16 +96,16 @@ class View
         {
             $html .= $this->setOutVariables($url, ['name' => $fileName, 'v' => $idx++]);
         }
-        return empty($html) ? null : $html;
+        return !empty($html) ? $html : null;
     }
 
-    public function getHeadLinks(array $files): string
+    public function getHeadLinks(array $files): ?string
     {
         $link = COMPONENTS . 'link.tpl';
         return $this->getHeadFile($link, $files);
     }
 
-    public function getHeadScripts(array $files): string
+    public function getHeadScripts(array $files): ?string
     {
         $link = COMPONENTS . 'script.tpl';
         return $this->getHeadFile($link, $files);

@@ -4,9 +4,9 @@
     <div>
         <a href="index.php?page=login">Login</a>
         <a href="index.php?page=signin">Signin</a>
-        <a href="index.php?page=update&upd_opt=user">Update user</a>
-        <a href="index.php?page=update&upd_opt=email">Update email</a>
-        <a href="index.php?page=update&upd_opt=pass">Update password</a>
+        <a href="index.php?page=updateUser">Update user</a>
+        <a href="index.php?page=updateEmail">Update email</a>
+        <a href="index.php?page=updatePass">Update password</a>
     </div>
     <br>
     <div>

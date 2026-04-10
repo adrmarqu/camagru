@@ -1,16 +1,10 @@
 <?php
 
-
-/* Separar mejor el archivo: Decidir donde ir, validar form, bbdd, render */
-
-
-
+require_once __DIR__ . '/CheckFormController.php';
 require_once ROOT . 'views/View.php';
 
 class AuthController
 {
-    private array   $incs = [];
-    private array   $vars = [];
     private View    $view;
 
     public function __construct(string $file)
@@ -18,131 +12,115 @@ class AuthController
         $this->view = new View($file);
     }
 
-    private function checkForm(string $type): string
+    public function login(array $lang, ?string $msg)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-            return '';
-        
-        $check = new CheckForm();
-        $msg = $check->launch($type, $_POST);
-
-        if ($msg === null)
-        {
-            header("Location: /index.php?page=login"); // no tengo home de momento
-            exit();
-        }
-        
-        return $msg;
-    }
-
-    public function login(array $lang)
-    {
-        $type = 'login';
-        $msg = $this->checkForm($type);
-
-        $this->incs = 
+        $vars =
+        [
+            'title' => 'Camagru | Login',
+            'page' => 'login',
+            
+            'logUser' => $lang['usermail'] ?? null,
+            'logPass' => $lang['pass'] ?? null
+        ];
+        $incs = 
         [
             'formContent' => 'components/form/login.tpl'
         ];
-        $this->vars =
-        [
-            'title' => 'Camagru | Login',
-            'page' => $type,
-            'type' => $type,
-            
-            'logUser' => $lang['usermail'] ?? '',
-            'logPass' => $lang['pass'] ?? ''
-        ];
 
-        $this->launch($lang, $msg);
+        $this->launch($vars, $incs, $lang, $msg);
     }
 
-    public function signin(array $lang)
+    public function signin(array $lang, ?string $msg)
     {
-        $type = 'signin';
-        $msg = $this->checkForm($type);
-
-        $this->incs = 
-        [
-            'formContent' => 'components/form/signin.tpl'
-        ];
-        $this->vars =
+        $vars =
         [
             'title' => 'Camagru | Signin',
             'page' => 'signin',
-            'type' => 'signin',
             
-            'signUser' => $lang['user'] ?? '',
-            'signEmail' => $lang['email'] ?? '',
-            'signPass' => $lang['pass'] ?? '',
-            'signPassRep' => $lang['rep_pass'] ?? '',
-            'signTerms' => $lang['term'] ?? ''
+            'signUser' => $lang['user'] ?? null,
+            'signEmail' => $lang['email'] ?? null,
+            'signPass' => $lang['pass'] ?? null,
+            'signPassRep' => $lang['rep_pass'] ?? null,
+            'signTerms' => $lang['term'] ?? null
+        ];
+        $incs = 
+        [
+            'formContent' => 'components/form/signin.tpl'
         ];
 
-        $this->launch($lang, $msg);
+        $this->launch($vars, $incs, $lang, $msg);
     }
 
-    public function update(array $lang, string $option)
+    public function updateUser(array $lang, ?string $msg)
     {
-        switch ($option)
-        {
-            case 'user':
-                $file = 'components/form/updateUser.tpl';
-                $user = $lang['new_user'];
-                $id = 'updateUser';
-                break ;
-            case 'email':
-                $file = 'components/form/updateEmail.tpl';
-                $email = $lang['new_email'];
-                $id = 'updateEmail';
-                break ;
-            case 'pass':
-                $file = 'components/form/updatePass.tpl';
-                $newPass = $lang['new_pass'];
-                $repPass = $lang['rep_pass'];
-                $id = 'updatePass';
-                break ;
-            default:
-                header("Location: /index.php?page=login"); // no tengo home de momento
-                exit();
-        }
-        $msg = $this->checkForm($id);
-
-        $this->incs = 
-        [
-            'formContent' => $file
-        ];
-        $this->vars =
+        $vars =
         [
             'title' => 'Camagru | Update',
-            'page' => ('update&upd_opt=' . $option) ?? '',
-            'type' => $id ?? '',
+            'page' => 'updateUser',
             
-            'newUser' => $user ?? '',
-            'newEmail' => $email ?? '',
-            'newCurrentPass' => $lang['curr_pass'] ?? '',
-            'newNewPass' => $newPass ?? '',
-            'newPassRep' => $repPass ?? ''
+            'newUser' => $lang['new_user'] ?? null,
+            'newCurrentPass' => $lang['curr_pass'] ?? null
+        ];
+        $incs = 
+        [
+            'formContent' => 'components/form/updateUser.tpl'
         ];
 
-        $this->launch($lang, $msg);
+        $this->launch($vars, $incs, $lang, $msg);
     }
 
-    private function launch(array $lang, string $msg)
+    public function updateEmail(array $lang, ?string $msg)
+    {
+        $vars =
+        [
+            'title' => 'Camagru | Update',
+            'page' => 'updateEmail',
+            
+            'newEmail' => $lang['new_email'] ?? null,
+            'newCurrentPass' => $lang['curr_pass'] ?? null,
+        ];
+        $incs = 
+        [
+            'formContent' => 'components/form/updateEmail.tpl'
+        ];
+
+        $this->launch($vars, $incs, $lang, $msg);
+    }
+
+    public function updatePass(array $lang, ?string $msg)
+    {
+        $vars =
+        [
+            'title' => 'Camagru | Update',
+            'page' => 'updatePass',
+            
+            'newCurrentPass' => $lang['curr_pass'] ?? null,
+            'newNewPass' => $lang['new_pass'] ?? null,
+            'newPassRep' => $lang['rep_pass'] ?? null,
+        ];
+        $incs = 
+        [
+            'formContent' => 'components/form/updatePass.tpl'
+        ];
+
+        $this->launch($vars, $incs, $lang, $msg);
+    }
+
+    private function launch(array $vars, array $incs, array $lang, ?string $msg)
     {
         /* Common variables */
         $baseVars =
         [
-            'language' => $lang['lang'] ?? '',
-            'btnDel' => $lang['del'] ?? '',
-            'btnSend' => $lang['send'] ?? '',
-            'formMsg' => $msg ?? '',
+            'language' => $lang['lang'] ?? null,
+            'btnDel' => $lang['del'] ?? null,
+            'btnSend' => $lang['send'] ?? null,
+            'formMsg' => $msg ?? null,
             'links' => $this->view->getHeadLinks(['form']),
             'scripts' => $this->view->getHeadScripts(['checkForm'])
         ];
 
-        $this->view->addIncludes($this->incs);
-        $this->view->addVariables($this->vars);
+        $this->view->addIncludes($incs);
+        $this->view->addVariables($vars);
         $this->view->addVariables($baseVars);
 
         echo $this->view->getHtml();

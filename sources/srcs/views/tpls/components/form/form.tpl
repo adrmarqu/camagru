@@ -1,7 +1,7 @@
 <form action="index.php?page={{::page::}}" id="form-cam" method="post">
     <output id="form-msg">{{::formMsg::}}</output>
     {{::formContent::}}
-    <input type="hidden" name="type" value="{{::type::}}">
+    <input type="hidden" name="type" value="{{::page::}}">
     <hr>
     <div class="reverse">
         <button class="btn-reset" type="reset">{{::btnDel::}}</button>
