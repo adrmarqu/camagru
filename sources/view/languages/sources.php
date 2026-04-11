@@ -28,4 +28,4 @@ function getLanguage(array $allowed): string
 
 $language = getLanguage(['en','ca','es']);
 
-require_once ROOT . 'views/languages/' . $language . '.php';
+require_once ROOT . 'view/languages/' . $language . '.php';

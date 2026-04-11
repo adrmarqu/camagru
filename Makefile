@@ -42,5 +42,7 @@ open:
 clean:
 	$(DC) down -v
 
+fclean: down clean
+
 # Reinstalar todo limpio
-re: all clean build up
+re: all clean fclean build up

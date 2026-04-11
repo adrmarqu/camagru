@@ -1,6 +1,6 @@
 <?php
 
-class CheckFormController
+class FormValidation
 {
     private string  $user;
     private string  $email;
@@ -21,91 +21,91 @@ class CheckFormController
         $this->terms = $post['terms'] ?? '';
     }
 
-    public function checkForm(string $type, array $lang): array
+    public function checkForm(string $type, array $lang): bool
     {
         $functionName = 'check' . $type;
         if (!method_exists($this, $functionName))
-            return $lang['error_generic'] ?? 'Invalid form type';
+        {
+            $_SESSION['error'] = $lang['error_generic'] ?? 'Invalid form type';
+            return false;
+        }
         return $this->$functionName($lang);
     }
 
-    private function checkLogin(array $lang): ?string
+    private function checkSignin(array $lang): bool
     {
-        // Mirar la bbdd por coincidencias
-    }
-
-    private function checkSignin(array $lang): ?string
-    {
-        // Hacer check (user + email + pass + rep + sign)
-
         if (!$this->checkUser($this->user))
-            return $lang['error_user'] ?? 'Error';
+        {
+            $_SESSION['error'] = $lang['error_user'] ?? 'Error';
+            return false;
+        }
         
         if (!$this->checkEmail($this->email))
-            return $lang['error_email'] ?? 'Error';
+        {
+            $_SESSION['error'] = $lang['error_email'] ?? 'Error';
+            return false;
+        }
 
         if (!$this->checkPass($this->pass))
-            return $lang['error_pass'] ?? 'Error';
+        {
+            $_SESSION['error'] = $lang['error_pass'] ?? 'Error';
+            return false;
+        }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
-            return $lang['error_pass_rep'] ?? 'Error';
+        {
+            $_SESSION['error'] = $lang['error_pass_rep'] ?? 'Error';
+            return false;
+        }
         
         if ($this->terms === false)
-            return $lang['error_terms'] ?? 'Error';
-        
-        // Mirar la bbdd que no exista
-        
+        {
+            $_SESSION['error'] = $lang['error_terms'] ?? 'Error';
+            return false;
+        }
+        return true;
     }
 
-    private function checkUpdateUser(array $lang): ?string
+    private function checkUpdateUser(array $lang): bool
     {
         // Hacer check (nuevo user)
 
         if (!$this->checkUser($this->user))
-            return $lang['error_user'] ?? 'Error';
-        
-        $userid = $this->getUserId();
-
-        // Peticion a la bbdd con el nuevo usuario
-        // Si encuentra algo
-            // id = userid
-            // id != userid
-
-        // Subir informacion
+        {
+            $_SESSION['error'] = $lang['error_user'] ?? 'Error';
+            return false;
+        }
+        return true;
     }
 
-    private function checkUpdateEmail(array $lang): ?string
+    private function checkUpdateEmail(array $lang): bool
     {
-        //$userid = $this->getUserId();
-        
         // Hacer check (nuevo email)
 
         if (!$this->checkEmail($this->email))
-            return $lang['error_email'] ?? 'Error';
-
-        // Peticion a la bbdd con el nuevo email
-        // Si encuentra algo
-            // id = userid
-            // id != userid
-
-        // Subir informacion
+        {
+            $_SESSION['error'] = $lang['error_email'] ?? 'Error';
+            return false;
+        }
+        return true;
     }
 
-    private function checkUpdatePass(array $lang): ?string
+    private function checkUpdatePass(array $lang): bool
     {
         // Hacer check (nueva pass + rep)
 
         if (!$this->checkPass($this->pass))
-            return $lang['error_pass'] ?? 'Error';
+        {
+            $_SESSION['error'] = $lang['error_pass'] ?? 'Error';
+            return false;
+        }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
-            return $lang['error_pass_rep'] ?? 'Error';
-
-        // Peticion a la bbdd para conseguir la password
-        // Si es igual error
-
-        // Subir informacion
-
+        {
+            $_SESSION['error'] = $lang['error_pass_rep'] ?? 'Error';
+            return false;
+        }
+        return true;
     }
 
     /* 
@@ -113,11 +113,6 @@ class CheckFormController
     |                             UTILS                               |
     -------------------------------------------------------------------
     */
-
-    /* private function getUserId()
-    {
-        return (int)($_SESSION['user_id'] ?? -1);
-    } */
 
     private function checkUser(string $user): bool
     {
@@ -128,8 +123,6 @@ class CheckFormController
         if (!preg_match($userPattern, $user))
             return false;
         return true;
-            
-        //"El usuario tiene que estar entre 3 y 20 caracteres, solo puede tener letras, numeros o guiones bajos y ha de empezar por una letra";
     }
 
     private function checkEmail(string $email): bool
@@ -139,7 +132,6 @@ class CheckFormController
         if (!preg_match($emailPattern, $email))
             return false;
         return true;
-        //return "Formato de correo incorrecto";
     }
 
     private function checkPass(string $pass): bool
@@ -149,8 +141,6 @@ class CheckFormController
         if (!preg_match($passPattern, $pass))
             return false;
         return true;
-
-        //return "La contraseña tiene que tener 8 caracteres, 1 mayuscula, 1 minuscula, 1 numero";
     }
 
     private function checkPassRep(string $pass, string $rep): bool
@@ -159,7 +149,5 @@ class CheckFormController
             return false;
         return true;
 
-        //return "Passwords are not equal";
     }
-        //"Necesitas aceptar los terminos";
 }

@@ -1,42 +1,29 @@
 <?php
 
-/* if (session_status() === PHP_SESSION_NONE)
-    session_start(); */
+if (session_status() === PHP_SESSION_NONE)
+    session_start();
 
-define('TPL', ROOT . 'views/tpls/');
-define('COMPONENTS', ROOT . 'views/tpls/components/');
-define('SCREENS', ROOT . 'views/tpls/screens/');
+define('TPL', ROOT . 'view/templates/');
+define('COMPONENTS', ROOT . 'view/templates/components/');
+define('SCREENS', ROOT . 'view/templates/screens/');
 
+require_once ROOT . 'view/languages/sources.php';
 require_once __DIR__ . '/AuthController.php';
-require_once ROOT . 'views/languages/sources.php';
+require_once ROOT . 'model/UserModel.php';
 
 class App
 {
-    private function sendError()
-    {
-        header('Location: /index.php');
-        exit();
-    }   
-
     private function launchAuth(string $name)
     {
-        $allowed = ['login', 'signin', 'updateUser', 'updateEmail', 'updatePass'];
-        if (!in_array($name, $allowed))
-            $this->sendError();
-
         global $lang;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $check = new CheckFormController($_POST);
-            $msg = $check->checkForm($name, $lang);
-        }
         $auth = new AuthController(COMPONENTS . 'form/form.tpl');
-        $auth->$name($lang, $msg);
+        $auth->run($name, $lang);
     }
 
     public function run()
     {
+        $_SESSION['error'] = null;
         $page = $_GET['page'] ?? 'login';
         $page = preg_replace('/[^a-zA-Z]/', '', $page);
 

@@ -5,6 +5,20 @@ services:
       - "8080:80"
     volumes:
       - ./public:/var/www/html
-      - ./srcs:/var/www/srcs:ro
+      - ./:/var/www/sources:ro
       - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf
     command: ["apache2-foreground"]
+
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: camagru
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

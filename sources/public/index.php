@@ -1,8 +1,8 @@
 <?php 
 
-define('ROOT', '/var/www/srcs/');
+define('ROOT', '/var/www/sources/');
 
-require_once ROOT . 'controllers/App.php';
+require_once ROOT . 'controller/App.php';
 
 $app = new App();
 $app->run();

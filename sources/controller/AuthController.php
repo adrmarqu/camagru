@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/CheckFormController.php';
-require_once ROOT . 'views/View.php';
+require_once ROOT . 'validation/FormValidation.php';
+require_once ROOT . 'view/View.php';
 
 class AuthController
 {
@@ -12,7 +12,31 @@ class AuthController
         $this->view = new View($file);
     }
 
-    public function login(array $lang, ?string $msg)
+    private function sendError()
+    {
+        header('Location: /index.php');
+        exit();
+    }
+
+    public function run(string $name, array $lang)
+    {
+        $allowed = ['login', 'signin', 'updateUser', 'updateEmail', 'updatePass'];
+        if (!in_array($name, $allowed))
+            $this->sendError();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $check = new FormValidation($_POST);
+            if (!$check->checkForm($name, $lang))
+                $this->sendError();
+            if ($_SESSION['error'] !== null)
+                $_SESSION['error'] = "Bien hecho";
+        }
+        $auth = new AuthController(COMPONENTS . 'form/form.tpl');
+        $auth->$name($lang);
+    }
+
+    private function login(array $lang)
     {
         $vars =
         [
@@ -27,10 +51,10 @@ class AuthController
             'formContent' => 'components/form/login.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang, $msg);
+        $this->launch($vars, $incs, $lang);
     }
 
-    public function signin(array $lang, ?string $msg)
+    private function signin(array $lang)
     {
         $vars =
         [
@@ -48,10 +72,10 @@ class AuthController
             'formContent' => 'components/form/signin.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang, $msg);
+        $this->launch($vars, $incs, $lang);
     }
 
-    public function updateUser(array $lang, ?string $msg)
+    private function updateUser(array $lang)
     {
         $vars =
         [
@@ -66,10 +90,10 @@ class AuthController
             'formContent' => 'components/form/updateUser.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang, $msg);
+        $this->launch($vars, $incs, $lang);
     }
 
-    public function updateEmail(array $lang, ?string $msg)
+    private function updateEmail(array $lang)
     {
         $vars =
         [
@@ -84,10 +108,10 @@ class AuthController
             'formContent' => 'components/form/updateEmail.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang, $msg);
+        $this->launch($vars, $incs, $lang);
     }
 
-    public function updatePass(array $lang, ?string $msg)
+    private function updatePass(array $lang)
     {
         $vars =
         [
@@ -103,10 +127,10 @@ class AuthController
             'formContent' => 'components/form/updatePass.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang, $msg);
+        $this->launch($vars, $incs, $lang);
     }
 
-    private function launch(array $vars, array $incs, array $lang, ?string $msg)
+    private function launch(array $vars, array $incs, array $lang)
     {
         /* Common variables */
         $baseVars =
@@ -114,7 +138,7 @@ class AuthController
             'language' => $lang['lang'] ?? null,
             'btnDel' => $lang['del'] ?? null,
             'btnSend' => $lang['send'] ?? null,
-            'formMsg' => $msg ?? null,
+            'formMsg' => $_SESSION['error'] ?? null,
             'links' => $this->view->getHeadLinks(['form']),
             'scripts' => $this->view->getHeadScripts(['checkForm'])
         ];
