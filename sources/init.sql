@@ -44,7 +44,7 @@ CREATE INDEX idx_com_imageid ON comments(image_id);
 
 /* INSERTS */
 
-INSERT INTO users (username, email, password_hash)
-VALUES ('user1', 'user1@gmail.com', 'user1'),
-VALUES ('user2', 'user2@gmail.com', 'user2'),
-VALUES ('user3', 'user3@gmail.com', 'user3');
+INSERT INTO users (username, email, password_hash) VALUES
+('user1', 'user1@gmail.com', 'user1'),
+('user2', 'user2@gmail.com', 'user2'),
+('user3', 'user3@gmail.com', 'user3');
