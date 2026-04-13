@@ -27,10 +27,16 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $check = new FormValidation($_POST);
-            if (!$check->checkForm($name, $lang))
-                $this->sendError();
-            if ($_SESSION['error'] !== null)
-                $_SESSION['error'] = "Bien hecho";
+            $result = $check->checkForm($name, $lang);
+            $success = $result['success'];
+
+            if ($success)
+            {
+                // Mandar al home
+                $_SESSION['error'] = 'bien hecho';
+            }
+            else
+                $_SESSION['error'] = $result['message'];
         }
         $auth = new AuthController(COMPONENTS . 'form/form.tpl');
         $auth->$name($lang);
@@ -142,6 +148,8 @@ class AuthController
             'links' => $this->view->getHeadLinks(['form']),
             'scripts' => $this->view->getHeadScripts(['checkForm'])
         ];
+
+        unset($_SESSION['error']);
 
         $this->view->addIncludes($incs);
         $this->view->addVariables($vars);

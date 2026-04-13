@@ -23,7 +23,7 @@ class App
 
     public function run()
     {
-        $_SESSION['error'] = null;
+        $_SESSION['error'] = '';
         $page = $_GET['page'] ?? 'login';
         $page = preg_replace('/[^a-zA-Z]/', '', $page);
 

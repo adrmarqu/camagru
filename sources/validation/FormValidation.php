@@ -9,6 +9,8 @@ class FormValidation
     private string  $newPass;
     private bool    $terms;
 
+    private string  $error;
+
     public function __construct(array $post)
     {
         $this->user = $post['user'] ?? '';
@@ -21,46 +23,69 @@ class FormValidation
         $this->terms = $post['terms'] ?? '';
     }
 
-    public function checkForm(string $type, array $lang): bool
+    public function checkForm(string $type, array $lang): array
     {
-        $functionName = 'check' . $type;
-        if (!method_exists($this, $functionName))
+        $formats =
+        [
+            'login' => 'checkLogin',
+            'signin' => 'checkSignin',
+            'updateUser' => 'checkUpdateUser',
+            'updateEmail' => 'checkUpdateEmail',
+            'updatePass' => 'checkUpdatePass'
+        ];
+
+        if (!isset($formats[$type]))
         {
-            $_SESSION['error'] = $lang['error_generic'] ?? 'Invalid form type';
-            return false;
+            return
+            [
+                'success' => false,
+                'message' => $lang['error_format_form'] ?? 'Invalid form type'
+            ];
         }
-        return $this->$functionName($lang);
+
+        $method = $formats[$type];
+         
+        return
+        [
+            'success' => $this->$method($lang),
+            'message' => $this->error ?? ''
+        ];
+    }
+
+    private function checkLogin(array $lang): bool
+    {
+        return true;
     }
 
     private function checkSignin(array $lang): bool
     {
         if (!$this->checkUser($this->user))
         {
-            $_SESSION['error'] = $lang['error_user'] ?? 'Error';
+            $this->error = $lang['error_user'] ?? 'Error';
             return false;
         }
         
         if (!$this->checkEmail($this->email))
         {
-            $_SESSION['error'] = $lang['error_email'] ?? 'Error';
+            $this->error = $lang['error_email'] ?? 'Error';
             return false;
         }
 
         if (!$this->checkPass($this->pass))
         {
-            $_SESSION['error'] = $lang['error_pass'] ?? 'Error';
+            $this->error = $lang['error_pass'] ?? 'Error';
             return false;
         }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
         {
-            $_SESSION['error'] = $lang['error_pass_rep'] ?? 'Error';
+            $this->error = $lang['error_pass_rep'] ?? 'Error';
             return false;
         }
         
         if ($this->terms === false)
         {
-            $_SESSION['error'] = $lang['error_terms'] ?? 'Error';
+            $this->error = $lang['error_terms'] ?? 'Error';
             return false;
         }
         return true;
@@ -72,7 +97,7 @@ class FormValidation
 
         if (!$this->checkUser($this->user))
         {
-            $_SESSION['error'] = $lang['error_user'] ?? 'Error';
+            $this->error = $lang['error_user'] ?? 'Error';
             return false;
         }
         return true;
@@ -84,7 +109,7 @@ class FormValidation
 
         if (!$this->checkEmail($this->email))
         {
-            $_SESSION['error'] = $lang['error_email'] ?? 'Error';
+            $this->error = $lang['error_email'] ?? 'Error';
             return false;
         }
         return true;
@@ -96,13 +121,13 @@ class FormValidation
 
         if (!$this->checkPass($this->pass))
         {
-            $_SESSION['error'] = $lang['error_pass'] ?? 'Error';
+            $this->error = $lang['error_pass'] ?? 'Error';
             return false;
         }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
         {
-            $_SESSION['error'] = $lang['error_pass_rep'] ?? 'Error';
+            $this->error = $lang['error_pass_rep'] ?? 'Error';
             return false;
         }
         return true;

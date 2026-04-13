@@ -1,103 +1,35 @@
-const form = document.getElementById("form-cam");
 const output = document.getElementById("form-msg");
-
-const checkUser = (user) =>
-{
-    user = user.trim();
-
-    const userPattern = /^[a-zA-Z][a-zA-Z0-9_]{3,20}$/;
-
-    if (!userPattern.test(user))
-        return "El usuario tiene que estar entre 3 y 20 caracteres, solo puede tener letras, numeros o guiones bajos y ha de empezar por una letra";
-    
-    return null;
-};
-
-const checkEmail = (email) =>
-{
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailPattern.test(email))
-        return "Formato de correo incorrecto";
-    return null;
-};
-
-const checkPass = (pass, rep) =>
-{
-    const passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-    if (!passPattern.test(pass))
-        return "La contraseña tiene que tener 8 caracteres, 1 mayuscula, 1 minuscula, 1 numero";
-
-    if (!err && pass !== rep)
-        return "Passwords are not equal";
-    return null;
-};
-
-const checkTerm = (term) =>
-{
-    if (!term)
-        return "Necesitas aceptar los terminos";
-    return null;
-};
 
 const checkForm = (e) =>
 {
-    const checkSignin = () =>
-    {
-        err = checkUser(form.user.value);
-        if (err) return err;
+    e.preventDefault();
 
-        err = checkEmail(form.email.value);
-        if (err) return err;
-        
-        err = checkPass(form.pass.value, form.passRep.value);
-        if (err) return err;
-        
-        return checkTerm(form.terms.checked);
-    };
+    const form = e.target;
+    const formData = new FormData(form);
 
-    const checkupdateUser = () =>
-    {
-        return checkUser(form.user.value);
-    };
+    formData.append("formName", form.type.value);
 
-    const checkupdatePass = () =>
+    fetch("/api/validateFormJs.php", 
     {
-        return checkPass(form.pass.value, form.passRep.value);
-    };
-
-    const checkupdateEmail = () =>
+        method: "POST",
+        body: formData
+    })
+    .then(async res => {
+        const text = await res.text();
+        console.log("RAW RESPONSE:", text);
+        return JSON.parse(text);
+    })
+    .then(data => 
     {
-        return checkEmail(form.email.value);
-    };
-
-    err = null;
-    switch (form.type.value)
-    {
-        case 'login':
-            break ;
-        case 'signin':
-            err = checkSignin();
-            break ;
-        case 'updateUser':
-            err = checkupdateUser();
-            break ;
-        case 'updatePass':
-            err = checkupdatePass();
-            break ;
-        case 'updateEmail':
-            err = checkupdateEmail();
-            break ;
-        default:
-            err = "Unknown error";
-    }
-    if (err)
-    {
-        e.preventDefault();
-        output.innerHTML = err;
-        return ;
-    }
-};
+        console.log(data);
+        if (!data.success)
+        {
+            output.innerHTML = data.message;
+            return ;
+        }
+        form.submit();
+    })
+    .catch(err => console.error('ERROR:', err));
+}
 
 document.addEventListener('submit', checkForm);
