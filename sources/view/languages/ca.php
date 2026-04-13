@@ -1,35 +1,6 @@
 <?php
 
-/*
-    
-    '' => '',
-
-    '' => ''
-
-*/
-
-/* 
-    'lang' => 'ca',
-    
-    'usermail' => '',
-    'user' => '',
-    'new_user' => '',
-
-    'email' => '',
-    'new_email' => '',
-
-    'term' => '',
-    
-    'pass' => '',
-    'new_pass' => '',
-    'curr_pass' => '',
-    'rep_pass' => '',
-
-    'del' => '',
-    'send' => '',
-*/
-
-$lang =
+$langText =
 [
     'lang' => 'ca',
     

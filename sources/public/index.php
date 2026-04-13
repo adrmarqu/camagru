@@ -1,8 +1,5 @@
 <?php 
 
-define('ROOT', '/var/www/sources/');
+define('ROOT', dirname(__DIR__) . '/');
 
-require_once ROOT . 'controller/App.php';
-
-$app = new App();
-$app->run();
+require_once ROOT . 'utils/cleanUrl.php';

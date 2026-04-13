@@ -23,15 +23,15 @@ class FormValidation
         $this->terms = $post['terms'] ?? '';
     }
 
-    public function checkForm(string $type, array $lang): array
+    public function checkForm(string $type): array
     {
         $formats =
         [
             'login' => 'checkLogin',
             'signin' => 'checkSignin',
-            'updateUser' => 'checkUpdateUser',
-            'updateEmail' => 'checkUpdateEmail',
-            'updatePass' => 'checkUpdatePass'
+            'update-user' => 'checkUpdateUser',
+            'update-email' => 'checkUpdateEmail',
+            'update-pass' => 'checkUpdatePass'
         ];
 
         if (!isset($formats[$type]))
@@ -39,7 +39,7 @@ class FormValidation
             return
             [
                 'success' => false,
-                'message' => $lang['error_format_form'] ?? 'Invalid form type'
+                'message' => t('errors.form.format') ?? 'Invalid form type'
             ];
         }
 
@@ -47,87 +47,87 @@ class FormValidation
          
         return
         [
-            'success' => $this->$method($lang),
+            'success' => $this->$method(),
             'message' => $this->error ?? ''
         ];
     }
 
-    private function checkLogin(array $lang): bool
+    private function checkLogin(): bool
     {
         return true;
     }
 
-    private function checkSignin(array $lang): bool
+    private function checkSignin(): bool
     {
         if (!$this->checkUser($this->user))
         {
-            $this->error = $lang['error_user'] ?? 'Error';
+            $this->error = t('errors.form.user') ?? 'Error';
             return false;
         }
         
         if (!$this->checkEmail($this->email))
         {
-            $this->error = $lang['error_email'] ?? 'Error';
+            $this->error = t('errors.form.email') ?? 'Error';
             return false;
         }
 
         if (!$this->checkPass($this->pass))
         {
-            $this->error = $lang['error_pass'] ?? 'Error';
+            $this->error = t('errors.form.pass') ?? 'Error';
             return false;
         }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
         {
-            $this->error = $lang['error_pass_rep'] ?? 'Error';
+            $this->error = t('errors.form.pass_rep') ?? 'Error';
             return false;
         }
         
         if ($this->terms === false)
         {
-            $this->error = $lang['error_terms'] ?? 'Error';
+            $this->error = t('errors.form.terms') ?? 'Error';
             return false;
         }
         return true;
     }
 
-    private function checkUpdateUser(array $lang): bool
+    private function checkUpdateUser(): bool
     {
         // Hacer check (nuevo user)
 
         if (!$this->checkUser($this->user))
         {
-            $this->error = $lang['error_user'] ?? 'Error';
+            $this->error = t('errors.form.user') ?? 'Error';
             return false;
         }
         return true;
     }
 
-    private function checkUpdateEmail(array $lang): bool
+    private function checkUpdateEmail(): bool
     {
         // Hacer check (nuevo email)
 
         if (!$this->checkEmail($this->email))
         {
-            $this->error = $lang['error_email'] ?? 'Error';
+            $this->error = t('errors.form.email') ?? 'Error';
             return false;
         }
         return true;
     }
 
-    private function checkUpdatePass(array $lang): bool
+    private function checkUpdatePass(): bool
     {
         // Hacer check (nueva pass + rep)
 
         if (!$this->checkPass($this->pass))
         {
-            $this->error = $lang['error_pass'] ?? 'Error';
+            $this->error = t('errors.form.pass') ?? 'Error';
             return false;
         }
 
         if (!$this->checkPassRep($this->pass, $this->passRep))
         {
-            $this->error = $lang['error_pass_rep'] ?? 'Error';
+            $this->error = t('errors.form.pass_rep') ?? 'Error';
             return false;
         }
         return true;

@@ -1,4 +1,4 @@
-<form action="index.php?page={{::page::}}" method="post">
+<form action="/{{::page::}}" method="post">
     <output id="form-msg">{{::formMsg::}}</output>
     {{::formContent::}}
     <input type="hidden" name="type" value="{{::page::}}">

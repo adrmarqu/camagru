@@ -4,10 +4,11 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./public:/var/www/html
-      - ./:/var/www/sources:ro
+      - ./:/var/www/html
       - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf
-    command: ["apache2-foreground"]
+    command: >
+      bash -c "a2enmod rewrite &&
+               apache2-foreground"
 
   db:
     image: postgres:15

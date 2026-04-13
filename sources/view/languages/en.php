@@ -1,6 +1,6 @@
 <?php
 
-$lang =
+$langText =
 [
     'lang' => 'en'
 ];

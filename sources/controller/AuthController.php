@@ -12,144 +12,147 @@ class AuthController
         $this->view = new View($file);
     }
 
-    private function sendError()
+    private function checkPost(string $name)
     {
-        header('Location: /index.php');
-        exit();
-    }
-
-    public function run(string $name, array $lang)
-    {
-        $allowed = ['login', 'signin', 'updateUser', 'updateEmail', 'updatePass'];
-        if (!in_array($name, $allowed))
-            $this->sendError();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $check = new FormValidation($_POST);
-            $result = $check->checkForm($name, $lang);
+            $result = $check->checkForm($name);
             $success = $result['success'];
 
             if ($success)
             {
-                // Mandar al home
-                $_SESSION['error'] = 'bien hecho';
+                $_SESSION['errorForm'] = 'bien hecho';
             }
             else
-                $_SESSION['error'] = $result['message'];
+                $_SESSION['errorForm'] = $result['message'];
         }
-        $auth = new AuthController(COMPONENTS . 'form/form.tpl');
-        $auth->$name($lang);
     }
 
-    private function login(array $lang)
+    public function run(string $name)
+    {
+        $map =
+        [
+            'login' => 'login',
+            'signin' => 'signin',
+            'update-user' => 'updateUser',
+            'update-email' => 'updateEmail',
+            'update-pass' => 'updatePass'
+        ];
+        if (!isset($map[$name]))
+        {
+            echo 'Invalid auth';
+            exit();
+        }
+        $this->checkPost($name);
+        $method = $map[$name];
+        $this->$method($name);
+    }
+
+    private function login(string $name)
     {
         $vars =
         [
             'title' => 'Camagru | Login',
-            'page' => 'login',
             
-            'logUser' => $lang['usermail'] ?? null,
-            'logPass' => $lang['pass'] ?? null
+            'logUser' => t('form.usermail'),
+            'logPass' => t('form.pass')
         ];
         $incs = 
         [
             'formContent' => 'components/form/login.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang);
+        $this->launch($vars, $incs, $name);
     }
 
-    private function signin(array $lang)
+    private function signin(string $name)
     {
         $vars =
         [
             'title' => 'Camagru | Signin',
-            'page' => 'signin',
             
-            'signUser' => $lang['user'] ?? null,
-            'signEmail' => $lang['email'] ?? null,
-            'signPass' => $lang['pass'] ?? null,
-            'signPassRep' => $lang['rep_pass'] ?? null,
-            'signTerms' => $lang['term'] ?? null
+            'signUser' => t('form.user'),
+            'signEmail' => t('form.email'),
+            'signPass' => t('form.pass'),
+            'signPassRep' => t('form.rep_pass'),
+            'signTerms' => t('form.term')
         ];
         $incs = 
         [
             'formContent' => 'components/form/signin.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang);
+        $this->launch($vars, $incs, $name);
     }
 
-    private function updateUser(array $lang)
+    private function updateUser(string $name)
     {
         $vars =
         [
             'title' => 'Camagru | Update',
-            'page' => 'updateUser',
             
-            'newUser' => $lang['new_user'] ?? null,
-            'newCurrentPass' => $lang['curr_pass'] ?? null
+            'newUser' => t('form.new_user'),
+            'newCurrentPass' => t('form.curr_pass')
         ];
         $incs = 
         [
             'formContent' => 'components/form/updateUser.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang);
+        $this->launch($vars, $incs, $name);
     }
 
-    private function updateEmail(array $lang)
+    private function updateEmail(string $name)
     {
         $vars =
         [
             'title' => 'Camagru | Update',
-            'page' => 'updateEmail',
             
-            'newEmail' => $lang['new_email'] ?? null,
-            'newCurrentPass' => $lang['curr_pass'] ?? null,
+            'newEmail' => t('form.new_email'),
+            'newCurrentPass' => t('form.curr_pass'),
         ];
         $incs = 
         [
             'formContent' => 'components/form/updateEmail.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang);
+        $this->launch($vars, $incs, $name);
     }
 
-    private function updatePass(array $lang)
+    private function updatePass(string $name)
     {
         $vars =
         [
             'title' => 'Camagru | Update',
-            'page' => 'updatePass',
             
-            'newCurrentPass' => $lang['curr_pass'] ?? null,
-            'newNewPass' => $lang['new_pass'] ?? null,
-            'newPassRep' => $lang['rep_pass'] ?? null,
+            'newCurrentPass' => t('form.curr_pass'),
+            'newNewPass' => t('form.new_pass'),
+            'newPassRep' => t('form.rep_pass'),
         ];
         $incs = 
         [
             'formContent' => 'components/form/updatePass.tpl'
         ];
 
-        $this->launch($vars, $incs, $lang);
+        $this->launch($vars, $incs, $name);
     }
 
-    private function launch(array $vars, array $incs, array $lang)
+    private function launch(array $vars, array $incs, string $name)
     {
         /* Common variables */
         $baseVars =
         [
-            'language' => $lang['lang'] ?? null,
-            'btnDel' => $lang['del'] ?? null,
-            'btnSend' => $lang['send'] ?? null,
-            'formMsg' => $_SESSION['error'] ?? null,
+            'page' => $name,
+            'language' => t('lang'),
+            'btnDel' => t('form.del'),
+            'btnSend' => t('form.send'),
+            'formMsg' => $_SESSION['errorForm'],
             'links' => $this->view->getHeadLinks(['form']),
             'scripts' => $this->view->getHeadScripts(['checkForm'])
         ];
 
-        unset($_SESSION['error']);
+        unset($_SESSION['errorForm']);
 
         $this->view->addIncludes($incs);
         $this->view->addVariables($vars);
