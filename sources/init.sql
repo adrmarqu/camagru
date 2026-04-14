@@ -5,7 +5,8 @@ CREATE TABLE users
     id              SERIAL PRIMARY KEY,
     username        VARCHAR(30) UNIQUE NOT NULL,
     email           VARCHAR(100) UNIQUE NOT NULL,
-    password_hash   VARCHAR(255) NOT NULL
+    password_hash   VARCHAR(255) NOT NULL,
+    verified        BOOLEAN
 );
 
 CREATE TABLE images
@@ -44,7 +45,7 @@ CREATE INDEX idx_com_imageid ON comments(image_id);
 
 /* INSERTS */
 
-INSERT INTO users (username, email, password_hash) VALUES
-('user1', 'user1@gmail.com', 'user1'),
-('user2', 'user2@gmail.com', 'user2'),
-('user3', 'user3@gmail.com', 'user3');
+INSERT INTO users (username, email, password_hash, verified) VALUES
+('user1', 'user1@gmail.com', 'user1', true),
+('user2', 'user2@gmail.com', 'user2', true),
+('user3', 'user3@gmail.com', 'user3', true);

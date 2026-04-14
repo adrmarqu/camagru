@@ -2,9 +2,7 @@
 
 require_once ROOT . 'view/languages/sources.php';
 require_once ROOT . 'utils/i18n.php';
-require_once ROOT . 'controller/App.php';
-
-global $language;
+require_once ROOT . 'core/App.php';
 
 /* Pagina solicitada */
 $page = $_GET['page'] ?? 'login';

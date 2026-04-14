@@ -6,7 +6,7 @@
         <a href="/{{::language::}}/signin">Signin</a>
         <a href="/{{::language::}}/update-user">Update user</a>
         <a href="/{{::language::}}/update-email">Update email</a>
-        <a href="/{{::language::}}/update-pass">Update password</a>
+        <a href="/{{::language::}}/update-password">Update password</a>
     </div>
     <br>
     <div>

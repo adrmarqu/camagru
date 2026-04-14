@@ -26,7 +26,7 @@ class View
     public function addIncludes(array $inc): void
     {
         foreach ($inc as $key => $value)
-            $this->includes[$key] = TPL . $value;
+            $this->includes[$key] = COMPONENTS . $value . '.tpl';
     }
 
     public function getHtml(): string
@@ -86,28 +86,21 @@ class View
         return $html ?? '';
     }
 
-    private function getHeadFile(string $url, array $files): ?string
+    private function getHeadFile(string $url, array $files): string
     {
-        static $idx = 0;
         $url = $this->convertTpl($url);
         $html = '';
 
         foreach ($files as $fileName)
         {
-            $html .= $this->setOutVariables($url, ['name' => $fileName, 'v' => $idx++]);
+            $html .= $this->setOutVariables($url, ['name' => $fileName]);
         }
-        return !empty($html) ? $html : null;
+        return $html;
     }
 
-    public function getHeadLinks(array $files): ?string
+    public function getHead(string $filename, array $files): string
     {
-        $link = COMPONENTS . 'link.tpl';
-        return $this->getHeadFile($link, $files);
-    }
-
-    public function getHeadScripts(array $files): ?string
-    {
-        $link = COMPONENTS . 'script.tpl';
+        $link = COMPONENTS . $filename . '.tpl';
         return $this->getHeadFile($link, $files);
     }
 }

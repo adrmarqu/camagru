@@ -2,177 +2,49 @@
 
 class FormValidation
 {
-    private string  $user;
-    private string  $email;
-    private string  $pass;
-    private string  $passRep;
-    private string  $newPass;
-    private bool    $terms;
-
-    private string  $error;
-
-    public function __construct(array $post)
+    public function checkSignin($user, $email, $pass, $passRep, $terms): string
     {
-        $this->user = $post['user'] ?? '';
-        $this->email = $post['email'] ?? '';
-
-        $this->pass = $post['pass'] ?? '';
-        $this->passRep = $post['passRep'] ?? '';
-        $this->newPass = $post['newPass'] ?? '';
-        
-        $this->terms = $post['terms'] ?? '';
-    }
-
-    public function checkForm(string $type): array
-    {
-        $formats =
+        $error = '';
+        $checks = 
         [
-            'login' => 'checkLogin',
-            'signin' => 'checkSignin',
-            'update-user' => 'checkUpdateUser',
-            'update-email' => 'checkUpdateEmail',
-            'update-pass' => 'checkUpdatePass'
+            fn() => $this->user($user),
+            fn() => $this->email($email),
+            fn() => $this->pass($pass),
+            fn() => $this->passRep($passRep),
+            fn() => $this->terms($terms)
         ];
 
-        if (!isset($formats[$type]))
+        foreach ($checks as $check)
         {
-            return
-            [
-                'success' => false,
-                'message' => t('errors.form.format') ?? 'Invalid form type'
-            ];
+            $error = $check();
+            if ($error !== '') break;
         }
-
-        $method = $formats[$type];
-         
-        return
-        [
-            'success' => $this->$method(),
-            'message' => $this->error ?? ''
-        ];
+        return $error;
     }
 
-    private function checkLogin(): bool
+    public function checkUser(string $user): string
     {
-        return true;
+        return preg_match('/^[a-zA-Z][a-zA-Z0-9_]{3,20}$/', $user) ? '' : t('errors.form.user');
     }
 
-    private function checkSignin(): bool
+    public function checkEmail(string $email): string
     {
-        if (!$this->checkUser($this->user))
-        {
-            $this->error = t('errors.form.user') ?? 'Error';
-            return false;
-        }
-        
-        if (!$this->checkEmail($this->email))
-        {
-            $this->error = t('errors.form.email') ?? 'Error';
-            return false;
-        }
-
-        if (!$this->checkPass($this->pass))
-        {
-            $this->error = t('errors.form.pass') ?? 'Error';
-            return false;
-        }
-
-        if (!$this->checkPassRep($this->pass, $this->passRep))
-        {
-            $this->error = t('errors.form.pass_rep') ?? 'Error';
-            return false;
-        }
-        
-        if ($this->terms === false)
-        {
-            $this->error = t('errors.form.terms') ?? 'Error';
-            return false;
-        }
-        return true;
+        return preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email) ? '' : t('errors.form.email');
     }
 
-    private function checkUpdateUser(): bool
+    public function checkPass(string $pass): string
     {
-        // Hacer check (nuevo user)
-
-        if (!$this->checkUser($this->user))
-        {
-            $this->error = t('errors.form.user') ?? 'Error';
-            return false;
-        }
-        return true;
+        return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $pass) ? '' : t('errors.form.pass');
     }
 
-    private function checkUpdateEmail(): bool
+    public function checkPassRep(string $pass, string $rep): string
     {
-        // Hacer check (nuevo email)
+        return $pass === $rep ? '' : t('errors.form.pass_rep');
 
-        if (!$this->checkEmail($this->email))
-        {
-            $this->error = t('errors.form.email') ?? 'Error';
-            return false;
-        }
-        return true;
     }
 
-    private function checkUpdatePass(): bool
+    public function checkTerms(bool $terms): string
     {
-        // Hacer check (nueva pass + rep)
-
-        if (!$this->checkPass($this->pass))
-        {
-            $this->error = t('errors.form.pass') ?? 'Error';
-            return false;
-        }
-
-        if (!$this->checkPassRep($this->pass, $this->passRep))
-        {
-            $this->error = t('errors.form.pass_rep') ?? 'Error';
-            return false;
-        }
-        return true;
-    }
-
-    /* 
-    -------------------------------------------------------------------
-    |                             UTILS                               |
-    -------------------------------------------------------------------
-    */
-
-    private function checkUser(string $user): bool
-    {
-        $user = trim($user);
-
-        $userPattern = '/^[a-zA-Z][a-zA-Z0-9_]{3,20}$/';
-
-        if (!preg_match($userPattern, $user))
-            return false;
-        return true;
-    }
-
-    private function checkEmail(string $email): bool
-    {
-        $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-
-        if (!preg_match($emailPattern, $email))
-            return false;
-        return true;
-    }
-
-    private function checkPass(string $pass): bool
-    {
-        $passPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/';
-
-        if (!preg_match($passPattern, $pass))
-            return false;
-        return true;
-    }
-
-    private function checkPassRep(string $pass, string $rep): bool
-    {
-        if ($pass !== $rep)
-            return false;
-        return true;
-
+        return $terms ? '' : t('errors.form.terms');
     }
 }

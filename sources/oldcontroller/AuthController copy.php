@@ -1,6 +1,8 @@
 <?php
 
 require_once ROOT . 'validation/FormValidation.php';
+require_once ROOT . 'model/UserModel.php';
+require_once ROOT . 'controller/UserModel.php';
 require_once ROOT . 'view/View.php';
 
 class AuthController
@@ -14,19 +16,27 @@ class AuthController
 
     private function checkPost(string $name)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $check = new FormValidation($_POST);
-            $result = $check->checkForm($name);
-            $success = $result['success'];
+        $check = new FormValidation($_POST);
+        $result = $check->checkForm($name);
 
-            if ($success)
-            {
-                $_SESSION['errorForm'] = 'bien hecho';
-            }
-            else
-                $_SESSION['errorForm'] = $result['message'];
+        if ($result['successs'])
+        {
+            $map =
+            [
+                'login'
+            ];
+            $checkdb = new UserModel();
+            $checkdb->validate($name)
         }
+
+        $success = $result['success'];
+
+        if ($success)
+        {
+            $_SESSION['errorForm'] = 'bien hecho';
+        }
+        else
+            $_SESSION['errorForm'] = $result['message'];
     }
 
     public function run(string $name)
@@ -39,12 +49,16 @@ class AuthController
             'update-email' => 'updateEmail',
             'update-pass' => 'updatePass'
         ];
+        
         if (!isset($map[$name]))
         {
             echo 'Invalid auth';
             exit();
         }
-        $this->checkPost($name);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+            $this->checkPost($name);
+        
         $method = $map[$name];
         $this->$method($name);
     }
