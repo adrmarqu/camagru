@@ -11,7 +11,10 @@ class AuthController extends BaseController
 
         if ($this->isPost())
         {
-            if (!empty($_POST['user']) && !empty($_POST['pass']))
+            $validation = new FormValidation();
+            $res = $validation->checkForm('login', $_POST);
+            
+            if ($res['success'])
             {
                 $model = new UserModel();
                 $result = $model->login($_SESSION['user']['id'], $_POST['user'], $_POST['pass']);
@@ -25,10 +28,10 @@ class AuthController extends BaseController
                     ];
                     $this->redirect('/' . t('lang') . '/home');
                 }
-                $error = $result['message'] ?? 'Error';
+                $error = $result['message'];
             }
             else
-                $error = 'Campos vacíos';
+                $error = $res['message'];
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -48,7 +51,6 @@ class AuthController extends BaseController
             'formContent' => 'form/login'
         ]);
     }
-
     
     private function isSignPostValid(array $post): bool
     {
@@ -63,29 +65,20 @@ class AuthController extends BaseController
 
         if ($this->isPost())
         {
-            if ($this->isSignPostValid($_POST))
+            $validation = new FormValidation();
+            $res = $validation->checkForm('signin', $_POST);
+            
+            if ($res['success'])
             {
-                $user = $_POST['user'];
-                $email = $_POST['email'];
-                $pass = $_POST['pass'];
-                $passRep = $_POST['passRep'];
-                $terms = $_POST['terms'];
-
-                $validation = new FormValidation();
-                $error = $validation->checkSignin($user, $email, $pass, $passRep, $terms);
+                $model = new UserModel();
+                $result = $model->signin($_SESSION['user']['id'], $_POST['user'], $_POST['email'], $_POST['pass']);
                 
-                if ($error === '')
-                {
-                    $model = new UserModel();
-                    $result = $model->signin($_SESSION['user']['id'], $user, $email, $pass);
-                    
-                    if ($result['success'])
-                        $this->redirect('/' . t('lang') . '/home');
-                    $error = $result['message'] ?? 'Error';
-                }
+                if ($result['success'])
+                    $this->redirect('/' . t('lang') . '/home');
+                $error = $result['message'];
             }
             else
-                $error = 'Campos vacios en el form';   
+                $error = $res['message'];
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',

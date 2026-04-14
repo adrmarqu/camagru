@@ -11,28 +11,23 @@ class UserController extends BaseController
 
         if ($this->isPost())
         {
-            if (!empty($_POST['user']))
+            $validation = new FormValidation();
+            $res = $validation->checkForm('update-user', $_POST);
+
+            if ($res['success'])
             {
-                $user = $_POST['user'];
+                $model = new UserModel();
+                $result = $model->updateUser($_SESSION['user']['id'], $_POST['user']);
 
-                $validation = new FormValidation();
-                $error = $validation->checkUser($user);
-
-                if ($error === '')
+                if ($result['success'])
                 {
-                    $model = new UserModel();
-                    $result = $model->updateUser($_SESSION['user']['id'],$user);
-
-                    if ($result['success'])
-                    {
-                        $_SESSION['user']['username'] = $result['username'];
-                        $this->redirect('/' . t('lang') . '/home');
-                    }
-                    $error = $result['message'] ?? 'Error';
+                    $_SESSION['user']['username'] = $result['username'];
+                    $this->redirect('/' . t('lang') . '/home');
                 }
+                $error = $result['message'];
             }
             else
-                $error = 'Campos vacíos';
+                $error = $res['message'];
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -59,28 +54,23 @@ class UserController extends BaseController
 
         if ($this->isPost())
         {
-            if (!empty($_POST['email']))
+            $validation = new FormValidation();
+            $res = $validation->checkForm('update-email', $_POST);
+
+            if ($res['success'])
             {
-                $email = $_POST['email'];
+                $model = new UserModel();
+                $result = $model->updateEmail($_SESSION['user']['id'], $_POST['email']);
 
-                $validation = new FormValidation();
-                $error = $validation->checkEmail($email);
-
-                if ($error === '')
+                if ($result['success'])
                 {
-                    $model = new UserModel();
-                    $result = $model->updateEmail($_SESSION['user']['id'], $email);
-
-                    if ($result['success'])
-                    {
-                        $_SESSION['user']['email'] = $result['email'];
-                        $this->redirect('/' . t('lang') . '/home');
-                    }
-                    $error = $result['message'] ?? 'Error';
+                    $_SESSION['user']['email'] = $result['email'];
+                    $this->redirect('/' . t('lang') . '/home');
                 }
+                $error = $result['message'];
             }
             else
-                $error = 'Campos vacíos';
+                $error = $res['message'];
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -107,31 +97,25 @@ class UserController extends BaseController
 
         if ($this->isPost())
         {
-            if (!empty($_POST['pass']) && !empty($_POST['newPass']) && !empty($_POST['passRep']))
+            $pass = $_POST['pass'];
+            $passRep = $_POST['passRep'];
+            $newPass = $_POST['newPass'];
+
+            $validation = new FormValidation();
+            $res = $validation->checkForm('update-password', $_POST);
+
+            if ($res['success'])
             {
-                $pass = $_POST['pass'];
-                $passRep = $_POST['passRep'];
-                $newPass = $_POST['newPass'];
+                $model = new UserModel();
+                $result = $model->updatePassword($_SESSION['user']['id'], $_POST['pass'], $_POST['newPass']);
 
-                $validation = new FormValidation();
-                $error = $validation->checkPass($newPass);
-                if ($error === '')
-                    $error = $validation->checkPassRep($newPass, $passRep);
-
-                if ($error === '')
-                {
-                    $model = new UserModel();
-                    $result = $model->updatePassword($_SESSION['user']['id'], $pass, $newPass);
-
-                    if ($result['success'])
-                    {
-                        $this->redirect('/' . t('lang') . '/home');
-                    }
-                    $error = $result['message'] ?? 'Error';
-                }
+                if ($result['success'])
+                    $this->redirect('/' . t('lang') . '/home');
+                
+                $error = $result['message'] ?? 'Error';
             }
             else
-                $error = 'Campos vacíos';
+                $error = $res['message'];
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
