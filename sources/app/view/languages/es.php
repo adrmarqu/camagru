@@ -58,10 +58,7 @@ $langText =
         [
             'usermail' => 'Usuario no encontrado en la bbdd',
             'pass' => 'Contraseña incorrecta',
-            'curr_pass' => 'Contraseña actual incorrecta',
-            '' => '',
-            '' => '',
-            '' => '',
+            'curr_pass' => 'Contraseña actual incorrecta'
         ]
     ]    
 ];

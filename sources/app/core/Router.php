@@ -1,7 +1,7 @@
 <?php
 
-require_once ROOT . 'controller/auth/AuthController.php';
-require_once ROOT . 'controller/user/UserController.php';
+require_once BACKEND . 'controller/auth/AuthController.php';
+require_once BACKEND . 'controller/user/UserController.php';
 
 class Router
 {

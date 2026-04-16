@@ -1,7 +1,6 @@
 <?php
 
-require_once ROOT . 'controller/BaseController.php';
-require_once ROOT . 'validation/FormValidation.php';
+require_once BACKEND . 'controller/BaseController.php';
 
 class UserController extends BaseController
 {
@@ -21,6 +20,7 @@ class UserController extends BaseController
 
                 if ($result['success'])
                 {
+                    $_SESSION['user']['id'] = $result['id'];
                     $_SESSION['user']['username'] = $result['username'];
                     $this->redirect('/' . t('lang') . '/home');
                 }
@@ -64,6 +64,7 @@ class UserController extends BaseController
 
                 if ($result['success'])
                 {
+                    $_SESSION['user']['id'] = $result['id'];
                     $_SESSION['user']['email'] = $result['email'];
                     $this->redirect('/' . t('lang') . '/home');
                 }

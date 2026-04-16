@@ -1,6 +1,8 @@
 <?php
 
-require_once ROOT . 'view/View.php';
+require_once BACKEND . 'validation/FormValidation.php';
+require_once BACKEND . 'model/UserModel.php';
+require_once BACKEND . 'view/View.php';
 
 class BaseController
 {

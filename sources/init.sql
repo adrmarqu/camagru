@@ -42,10 +42,3 @@ CREATE INDEX idx_likes_imageid ON likes(image_id);
 
 CREATE INDEX idx_com_userid ON comments(user_id);
 CREATE INDEX idx_com_imageid ON comments(image_id);
-
-/* INSERTS */
-
-INSERT INTO users (username, email, password_hash, verified) VALUES
-('user1', 'user1@gmail.com', 'user1', true),
-('user2', 'user2@gmail.com', 'user2', true),
-('user3', 'user3@gmail.com', 'user3', true);

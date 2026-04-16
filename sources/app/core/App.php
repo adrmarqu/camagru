@@ -1,8 +1,6 @@
 <?php
 
-define('COMPONENTS', ROOT . 'view/templates/components/');
-
-require_once ROOT . 'core/Router.php';
+require_once BACKEND . 'core/Router.php';
 
 class App
 {
@@ -13,7 +11,7 @@ class App
 
         $router = new Router();
 
-        $routes = require ROOT . 'core/routes.php';
+        $routes = require BACKEND . 'core/routes.php';
 
         foreach ($routes as $path => [$controller, $method])
             $router->add($path, $controller, $method);

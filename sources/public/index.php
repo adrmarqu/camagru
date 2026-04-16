@@ -1,5 +1,5 @@
 <?php 
 
-define('ROOT', dirname(__DIR__) . '/');
+require_once dirname(__DIR__) . '/app/core/bootstrap.php';
 
-require_once ROOT . 'utils/cleanUrl.php';
+require_once BACKEND . '/utils/cleanUrl.php';

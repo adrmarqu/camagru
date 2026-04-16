@@ -1,5 +1,5 @@
 # Nombre del proyecto
-PROJECT_NAME = webapp
+PROJECT_NAME = camagru
 
 # Ruta al docker-compose
 DC = docker compose -f sources/docker-compose.yml
@@ -38,6 +38,9 @@ ps:
 open:
 	open http://localhost:8080
 
+seed:
+	$(DC) exec web php ./database/seed.php
+
 # Limpiar todo (containers + volúmenes)
 clean:
 	$(DC) down -v
@@ -45,4 +48,6 @@ clean:
 stop: down clean
 
 # Reinstalar todo limpio
-re: all clean stop build up
+re: clean stop build up
+
+.PHONY: 

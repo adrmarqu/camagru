@@ -1,7 +1,6 @@
 <?php
 
-require_once ROOT . 'controller/BaseController.php';
-require_once ROOT . 'validation/FormValidation.php';
+require_once BACKEND . 'controller/BaseController.php';
 
 class AuthController extends BaseController
 {
@@ -17,16 +16,17 @@ class AuthController extends BaseController
             if ($res['success'])
             {
                 $model = new UserModel();
-                $result = $model->login($_SESSION['user']['id'], $_POST['user'], $_POST['pass']);
+                $result = $model->login($_POST['user'], $_POST['pass']);
 
                 if ($result['success'])
                 {
-                    $_SESSION['user'] = [
+                    $_SESSION['user'] =
+                    [
                         'id' => $result['id'],
                         'username' => $result['username'],
-                        'email' => $result['email']
+                        'email' => $result['email'],
                     ];
-                    $this->redirect('/' . t('lang') . '/home');
+                    $this->redirect('/' . t('lang') . '/signin');
                 }
                 $error = $result['message'];
             }
@@ -71,10 +71,19 @@ class AuthController extends BaseController
             if ($res['success'])
             {
                 $model = new UserModel();
-                $result = $model->signin($_SESSION['user']['id'], $_POST['user'], $_POST['email'], $_POST['pass']);
+                $result = $model->signin($_POST['user'], $_POST['email'], $_POST['pass']);
                 
                 if ($result['success'])
-                    $this->redirect('/' . t('lang') . '/home');
+                {
+                    $_SESSION['user'] =
+                    [
+                        'id' => $result['id'],
+                        'username' => $result['username'],
+                        'email' => $result['email'],
+                        'verified' => false
+                    ];
+                    $this->redirect('/' . t('lang') . '/login');
+                }
                 $error = $result['message'];
             }
             else

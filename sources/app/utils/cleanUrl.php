@@ -1,8 +1,8 @@
 <?php
 
-require_once ROOT . 'view/languages/sources.php';
-require_once ROOT . 'utils/i18n.php';
-require_once ROOT . 'core/App.php';
+require_once BACKEND . 'view/languages/sources.php';
+require_once BACKEND . 'utils/i18n.php';
+require_once BACKEND . 'core/App.php';
 
 /* Pagina solicitada */
 $page = $_GET['page'] ?? 'login';
