@@ -8,7 +8,7 @@ require_once dirname(__DIR__) . '/app/model/Database.php';
 $pdo = Database::getConnection();
 
 $stmt = $pdo->prepare("
-    INSERT INTO users (username, email, password_hash, verified)
+    INSERT INTO users (username, email, password_hash, is_verified)
     VALUES (:u, :e, :p, :v)
 ");
 

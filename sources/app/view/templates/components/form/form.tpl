@@ -5,6 +5,6 @@
     <hr>
     <div class="reverse">
         <button class="btn-reset" type="reset">{{::btnDel::}}</button>
-        <button class="btn-send" type="submit">{{::btnSend::}}</button>
+        <button class="btn-send" type="submit" name="action">{{::btnSend::}}</button>
     </div>
 </form>

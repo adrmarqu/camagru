@@ -1,8 +1,9 @@
 <?php
 
 require_once BACKEND . 'controller/BaseController.php';
+require_once BACKEND . 'model/code/UpdateModel.php';
 
-class UserController extends BaseController
+class UpdateController extends BaseController
 {
     public function user(): void
     {
@@ -22,7 +23,7 @@ class UserController extends BaseController
                 {
                     $_SESSION['user']['id'] = $result['id'];
                     $_SESSION['user']['username'] = $result['username'];
-                    $this->redirect('/' . t('lang') . '/home');
+                    $this->redirect('home');
                 }
                 $error = $result['message'];
             }
@@ -66,7 +67,7 @@ class UserController extends BaseController
                 {
                     $_SESSION['user']['id'] = $result['id'];
                     $_SESSION['user']['email'] = $result['email'];
-                    $this->redirect('/' . t('lang') . '/home');
+                    $this->redirect('home');
                 }
                 $error = $result['message'];
             }
@@ -111,7 +112,7 @@ class UserController extends BaseController
                 $result = $model->updatePassword($_SESSION['user']['id'], $_POST['pass'], $_POST['newPass']);
 
                 if ($result['success'])
-                    $this->redirect('/' . t('lang') . '/home');
+                    $this->redirect('home');
                 
                 $error = $result['message'] ?? 'Error';
             }

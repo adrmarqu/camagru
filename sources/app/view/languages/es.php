@@ -21,7 +21,9 @@ $langText =
         'rep_pass' => 'Repite contraseña',
 
         'del' => 'Borrar',
-        'send' => 'Enviar'
+        'send' => 'Enviar',
+
+        'verification' => 'Código de verificación'
     ],
 
     'errors' =>
@@ -39,7 +41,8 @@ $langText =
             'new_pass' => 'La nueva contraseña ha de tener al menos una letra minuscula, una mayuscula, un numero y 8-100 caracteres',
 
             'rep_pass' => 'Las contraseñas son diferentes',
-            
+            'valid_pass' => 'Esa contraseña no es posible en camagru',
+
             'terms' => 'Debes de aceptar los terminos y condiciones',
 
             'empty' =>

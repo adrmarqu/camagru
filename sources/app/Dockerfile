@@ -7,3 +7,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite
+
+# Mail
+#COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

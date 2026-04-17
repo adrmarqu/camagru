@@ -1,0 +1,4 @@
+<label for="verification">{{::verification::}}</label>
+<input type="text" name="verification" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"/>
+
+<button type="submit" name="action" value="generate">{{::another::}}</button>

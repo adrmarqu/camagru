@@ -1,6 +1,8 @@
 <?php
 
 require_once BACKEND . 'controller/BaseController.php';
+require_once BACKEND . 'model/code/UserModel.php';
+require_once BACKEND . 'model/code/CodeModel.php';
 
 class AuthController extends BaseController
 {
@@ -26,7 +28,7 @@ class AuthController extends BaseController
                         'username' => $result['username'],
                         'email' => $result['email'],
                     ];
-                    $this->redirect('/' . t('lang') . '/signin');
+                    $this->redirect('signin');
                 }
                 $error = $result['message'];
             }
@@ -75,14 +77,20 @@ class AuthController extends BaseController
                 
                 if ($result['success'])
                 {
-                    $_SESSION['user'] =
-                    [
-                        'id' => $result['id'],
-                        'username' => $result['username'],
-                        'email' => $result['email'],
-                        'verified' => false
-                    ];
-                    $this->redirect('/' . t('lang') . '/login');
+                    $code = new CodeModel();
+                    $r = $code->setVerificationCode($result['id']);
+
+                    if ($r['success'])
+                    {
+                        $_SESSION['user'] =
+                        [
+                            'id' => $result['id'],
+                            'username' => $result['username'],
+                            'email' => $result['email']
+                        ];
+                        $this->redirect('verification');
+                    }
+                    $error = $r['message'];
                 }
                 $error = $result['message'];
             }

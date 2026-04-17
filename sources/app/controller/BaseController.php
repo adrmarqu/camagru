@@ -1,7 +1,6 @@
 <?php
 
 require_once BACKEND . 'validation/FormValidation.php';
-require_once BACKEND . 'model/UserModel.php';
 require_once BACKEND . 'view/View.php';
 
 class BaseController
@@ -10,10 +9,10 @@ class BaseController
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
-
+    
     protected function redirect(string $path)
     {
-        header('Location: ' . $path, true, 302);
+        header('Location: /' . t('lang') . '/' . $path, true, 302);
         exit();
     }
 

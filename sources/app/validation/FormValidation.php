@@ -16,7 +16,7 @@ class FormValidation
             'pass' =>
             [
                 ['required', 'errors.form.empty.pass'],
-                ['callback', 'checkPass', 'errors.bbdd.pass']
+                ['callback', 'checkPass', 'errors.form.valid_pass']
             ],
         ],
 
@@ -157,6 +157,28 @@ class FormValidation
     public function checkPassRep(string $rep): bool
     {
         return ($this->myPass ?? '') === $rep;
+    }
 
+    public function verification(string $code): array
+    {
+        if (!$code)
+            return ['success' => false, 'message' => t('errors.form.format')];
+
+        if (empty($code))
+        {
+            return ['success' => false, 'message' => t('errors.form.empty.code')];
+        }
+
+        if (strlen($code) != 6)
+        {
+            return ['success' => false, 'message' => t('errors.form.code_len')];
+        }
+
+        if (!ctype_digit($code))
+        {
+            return ['success' => false, 'message' => t('errors.form.code_num')];
+        }
+
+        return ['success' => true, 'message' => ''];
     }
 }

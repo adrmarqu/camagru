@@ -6,7 +6,16 @@ CREATE TABLE users
     username        VARCHAR(30) UNIQUE NOT NULL,
     email           VARCHAR(100) UNIQUE NOT NULL,
     password_hash   VARCHAR(255) NOT NULL,
-    verified        BOOLEAN
+    is_verified     BOOLEAN
+);
+
+CREATE TABLE codes
+(
+    id              SERIAL PRIMARY KEY,
+    code            VARCHAR(255) NOT NULL,
+    expires_at      TIMESTAMP NOT NULL,
+    attempts        INTEGER NOT NULL DEFAULT 0,
+    user_id         INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE images
@@ -34,6 +43,8 @@ CREATE TABLE comments
 );
 
 /* INDEXS */
+
+CREATE UNIQUE INDEX idx_code_userid ON codes(user_id);
 
 CREATE INDEX idx_images_userid ON images(user_id);
 

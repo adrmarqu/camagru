@@ -9,7 +9,10 @@ services:
       - ./:/var/www/html
       - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - app_network
 
   db:
     image: postgres:15
@@ -21,6 +24,13 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   pgadmin:
     image: dpage/pgadmin4
@@ -32,6 +42,12 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       - db
+    networks:
+      - app_network
 
 volumes:
   db_data:
+
+networks:
+  app_network:
+    driver: bridge

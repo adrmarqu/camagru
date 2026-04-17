@@ -1,7 +1,8 @@
 <?php
 
 require_once BACKEND . 'controller/auth/AuthController.php';
-require_once BACKEND . 'controller/user/UserController.php';
+require_once BACKEND . 'controller/auth/UpdateController.php';
+require_once BACKEND . 'controller/auth/CodeController.php';
 
 class Router
 {

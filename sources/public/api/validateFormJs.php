@@ -8,7 +8,18 @@ require_once BACKEND . 'validation/FormValidation.php';
 require_once BACKEND . 'view/languages/sources.php';
 require_once BACKEND . 'utils/i18n.php';
 
+if (!isset($_POST['formName']))
+{
+    echo json_encode(['success' => false, 'message' => 'formName not set']);
+    exit();
+}
+
 $validation = new FormValidation();
-$result = $validation->checkForm($_POST['formName'] ?? '', $_POST);
+
+if ($_POST['formName'] === 'verification')
+    $result = $validation->verification($_POST['verification'] ?? 'Error');
+else
+    $result = $validation->checkForm($_POST['formName'] ?? '', $_POST);
 
 echo json_encode($result);
+exit();

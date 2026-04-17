@@ -17,8 +17,6 @@ down:
 # Reiniciar
 restart: down up
 
-re: down clean build up open
-
 # Ver logs
 logs:
 	$(DC) logs -f
@@ -38,6 +36,11 @@ ps:
 open:
 	open http://localhost:8080
 
+bbdd:
+	sleep 20
+	open http://localhost:5050
+	
+
 seed:
 	$(DC) exec web php ./database/seed.php
 
@@ -48,6 +51,6 @@ clean:
 stop: down clean
 
 # Reinstalar todo limpio
-re: clean stop build up
+re: stop build up open bbdd
 
 .PHONY: 
