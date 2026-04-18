@@ -37,7 +37,7 @@ open:
 	open http://localhost:8080
 
 bbdd:
-	sleep 20
+	sleep 30
 	open http://localhost:5050
 	
 

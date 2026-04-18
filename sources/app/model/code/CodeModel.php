@@ -1,17 +1,18 @@
 <?php
 
 require_once BACKEND . 'model/BaseModel.php';
+require_once BACKEND . 'services/MailService.php';
 
 class CodeModel extends BaseModel
 {
     private int $time = 300;
 
-    private function generateVerificationNumber(): int
+    private function generateVerificationNumber(): string
     {
-        return str_pad(random_int(0, 999999), 6, "0", STR_PAD_LEFT);
+        return str_pad((string) random_int(0, 999999), 6, "0", STR_PAD_LEFT);
     }
 
-    public function setVerificationCode(int $userid): array
+    public function setVerificationCode(int $userid, string $email): array
     {
         try
         {
@@ -26,17 +27,23 @@ class CodeModel extends BaseModel
                     attempts = 0
             ";
 
-            $stmt = $pdo->prepare($sql);
+            $code = $this->generateVerificationNumber();
 
+            $mail = new MailService();
+            $result = $mail->sendVerificationEmail($email, $code);
+
+            if ($result['success'] === false)
+                return $this->makeReturn(false, $result['msg']);
+
+            $stmt = $pdo->prepare($sql);
             $stmt->execute(
             [
                 'id' => $userid,
-                'code' => $this->generateVerificationNumber(),
+                'code' => $code,
                 'expires_at' => date('Y-m-d H:i:s', time() + $this->time),
             ]);
 
             return $this->makeReturn(true, t('form.code'));
-
         }
         catch (PDOException $e)
         {

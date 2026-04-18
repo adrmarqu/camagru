@@ -7,28 +7,27 @@ class UpdateController extends BaseController
 {
     public function user(): void
     {
-        $error = '';
+        $this->name = 'update-user';
+        $error = $this->getFlash($this->name);
 
         if ($this->isPost())
         {
             $validation = new FormValidation();
             $res = $validation->checkForm('update-user', $_POST);
 
-            if ($res['success'])
-            {
-                $model = new UserModel();
-                $result = $model->updateUser($_SESSION['user']['id'], $_POST['user']);
-
-                if ($result['success'])
-                {
-                    $_SESSION['user']['id'] = $result['id'];
-                    $_SESSION['user']['username'] = $result['username'];
-                    $this->redirect('home');
-                }
-                $error = $result['message'];
-            }
-            else
-                $error = $res['message'];
+            if ($res['success'] === false)
+                $this->reload($this->name, $res['message']);
+            
+            $model = new UserModel();
+            $result = $model->updateUser($_SESSION['user']['id'], $_POST['user']);
+            
+            if ($result['success'] === false)
+                $this->reload($this->name, $result['message']);
+            
+            $_SESSION['user']['id'] = $result['id'];
+            $_SESSION['user']['username'] = $result['username'];
+            
+            $this->redirect('home');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -37,7 +36,7 @@ class UpdateController extends BaseController
             'title' => 'Camagru | Update User',
             'links' => ['form'],
             'scripts' => ['checkForm'],
-            'page' => 'update-user',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),
@@ -51,28 +50,26 @@ class UpdateController extends BaseController
 
     public function email(): void
     {
-        $error = '';
+        $this->name = 'update-email';
+        $error = $this->getFlash($this->name);
 
         if ($this->isPost())
         {
             $validation = new FormValidation();
             $res = $validation->checkForm('update-email', $_POST);
-
-            if ($res['success'])
-            {
-                $model = new UserModel();
-                $result = $model->updateEmail($_SESSION['user']['id'], $_POST['email']);
-
-                if ($result['success'])
-                {
-                    $_SESSION['user']['id'] = $result['id'];
-                    $_SESSION['user']['email'] = $result['email'];
-                    $this->redirect('home');
-                }
-                $error = $result['message'];
-            }
-            else
-                $error = $res['message'];
+            if ($res['success'] === false)
+                $this->reload($this->name, $res['message']);
+            
+            $model = new UserModel();
+            $result = $model->updateEmail($_SESSION['user']['id'], $_POST['email']);
+            
+            if ($result['success'] === false)
+                $this->reload($this->name, $result['message']);
+            
+            $_SESSION['user']['id'] = $result['id'];
+            $_SESSION['user']['email'] = $result['email'];
+            
+            $this->redirect('home');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -81,7 +78,7 @@ class UpdateController extends BaseController
             'title' => 'Camagru | Update Email',
             'links' => ['form'],
             'scripts' => ['checkForm'],
-            'page' => 'update-email',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),
@@ -95,7 +92,8 @@ class UpdateController extends BaseController
 
     public function password(): void
     {
-        $error = '';
+        $this->name = 'update-password';
+        $error = $this->getFlash($this->name);
 
         if ($this->isPost())
         {
@@ -105,19 +103,16 @@ class UpdateController extends BaseController
 
             $validation = new FormValidation();
             $res = $validation->checkForm('update-password', $_POST);
+            if ($res['success'] === false)
+                $this->reload($this->name, $res['message']);
 
-            if ($res['success'])
-            {
-                $model = new UserModel();
-                $result = $model->updatePassword($_SESSION['user']['id'], $_POST['pass'], $_POST['newPass']);
-
-                if ($result['success'])
-                    $this->redirect('home');
-                
-                $error = $result['message'] ?? 'Error';
-            }
-            else
-                $error = $res['message'];
+            $model = new UserModel();
+            $result = $model->updatePassword($_SESSION['user']['id'], $_POST['pass'], $_POST['newPass']);
+            
+            if ($result['success'] === false)
+                $this->reload($this->name, $result['message']);
+                    
+            $this->redirect('home');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -126,7 +121,7 @@ class UpdateController extends BaseController
             'title' => 'Camagru | Update Password',
             'links' => ['form'],
             'scripts' => ['checkForm'],
-            'page' => 'update-password',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),

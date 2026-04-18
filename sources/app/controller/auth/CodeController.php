@@ -5,44 +5,44 @@ require_once BACKEND . 'model/code/CodeModel.php';
 
 class CodeController extends BaseController
 {
-    private function newCode(): string
+    private function newCode(): void
     {
         $another = new CodeModel();
-        $result = $another->setVerificationCode($_SESSION['user']['id']);
-        return $result['message'];
+        $result = $another->setVerificationCode($_SESSION['user']['id'], $_SESSION['user']['email']);
+
+        $this->reload($this->name, $result['message']);
     }
 
     public function verification(): void
     {
-        $error = '';
+        $this->name = 'verification';
+        $error = $this->getFlash($this->name);
 
-        if (isset($_POST['action']) && $_POST['action'] === 'generate')
-            $error = $this->newCode();
-        else if ($this->isPost())
+        if ($this->isPost())
         {
+            if (isset($_POST['action']) && $_POST['action'] === 'generate')
+                $this->newCode();
+
             $ver = $_POST['verification'];
 
             $validation = new FormValidation();
             $res = $validation->verification($ver);
 
-            if ($res['success'])
-            {
-                $id = $_SESSION['user']['id'];
+            if ($res['success'] === false)
+                $this->reload($this->name, $res['message']);
 
-                $model = new CodeModel();
-                $result = $model->verification($id, $ver);
+            $id = $_SESSION['user']['id'];
 
-                if ($result['success'])
-                {
-                    $model->updateUserVerification($id);
-                    $model->deleteCode($id);
-                    $this->redirect('login');
-                }
-                else
-                    $error = $result['message'];
-            }
-            else
-                $error = $res['message'];
+            $model = new CodeModel();
+            $result = $model->verification($id, $ver);
+            
+            if ($result['success'] === false)
+                $this->reload($this->name, $result['message']);
+
+            $model->updateUserVerification($id);
+            $model->deleteCode($id);
+            
+            $this->redirect('login');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -51,7 +51,7 @@ class CodeController extends BaseController
             'title' => 'Camagru | Verification',
             'links' => ['form'],
             'scripts' => ['checkForm'],
-            'page' => 'verification',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),

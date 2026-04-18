@@ -8,32 +8,30 @@ class AuthController extends BaseController
 {
     public function login(): void
     {
-        $error = '';
+        $this->name = 'login';
+        $error = $this->getFlash($this->name);
 
         if ($this->isPost())
         {
             $validation = new FormValidation();
-            $res = $validation->checkForm('login', $_POST);
+            $res = $validation->checkForm($this->name, $_POST);
             
-            if ($res['success'])
-            {
-                $model = new UserModel();
-                $result = $model->login($_POST['user'], $_POST['pass']);
+            if ($res['success'] === false)
+                $this->reload($this->name, $res['message']);
 
-                if ($result['success'])
-                {
-                    $_SESSION['user'] =
-                    [
-                        'id' => $result['id'],
-                        'username' => $result['username'],
-                        'email' => $result['email'],
-                    ];
-                    $this->redirect('signin');
-                }
-                $error = $result['message'];
-            }
-            else
-                $error = $res['message'];
+            $model = new UserModel();
+            $result = $model->login($_POST['user'], $_POST['pass']);
+
+            if ($result['success'] === false)
+                $this->reload($this->name, $result['message']);
+
+            $_SESSION['user'] =
+            [
+                'id' => $result['id'],
+                'username' => $result['username'],
+                'email' => $result['email'],
+            ];
+            $this->redirect('update-user');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -42,7 +40,7 @@ class AuthController extends BaseController
             'title' => 'Camagru | Login',
             'links' => ['form'],
             'scripts' => '',
-            'page' => 'login',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),
@@ -63,39 +61,36 @@ class AuthController extends BaseController
 
     public function signin(): void
     {
-        $error = '';
+        $this->name = 'signin';
+        $error = $this->getFlash($this->name);
 
         if ($this->isPost())
         {
             $validation = new FormValidation();
-            $res = $validation->checkForm('signin', $_POST);
+            $res = $validation->checkForm($this->name, $_POST);
             
-            if ($res['success'])
-            {
-                $model = new UserModel();
-                $result = $model->signin($_POST['user'], $_POST['email'], $_POST['pass']);
+            if ($res['success'] == false)
+                $this->reload($this->name, $res['message']);
+            
+            $model = new UserModel();
+            $result = $model->signin($_POST['user'], $_POST['email'], $_POST['pass']);
                 
-                if ($result['success'])
-                {
-                    $code = new CodeModel();
-                    $r = $code->setVerificationCode($result['id']);
+            if ($result['success'] == false)
+                $this->reload($this->name, $result['message']);
 
-                    if ($r['success'])
-                    {
-                        $_SESSION['user'] =
-                        [
-                            'id' => $result['id'],
-                            'username' => $result['username'],
-                            'email' => $result['email']
-                        ];
-                        $this->redirect('verification');
-                    }
-                    $error = $r['message'];
-                }
-                $error = $result['message'];
-            }
-            else
-                $error = $res['message'];
+            $code = new CodeModel();
+            $r = $code->setVerificationCode($result['id'], $result['email']);
+
+            if ($r['success'] == false)
+                $this->reload($this->name, $r['message']);
+
+            $_SESSION['user'] =
+            [
+                'id' => $result['id'],
+                'username' => $result['username'],
+                'email' => $result['email']
+            ];
+            $this->redirect('verification');
         }
 
         $this->render(COMPONENTS . 'form/form.tpl',
@@ -104,7 +99,7 @@ class AuthController extends BaseController
             'title' => 'Camagru | Signin',
             'links' => ['form'],
             'scripts' => ['checkForm'],
-            'page' => 'signin',
+            'page' => $this->name,
             'formMsg' => $error,
             'btnDel' => t('form.del'),
             'btnSend' => t('form.send'),
