@@ -5,8 +5,8 @@ services:
       - "8080:80"
     environment:
       APP_ENV: local
-      SMTP_USER: admin
-      SMTP_PASS: admin
+      SMTP_USER: user
+      SMTP_PASS: user
     volumes:
       - ./:/var/www/html
       - ./conf/apache.conf:/etc/apache2/sites-available/000-default.conf

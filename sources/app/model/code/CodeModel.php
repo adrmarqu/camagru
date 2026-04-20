@@ -12,6 +12,13 @@ class CodeModel extends BaseModel
         return str_pad((string) random_int(0, 999999), 6, "0", STR_PAD_LEFT);
     }
 
+    public function sendEmail(string $code, string $email): array
+    {
+        $mail = new MailService();
+        return $mail->sendVerificationEmail($email, $code);
+        
+    }
+
     public function setVerificationCode(int $userid, string $email): array
     {
         try
@@ -29,12 +36,6 @@ class CodeModel extends BaseModel
 
             $code = $this->generateVerificationNumber();
 
-            $mail = new MailService();
-            $result = $mail->sendVerificationEmail($email, $code);
-
-            if ($result['success'] === false)
-                return $this->makeReturn(false, $result['msg']);
-
             $stmt = $pdo->prepare($sql);
             $stmt->execute(
             [
@@ -43,6 +44,10 @@ class CodeModel extends BaseModel
                 'expires_at' => date('Y-m-d H:i:s', time() + $this->time),
             ]);
 
+            $result = $this->sendEmail($code, $email);
+
+            if ($result['success'] === false)
+                return $this->makeReturn(false, $result['msg']);
             return $this->makeReturn(true, t('form.code'));
         }
         catch (PDOException $e)

@@ -643,6 +643,102 @@ Sanitización
 
 ----------------------------------------------------------------------------
 
+Webcam
+
+Al final, para cumplir con el subject oficial y aprobar la evaluación, el flujo debe ser exactamente este:
+1. El proceso de captura (Lado del Cliente)
+
+No puedes simplemente hacer la foto y luego decidir. El manual establece reglas estrictas:
+
+    Selección previa: El usuario debe elegir un sticker de la lista antes de disparar.
+
+    Botón de captura: El botón debe estar bloqueado (disabled) hasta que se haya seleccionado un sticker.
+
+    Previsualización: El usuario ve su webcam y el sticker elegido (normalmente usando CSS para poner uno encima de otro) para saber cómo posar.
+
+2. La fusión (Lado del Servidor) - ¡MUY IMPORTANTE!
+
+Este es el punto técnico donde más gente falla en la evaluación:
+
+    Prohibido fusionar solo en JS: Aunque el usuario vea el sticker sobre su cara en el navegador, la "mezcla" final de las dos imágenes debe realizarse imperativamente en el servidor.
+
+    Cómo enviarlo: Debes enviar al servidor (vía PHP) la imagen de la cámara (el base64 del canvas) y la referencia de qué sticker se ha elegido.
+
+    Procesamiento en PHP: Tu script de PHP debe usar una librería como GD (estándar en PHP) para abrir la foto, abrir el sticker y fusionarlos en un nuevo archivo .png.
+
+3. Ejemplo de funcionamiento paso a paso
+
+Aquí tienes cómo deberías programarlo para casa:
+
+    En el navegador:
+
+        El usuario elige "Gafas de sol".
+
+        El botón de "Capturar" se activa.
+
+        Al pulsar, capturas el frame del vídeo en un <canvas>.
+
+        Envías por fetch o AJAX: la foto del canvas y el nombre del sticker ("gafas.png").
+
+    En tu servidor (PHP):
+
+        Recibes los datos.
+
+        Usas imagecreatefromstring() para la foto y imagecreatefrompng() para el sticker.
+
+        Usas imagecopy() o imagecopyresampled() para poner el sticker encima de la foto.
+
+        Guardas el resultado final en tu carpeta de /uploads.
+
+        Insertas la ruta en la base de datos.
+
+4. ¿Y si quiero "mover cosas"?
+
+Si quieres aprender a mover o redimensionar los stickers con el ratón:
+
+    Hazlo antes de capturar: Deja que el usuario arrastre el sticker sobre el vídeo de la webcam.
+
+    Envía las coordenadas: Cuando el usuario dispare, envía también al servidor la posición (X, Y) y el tamaño donde dejó el sticker.
+
+    Fusión exacta: Tu código PHP usará esas coordenadas para colocar el sticker exactamente donde el usuario lo puso.
+
+Resumen: No hagas la foto y luego preguntes si editar. Haz que elijan el filtro, disparen, y que sea tu código PHP el que haga el trabajo de "fusionar" las imágenes. Esto es lo que verificará el corrector.
+
+¿Te queda claro cómo usar la librería GD de PHP para esta fusión o quieres un ejemplo de cómo sería esa parte del código?
+
+Exacto, lo has entendido perfectamente. Según el subject, así es como se dividen esas funcionalidades:
+1. El Sticker sin Bonus (Posición Fija)
+
+En la parte obligatoria, el manual dice que el usuario debe poder "seleccionar una imagen en una lista de imágenes superponibles".
+
+    Ubicación predeterminada: Normalmente, para simplificar, se configura el sticker para que aparezca centrado o en una esquina específica.
+
+    Implementación: Cuando el usuario hace clic en el botón de captura, envías la foto y el ID del sticker al servidor. PHP coloca el sticker en las coordenadas (x,y) que tú hayas definido por defecto en tu código.
+
+2. El Sticker con Bonus (Ubicación Libre)
+
+Si decides hacer el bonus de "Live preview", la experiencia cambia:
+
+    Elección de ubicación: Puedes permitir que el usuario arrastre el sticker con el ratón sobre el vídeo antes de disparar.
+
+    Envío de coordenadas: En este caso, al capturar la imagen, no solo envías el sticker, sino también las coordenadas exactas donde el usuario lo dejó. Tu script de PHP recibirá esos datos y usará la librería GD para "estampar" el sticker en ese punto exacto.
+
+3. ¿Cuántos stickers a la vez?
+
+    Obligatorio: El manual habla de seleccionar "una imagen" en una lista. Por lo tanto, con que permitas poner un sticker por foto ya cumples con la parte obligatoria.
+
+    Bonus: Permitir poner múltiples stickers al mismo tiempo (como un collage) sería considerado un bonus de funcionalidad técnica, ya que complica la lógica del servidor al tener que procesar varias capas.
+
+Resumen de restricciones clave del manual:
+
+    Botón inactivo: El botón de captura debe estar bloqueado hasta que selecciones un sticker.
+
+    Procesamiento en servidor: La mezcla de la foto y el sticker debe hacerse en el servidor. No vale con guardarlo todo desde el navegador.
+
+    Subida de archivos: Debes permitir subir una imagen local si el usuario no tiene webcam.
+
+Mi recomendación: Empieza con un solo sticker en una posición fija (por ejemplo, un marco que siempre ocupa el 100% de la imagen o unas gafas que siempre salen en el centro). Una vez que eso te funcione y el servidor guarde la imagen correctamente, lánzate a por el bonus de moverlos si te sobra tiempo.
+
 ----------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------

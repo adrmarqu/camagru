@@ -1,56 +1,69 @@
-# Nombre del proyecto
+# --- Configuración ---
 PROJECT_NAME = camagru
+DC           = docker compose -f sources/docker-compose.yml
+OPEN         = open # Cambiar a xdg-open en Linux si es necesario
 
-# Ruta al docker-compose
-DC = docker compose -f sources/docker-compose.yml
 
-all: build up
+# --- Colores para el Help ---
+GREEN  = \033[0;32m
+RESET  = \033[0m
+YELLOW = \033[0;33m
 
-# Levantar contenedores
-up:
+
+# --- Reglas Principales ---
+all: build up ## Construye y levanta los contenedores
+
+up: ## Levanta los contenedores en segundo plano
 	$(DC) up -d
 
-# Parar contenedores
-down:
+down: ## Detiene los contenedores
 	$(DC) down
 
-# Reiniciar
-restart: down up
+restart: ## Reinicia los servicios (down + up)
+	$(DC) down
+	$(DC) up -d
 
-# Ver logs
-logs:
-	$(DC) logs -f
-
-# Construir (por si luego usas Dockerfile)
-build:
+build: ## Construye las imágenes sin usar la caché
 	$(DC) build --no-cache
 
-# Acceder al contenedor (bash)
-bash:
+re: clean build up ## Borrado total y reinstalación completa
+	@echo "$(YELLOW)Esperando a que los servicios estén listos...$(RESET)"
+	@sleep 8
+	$(MAKE) seed
+	@echo "$(GREEN)Todo listo. Abriendo navegador...$(RESET)"
+	$(MAKE) open
+
+
+# --- Utilidades y Debug ---
+logs: ## Muestra los logs en tiempo real
+	$(DC) logs -f
+
+bash: ## Accede a la terminal del contenedor web
 	$(DC) exec web bash
 
-# Estado de contenedores
-ps:
+ps: ## Lista el estado de los contenedores
 	$(DC) ps
 
-open:
-	open http://localhost:8080
 
-bbdd:
-	sleep 30
-	open http://localhost:5050
-	
+# --- Automatización ---
+open: ## Abre la aplicación en el navegador
+	$(OPEN) http://localhost:8080
 
-seed:
+bbdd: ## Abre el gestor de base de datos (puerto 5050)
+	$(OPEN) http://localhost:5050
+
+seed: ## Ejecuta el script de población de la base de datos
 	$(DC) exec web php ./database/seed.php
 
-# Limpiar todo (containers + volúmenes)
-clean:
-	$(DC) down -v
 
-stop: down clean
+# --- Limpieza ---
+clean: ## Elimina contenedores, volúmenes, imágenes y huérfanos
+	$(DC) down -v --rmi all --remove-orphans
 
-# Reinstalar todo limpio
-re: stop build up open bbdd
 
-.PHONY: 
+# --- Ayuda ---
+help: ## Muestra esta ayuda
+	@echo "$(GREEN)Comandos disponibles para $(PROJECT_NAME):$(RESET)"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(YELLOW)%-15s$(RESET) %s\n", $$1, $$2}'
+
+.PHONY: all down up restart logs build bash ps open bbdd seed clean re help
