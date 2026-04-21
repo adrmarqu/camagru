@@ -37,11 +37,11 @@ class UpdateController extends BaseController
             'links' => ['form'],
             'scripts' => ['checkForm'],
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
-            'newUser' => t('form.user'),
-            'newCurrentPass' => t('form.curr_pass')
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
+            'new_user' => t('form.user'),
+            'current_pass' => t('form.curr_pass')
         ],
         [
             'formContent' => 'form/updateUser'
@@ -59,7 +59,7 @@ class UpdateController extends BaseController
             $res = $validation->checkForm('update-email', $_POST);
             if ($res['success'] === false)
                 $this->reload($this->name, $res['message']);
-            
+
             $model = new UserModel();
             $result = $model->updateEmail($_SESSION['user']['id'], $_POST['email']);
             
@@ -79,11 +79,11 @@ class UpdateController extends BaseController
             'links' => ['form'],
             'scripts' => ['checkForm'],
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
-            'newEmail' => t('form.email'),
-            'newCurrentPass' => t('form.curr_pass')
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
+            'new_email' => t('form.email'),
+            'current_pass' => t('form.curr_pass')
         ],
         [
             'formContent' => 'form/updateEmail'
@@ -122,12 +122,12 @@ class UpdateController extends BaseController
             'links' => ['form'],
             'scripts' => ['checkForm'],
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
-            'newCurrentPass' => t('form.curr_pass'),
-            'newNewPass' => t('form.new_pass'),
-            'newPassRep' => t('form.rep_pass')
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
+            'current_pass' => t('form.curr_pass'),
+            'new_pass' => t('form.new_pass'),
+            'new_pass_rep' => t('form.rep_pass')
         ],
         [
             'formContent' => 'form/updatePass'

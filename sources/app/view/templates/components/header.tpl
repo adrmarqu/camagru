@@ -32,4 +32,3 @@
             </ul>
         </nav> -->
     </header>
-    <main style="border: 3px solid blue;">

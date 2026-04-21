@@ -1,1 +1,1 @@
-<script src="/js/{{::name::}}.js" defer></script>
+<script src="/js/{{::script_src::}}.js" defer></script>

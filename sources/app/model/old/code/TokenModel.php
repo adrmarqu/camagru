@@ -12,6 +12,7 @@ class CodeModel extends BaseModel
         return str_pad((string) random_int(0, 999999), 6, "0", STR_PAD_LEFT);
     }
 
+    /* Send an email with the code */
     public function sendEmail(string $code, string $email): array
     {
         $mail = new MailService();
@@ -19,14 +20,15 @@ class CodeModel extends BaseModel
         
     }
 
+    /* Create or update a pass code for a user */
     public function setVerificationCode(int $userid, string $email): array
     {
         try
         {
             $pdo = Database::getConnection();
 
-            $sql = "INSERT INTO codes (user_id, code, expires_at, attempts)
-                VALUES (:id, :code, :expires_at, 0)
+            $sql = "INSERT INTO tokens (user_id, token, type, expires_at, attempts)
+                VALUES (:id, :code, :type, :expires_at, 0)
                 ON CONFLICT (user_id)
                 DO UPDATE SET
                     code = EXCLUDED.code,
@@ -40,7 +42,8 @@ class CodeModel extends BaseModel
             $stmt->execute(
             [
                 'id' => $userid,
-                'code' => $code,
+                'token' => $code,
+                'type' => 'pass',
                 'expires_at' => date('Y-m-d H:i:s', time() + $this->time),
             ]);
 
@@ -56,6 +59,7 @@ class CodeModel extends BaseModel
         }
     }
 
+    /* Verificate post of the pass code */
     public function verification(int $userid, string $code): array
     {
         try
@@ -92,15 +96,16 @@ class CodeModel extends BaseModel
         }
     }
 
-    public function updateUserVerification(int $userid): array
+    /* Activate or disactivate account */
+    public function updateUserVerification(int $userid, bool $activate): array
     {
         try
         {
             $pdo = Database::getConnection();
 
-            $stmt = $pdo->prepare("UPDATE users SET is_verified = true WHERE id = :id");
+            $stmt = $pdo->prepare("UPDATE users SET is_verified = :activate WHERE id = :id");
 
-            $stmt->execute(['id' => $userid]);
+            $stmt->execute(['id' => $userid, 'activate' => $activate]);
 
             return $this->makeReturn(true);
         }
@@ -110,6 +115,7 @@ class CodeModel extends BaseModel
         }
     }
 
+    /* Delete code after verification and expired time */
     public function deleteCode(int $userid): array
     {
         try

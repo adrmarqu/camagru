@@ -2,10 +2,9 @@
 
 require_once BACKEND . 'model/Database.php';
 
-/* 
-
-
-protected function samePass(PDO $pdo, int $id, string $pass): bool
+class BaseModel
+{
+    protected function samePass(PDO $pdo, int $id, string $pass): bool
     {
         $stmt = $pdo->prepare("SELECT password_hash FROM users WHERE id = :id LIMIT 1");
 
@@ -27,39 +26,6 @@ protected function samePass(PDO $pdo, int $id, string $pass): bool
         $stmt->execute(['value' => $user]);
 
         return (bool) $stmt->fetchColumn();
-    }
-
-*/
-
-class BaseModel
-{
-    private PDO $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = Database::getConnection();
-    }
-
-    protected function execute(string $sql, array $data): void
-    {
-        try
-        {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($data);
-
-        }
-        catch ()
-        {
-            
-        }
-    }
-
-    protected function getFetch(string $sql, array $data): array
-    {
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($data);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     protected function makeReturn(bool $success, string $msg = '', string $id = '', string $user = '', string $email = ''): array

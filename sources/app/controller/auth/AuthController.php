@@ -41,11 +41,11 @@ class AuthController extends BaseController
             'links' => ['form'],
             'scripts' => '',
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
-            'logUser' => t('form.usermail'),
-            'logPass' => t('form.pass'),
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
+            'user' => t('form.usermail'),
+            'pass' => t('form.pass'),
         ],
         [
             'formContent' => 'form/login'
@@ -100,14 +100,14 @@ class AuthController extends BaseController
             'links' => ['form'],
             'scripts' => ['checkForm'],
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
-            'signUser' => t('form.user'),
-            'signPass' => t('form.pass'),
-            'signPassRep' => t('form.rep_pass'),
-            'signEmail' => t('form.email'),
-            'signTerms' => t('form.terms')
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
+            'user' => t('form.user'),
+            'pass' => t('form.pass'),
+            'pass_rep' => t('form.rep_pass'),
+            'email' => t('form.email'),
+            'terms' => t('form.terms')
         ],
         [
             'formContent' => 'form/signin'

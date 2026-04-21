@@ -13,7 +13,7 @@ class CodeController extends BaseController
         $this->reload($this->name, $result['message']);
     }
 
-    public function verification(): void
+    public function password(): void
     {
         $this->name = 'verification';
         $error = $this->getFlash($this->name);
@@ -33,8 +33,8 @@ class CodeController extends BaseController
 
             $id = $_SESSION['user']['id'];
 
-            $model = new CodeModel();
-            $result = $model->verification($id, $ver);
+            $model = new TokenModel();
+            $result = $model->password($id, $ver);
             
             if ($result['success'] === false)
                 $this->reload($this->name, $result['message']);
@@ -52,14 +52,27 @@ class CodeController extends BaseController
             'links' => ['form'],
             'scripts' => ['checkForm'],
             'page' => $this->name,
-            'formMsg' => $error,
-            'btnDel' => t('form.del'),
-            'btnSend' => t('form.send'),
+            'form_output' => $error,
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send'),
             'verification' => t('form.verification'),
-            'another' => t('form.another')
+            'send_code' => t('form.send_code')
         ],
         [
             'formContent' => 'form/verification'
         ]);
+    }
+
+    public function email(): void
+    {
+        if (!isset($_GET['token']))
+            $this->reload('token_email', t('errors.token'), 'update-email');
+
+        $model = new TokenModel();
+        $result = $model->email();
+
+        if (!$result['success'])
+            $this->reload('token_email', $result['message'], 'update-email');
+        $this->redirect('home');
     }
 }

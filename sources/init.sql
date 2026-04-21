@@ -9,13 +9,15 @@ CREATE TABLE users
     is_verified     BOOLEAN
 );
 
-CREATE TABLE codes
+CREATE TABLE tokens
 (
     id              SERIAL PRIMARY KEY,
-    code            VARCHAR(255) NOT NULL,
-    expires_at      TIMESTAMP NOT NULL,
+    token           VARCHAR(255) NOT NULL,
+    type            VARCHAR(20) NOT NULL,
+    new_value       VARCHAR(100),
     attempts        INTEGER NOT NULL DEFAULT 0,
-    user_id         INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE
+    expires_at      TIMESTAMP NOT NULL,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE images
@@ -44,7 +46,10 @@ CREATE TABLE comments
 
 /* INDEXS */
 
-CREATE UNIQUE INDEX idx_code_userid ON codes(user_id);
+CREATE INDEX idx_tokens_token ON tokens(token);
+
+CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_email ON users(email);
 
 CREATE INDEX idx_images_userid ON images(user_id);
 

@@ -1,27 +1,3 @@
-<!-- Login, signin -->
-
-<?php
-
-require_once BACKEND . 'model/BaseModel.php';
-
-class UserModel extends BaseModel
-{
-    public function login()
-    {
-        
-    }
-
-    public function signin()
-    {
-
-    }
-
-    public function delete()
-    {
-
-    }
-}
-
 <?php
 
 require_once BACKEND . 'model/BaseModel.php';
