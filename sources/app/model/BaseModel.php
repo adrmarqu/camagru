@@ -20,49 +20,52 @@ protected function samePass(PDO $pdo, int $id, string $pass): bool
         return password_verify($hash, $user['password_hash']);
     }
 
-    protected function userExists(PDO $pdo, string $user): bool
-    {
-        $stmt = $pdo->prepare("SELECT 1 FROM users WHERE username = :value OR email = :value LIMIT 1");
-
-        $stmt->execute(['value' => $user]);
-
-        return (bool) $stmt->fetchColumn();
-    }
-
 */
 
 class BaseModel
 {
-    private PDO $pdo;
+    private PDO     $pdo;
 
     public function __construct()
     {
         $this->pdo = Database::getConnection();
+        $this->error = '';
     }
 
-    protected function execute(string $sql, array $data): void
+    protected function emailExists(string $email): bool
     {
-        try
-        {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($data);
+        $sql = "SELECT email FROM users WHERE email = :email LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
 
-        }
-        catch ()
-        {
-            
-        }
+        return (bool) $stmt->fetchColumn();
     }
 
-    protected function getFetch(string $sql, array $data): array
+    protected function userExists(string $user): bool
+    {
+        $sql = "SELECT username FROM users WHERE username = :user LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user' => $user]);
+
+        return (bool) $stmt->fetchColumn();
+    }
+
+    protected function execute(string $sql, array $data): PDOStatement
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($data);
 
+        return $stmt;
+    }
+
+    protected function getFetch(string $sql, array $data): array
+    {
+        $stmt = $this->execute($sql, $data);
+            
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    protected function makeReturn(bool $success, string $msg = '', string $id = '', string $user = '', string $email = ''): array
+    protected function ret(bool $success, string $msg = '', string $id = '', string $user = '', string $email = ''): array
     {
         return
         [

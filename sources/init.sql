@@ -58,3 +58,8 @@ CREATE INDEX idx_likes_imageid ON likes(image_id);
 
 CREATE INDEX idx_com_userid ON comments(user_id);
 CREATE INDEX idx_com_imageid ON comments(image_id);
+
+
+/* OTHERS */
+    
+ALTER TABLE tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);

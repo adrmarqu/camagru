@@ -13,7 +13,7 @@ class CodeController extends BaseController
         $this->reload($this->name, $result['message']);
     }
 
-    public function password(): void
+    public function account(): void
     {
         $this->name = 'verification';
         $error = $this->getFlash($this->name);
@@ -34,7 +34,7 @@ class CodeController extends BaseController
             $id = $_SESSION['user']['id'];
 
             $model = new TokenModel();
-            $result = $model->password($id, $ver);
+            $result = $model->account($id, $ver);
             
             if ($result['success'] === false)
                 $this->reload($this->name, $result['message']);
