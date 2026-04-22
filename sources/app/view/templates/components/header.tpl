@@ -17,8 +17,8 @@
     <header style="border: 3px solid red;">
         <h1>Camagru</h1>
         <div>
-            <a href="">Gallery</a>
-            <a href="">Photo editor</a>
+            <a href="/{{::language::}}/gallery">Gallery</a>
+            <a href="/{{::language::}}/photo-editor">Editor</a>
         </div>
         <!-- <nav>
             <ul class="flex-row-between">

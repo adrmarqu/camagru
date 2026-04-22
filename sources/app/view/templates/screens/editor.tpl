@@ -6,9 +6,9 @@
 
     <video id="webcam" autoplay playsinline></video>
     
-    <div>
+    <!-- <div>
         {{::stickers::}}
-    </div>
+    </div> -->
 
     <button id="capture" class="{{::captureBtn::}}">
         {{::image_photo::}}
@@ -16,9 +16,13 @@
 
 </main>
 
-<aside>
+<!-- <aside>
     <h2>Previews</h2>
     <div>
         {{::thumbnails::}}
     </div>
-</aside>
+</aside> -->
+
+<!-- <canvas id="canvas" style="display: none;"></canvas> -->
+
+<img id="final">
