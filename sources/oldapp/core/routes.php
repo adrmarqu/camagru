@@ -7,7 +7,7 @@ return
     'signin' => [AuthController::class, 'signin'],
 
     // Verification
-    'verification' => [CodeController::class, 'verification'],
+    'verification' => [TokenController::class, 'account'],
 
     // Update user
     'update-user' => [UpdateController::class, 'user'],

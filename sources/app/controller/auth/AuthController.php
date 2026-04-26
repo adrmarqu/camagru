@@ -1,116 +1,91 @@
 <?php
 
-require_once BACKEND . 'controller/BaseController.php';
-require_once BACKEND . 'model/code/UserModel.php';
-require_once BACKEND . 'model/code/CodeModel.php';
+require_once BACKEND . 'base/BaseController.php';
 
 class AuthController extends BaseController
 {
-    public function login(): void
+    public function login()
     {
-        $this->name = 'login';
         $error = $this->getFlash($this->name);
 
         if ($this->isPost())
-        {
-            $validation = new FormValidation();
-            $res = $validation->checkForm($this->name, $_POST);
-            
-            if ($res['success'] === false)
-                $this->reload($this->name, $res['message']);
+            $this->load($this->name);
 
-            $model = new UserModel();
-            $result = $model->login($_POST['user'], $_POST['pass']);
-
-            if ($result['success'] === false)
-                $this->reload($this->name, $result['message']);
-
-            $_SESSION['user'] =
-            [
-                'id' => $result['id'],
-                'username' => $result['username'],
-                'email' => $result['email'],
-            ];
-            $this->redirect('update-user');
-        }
-
-        $this->render(COMPONENTS . 'form/form.tpl',
+        $this->render('form.tpl',
         [
-            'language' => t('lang'),
             'title' => 'Camagru | Login',
-            'links' => ['form'],
-            'scripts' => '',
-            'page' => $this->name,
+
             'form_output' => $error,
-            'btn_del' => t('form.del'),
-            'btn_send' => t('form.send'),
             'user' => t('form.usermail'),
             'pass' => t('form.pass'),
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send')
         ],
         [
-            'formContent' => 'form/login'
+            'links' => 
+            [
+                'path' => COMPONENTS . 'link.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'form']]
+            ],
+
+            'scripts' => 
+            [
+                'path' => COMPONENTS . 'script.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'checkForm']]
+            ],
+
+            'form_content' => 
+            [
+                'path' => FORMS . 'login.tpl',
+                'n' => 0,
+                'data' => [] 
+            ],
         ]);
     }
-    
-    private function isSignPostValid(array $post): bool
-    {
-        return (!empty($post['user']) && !empty($post['email'])
-            && !empty($post['pass']) && !empty($post['passRep'])
-            && !empty($post['terms']));
-    }
 
-    public function signin(): void
+    public function signin()
     {
-        $this->name = 'signin';
         $error = $this->getFlash($this->name);
 
         if ($this->isPost())
-        {
-            $validation = new FormValidation();
-            $res = $validation->checkForm($this->name, $_POST);
-            
-            if ($res['success'] == false)
-                $this->reload($this->name, $res['message']);
-            
-            $model = new UserModel();
-            $result = $model->signin($_POST['user'], $_POST['email'], $_POST['pass']);
-                
-            if ($result['success'] == false)
-                $this->reload($this->name, $result['message']);
+            $this->load($this->name);
 
-            $code = new CodeModel();
-            $r = $code->setVerificationCode($result['id'], $result['email']);
-
-            if ($r['success'] == false)
-                $this->reload($this->name, $r['message']);
-
-            $_SESSION['user'] =
-            [
-                'id' => $result['id'],
-                'username' => $result['username'],
-                'email' => $result['email']
-            ];
-            $this->redirect('verification');
-        }
-
-        $this->render(COMPONENTS . 'form/form.tpl',
+        $this->render('form.tpl',
         [
-            'language' => t('lang'),
             'title' => 'Camagru | Signin',
-            'links' => ['form'],
-            'scripts' => ['checkForm'],
-            'page' => $this->name,
+
             'form_output' => $error,
-            'btn_del' => t('form.del'),
-            'btn_send' => t('form.send'),
-            'user' => t('form.user'),
-            'pass' => t('form.pass'),
-            'pass_rep' => t('form.rep_pass'),
+            'user' => t('form.usermail'),
             'email' => t('form.email'),
-            'terms' => t('form.terms')
+            'pass' => t('form.pass'),
+            'pass_rep' => t('form.pass_rep'),
+            'terms' => t('form.terms'),
+            'btn_del' => t('form.del'),
+            'btn_send' => t('form.send')
         ],
         [
-            'formContent' => 'form/signin'
+            'links' => 
+            [
+                'path' => COMPONENTS . 'link.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'form']]
+            ],
+
+            'scripts' => 
+            [
+                'path' => COMPONENTS . 'script.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'checkForm']]
+            ],
+
+            'form_content' => 
+            [
+                'path' => FORMS . 'signin.tpl',
+                'n' => 0,
+                'data' => [] 
+            ],
         ]);
     }
 }

@@ -2,26 +2,6 @@
 
 require_once BACKEND . 'model/Database.php';
 
-/* 
-
-
-protected function samePass(PDO $pdo, int $id, string $pass): bool
-    {
-        $stmt = $pdo->prepare("SELECT password_hash FROM users WHERE id = :id LIMIT 1");
-
-        $stmt->execute(['id' => $id]);
-
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$user)
-            return false;
-        
-        $hash = password_hash($pass, PASSWORD_DEFAULT);
-
-        return password_verify($hash, $user['password_hash']);
-    }
-
-*/
-
 class BaseModel
 {
     private PDO     $pdo;
@@ -29,7 +9,6 @@ class BaseModel
     public function __construct()
     {
         $this->pdo = Database::getConnection();
-        $this->error = '';
     }
 
     protected function emailExists(string $email): bool

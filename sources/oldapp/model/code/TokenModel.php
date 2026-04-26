@@ -5,12 +5,13 @@ require_once BACKEND . 'model/BaseModel.php';
 class TokenModel extends BaseModel
 {
     /* Account token */
+    /* Generate account token */
     public function generateAccount(int $userid, string $email): array
     {
         $type = 'account';
         $code = $this->generateVerificationNumber();
         $hash = hash('sha256', $code);
-        try
+        try 
         {
             $this->execute(
                 "INSERT INTO tokens (user_id, token, type, expires_at, attempts) VALUES (:id, :token, :t, :expires_at, 0) ON CONFLICT (user_id, type) DO UPDATE SET token = EXCLUDED.token, expires_at = EXCLUDED.expires_at, attempts = 0", 
@@ -29,6 +30,7 @@ class TokenModel extends BaseModel
         }
     }
 
+    /* Verificate account token */
     public function account(int $userid, string $code): array
     {
         $type = 'account';
@@ -40,7 +42,10 @@ class TokenModel extends BaseModel
                 return $this->ret(false, t('errors.bbdd.new_code'));
 
             if (time() > strtotime($data['expires_at']))
+            {
+                $this->delete($userid, 'account');
                 return $this->ret(false, t('errors.bbdd.expired'));
+            }
 
             if ($data['attempts'] >= 3)
                 return $this->ret(false, t('errors.bbdd.attempts'));
@@ -61,6 +66,7 @@ class TokenModel extends BaseModel
     }
 
     /* Email token */
+    /* New token of email */
     public function generateEmail(int $userid, string $email): array
     {
         $type = 'email';
@@ -83,6 +89,7 @@ class TokenModel extends BaseModel
         }
     }
 
+    /* Check email token */
     public function email(int $userid, string $token): array
     {
         $type = 'email';
@@ -94,7 +101,10 @@ class TokenModel extends BaseModel
                 return $this->ret(false, t('errors.bbdd.email_no'));            
 
             if (time() > strtotime($data['expires_at']))
+            {
+                $this->delete($userid, 'email');
                 return $this->ret(false, t('errors.bbdd.expired'));
+            }
 
             if (!hash_equals($data['token'], hash('sha256', $token)))
                 return $this->ret(false, t('errors.bbdd.token'));

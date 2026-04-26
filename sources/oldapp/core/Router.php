@@ -4,9 +4,9 @@ class Router
 {
     private array   $routes = [];
 
-    public function add($path, $dir, $controller, $method)
+    public function add($type, $path, $controller, $method)
     {
-        $this->routes[$path] = [$dir, $controller, $method];
+        $this->routes[$path] = [$type, $controller, $method];
     }
 
     public function resolve($path)
@@ -17,14 +17,14 @@ class Router
             return;
         }
 
-        [$dir, $controller, $method] = $this->routes[$path];
+        [$type, $controller, $method] = $this->routes[$path];
 
-        $file = BACKEND . "controller/{$dir}/{$controller}.php";
+        $file = BACKEND . "controller/{$type}/{$controller}.php";
         if (file_exists($file))
         {
             require_once $file;
 
-            $instance = new $controller($path);
+            $instance = new $controller();
             $instance->$method();
         }
         else

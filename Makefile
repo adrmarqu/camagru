@@ -60,7 +60,6 @@ seed: ## Ejecuta el script de población de la base de datos
 clean: ## Elimina contenedores, volúmenes, imágenes y huérfanos
 	$(DC) down -v --rmi all --remove-orphans
 
-
 # --- Ayuda ---
 help: ## Muestra esta ayuda
 	@echo "$(GREEN)Comandos disponibles para $(PROJECT_NAME):$(RESET)"

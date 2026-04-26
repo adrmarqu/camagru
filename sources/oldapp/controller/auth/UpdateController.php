@@ -44,7 +44,7 @@ class UpdateController extends BaseController
             'current_pass' => t('form.curr_pass')
         ],
         [
-            'formContent' => 'form/updateUser'
+            'form_content' => 'form/updateUser'
         ]);
     }
 
@@ -60,8 +60,8 @@ class UpdateController extends BaseController
             if ($res['success'] === false)
                 $this->reload($this->name, $res['message']);
 
-            $model = new UserModel();
-            $result = $model->updateEmail($_SESSION['user']['id'], $_POST['email']);
+            $model = new UpdateModel();
+            $result = $model->emailToken($_SESSION['user']['id'], $_POST['email']);
             
             if ($result['success'] === false)
                 $this->reload($this->name, $result['message']);
@@ -86,7 +86,7 @@ class UpdateController extends BaseController
             'current_pass' => t('form.curr_pass')
         ],
         [
-            'formContent' => 'form/updateEmail'
+            'form_content' => 'form/updateEmail'
         ]);
     }
 
@@ -130,7 +130,7 @@ class UpdateController extends BaseController
             'new_pass_rep' => t('form.rep_pass')
         ],
         [
-            'formContent' => 'form/updatePass'
+            'form_content' => 'form/updatePass'
         ]);
     }
 }

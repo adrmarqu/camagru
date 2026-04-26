@@ -10,9 +10,6 @@ define('FRONTEND', ROOT . 'public/');
 
 define('BACKEND', ROOT . 'app/');
 define('COMPONENTS', BACKEND . 'view/templates/components/');
-define('SCREENS', BACKEND . 'view/templates/screens/');
-define('GLOBALS', BACKEND . 'view/templates/globals/');
-define('FORMS', BACKEND . 'view/templates/forms/');
 
 /* Others */
 
