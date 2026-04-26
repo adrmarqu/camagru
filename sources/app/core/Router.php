@@ -23,7 +23,7 @@ class Router
         if (file_exists($file))
         {
             require_once $file;
-
+   
             $instance = new $controller($path);
             $instance->$method();
         }

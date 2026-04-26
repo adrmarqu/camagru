@@ -4,6 +4,35 @@ require_once BACKEND . 'base/BaseController.php';
 
 class AuthController extends BaseController
 {
+    private array $includes = [];
+
+    public function __construct(string $name)
+    {
+        parent::__construct($name);
+
+        $this->includes = 
+        [
+            'links' => 
+            [
+                'path' => COMPONENTS . 'link.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'form.css']]
+            ],
+            'scripts' => 
+            [
+                'path' => COMPONENTS . 'script.tpl',
+                'n' => 1,
+                'data' => [['filename' => 'checkForm.js']]
+            ],
+            'form_content' => 
+            [
+                'path' => FORMS . "{$this->name}.tpl",
+                'n' => 0,
+                'data' => [] 
+            ]
+        ];
+    }
+
     public function login()
     {
         $error = $this->getFlash($this->name);
@@ -20,29 +49,7 @@ class AuthController extends BaseController
             'pass' => t('form.pass'),
             'btn_del' => t('form.del'),
             'btn_send' => t('form.send')
-        ],
-        [
-            'links' => 
-            [
-                'path' => COMPONENTS . 'link.tpl',
-                'n' => 1,
-                'data' => [['filename' => 'form']]
-            ],
-
-            'scripts' => 
-            [
-                'path' => COMPONENTS . 'script.tpl',
-                'n' => 1,
-                'data' => [['filename' => 'checkForm']]
-            ],
-
-            'form_content' => 
-            [
-                'path' => FORMS . 'login.tpl',
-                'n' => 0,
-                'data' => [] 
-            ],
-        ]);
+        ], $this->includes);
     }
 
     public function signin()
@@ -57,35 +64,13 @@ class AuthController extends BaseController
             'title' => 'Camagru | Signin',
 
             'form_output' => $error,
-            'user' => t('form.usermail'),
+            'user' => t('form.user'),
             'email' => t('form.email'),
             'pass' => t('form.pass'),
             'pass_rep' => t('form.pass_rep'),
             'terms' => t('form.terms'),
             'btn_del' => t('form.del'),
             'btn_send' => t('form.send')
-        ],
-        [
-            'links' => 
-            [
-                'path' => COMPONENTS . 'link.tpl',
-                'n' => 1,
-                'data' => [['filename' => 'form']]
-            ],
-
-            'scripts' => 
-            [
-                'path' => COMPONENTS . 'script.tpl',
-                'n' => 1,
-                'data' => [['filename' => 'checkForm']]
-            ],
-
-            'form_content' => 
-            [
-                'path' => FORMS . 'signin.tpl',
-                'n' => 0,
-                'data' => [] 
-            ],
-        ]);
+        ], $this->includes);
     }
 }

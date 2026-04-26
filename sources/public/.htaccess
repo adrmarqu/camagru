@@ -13,4 +13,5 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-RewriteRule ^([a-z]{2})/([a-z0-9-_]+)$ index.php?lang=$1&page=$2 [QSA,L]
+# Cambiamos el segundo grupo para que incluya la barra /
+RewriteRule ^([a-z]{2})/([a-z0-9-_/]+)$ index.php?lang=$1&page=$2 [QSA,L]

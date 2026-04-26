@@ -2,7 +2,56 @@
 
 return
 [
+    'errors' =>
+    [
+        
+    ],
+
+    'header' =>
+    [
+        'gallery' => 'Galeria',
+        'editor' => 'Editor de fotos',
+
+        'settings' => 'Configuración',
+        'my_gallery' => 'Mi galeria'
+    ],
+
     'form' =>
+    [
+        'usermail' => 'Usuario o correo electrónico',
+        'user' => 'Usuario',
+        'email' => 'Email',
+        'pass' => 'Contraseña',
+        'pass_rep' => 'Contraseña repetida',
+        'terms' => 'Aceptar términos y servicios',
+        'verification_account' => 'Introduce el código para activar la cuenta',
+        'verification_email' => 'Introduce el código para confirmar el nuevo correo',
+        'send_code' => 'Enviar código',
+
+        'current' =>
+        [
+            'pass' => 'Contraseña actual'
+        ],
+
+        'new' =>
+        [
+            'user' => 'Nuevo nombre de usuario',
+            'email' => 'Nuevo correo electrónico',
+            'pass' => 'Nueva contraseña'
+        ]
+    ],
+
+    'bbdd' =>
+    [
+
+    ],
+
+    'footer' =>
+    [
+
+    ]
+
+    /* 'form' =>
     [
         'usermail' => 'Usuario/Correo',
         'user' => 'Usuario',
@@ -61,5 +110,5 @@ return
             'pass' => 'Contraseña incorrecta',
             'curr_pass' => 'Contraseña actual incorrecta'
         ]
-    ]    
+    ]     */
 ];

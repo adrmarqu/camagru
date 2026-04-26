@@ -6,7 +6,8 @@
         <a href="/{{::language::}}/update-user">Update user</a>
         <a href="/{{::language::}}/update-email">Update email</a>
         <a href="/{{::language::}}/update-password">Update password</a>
-        <a href="/{{::language::}}/verification">Verification</a>
+        <a href="/{{::language::}}/verify-account">Account</a>
+        <a href="/{{::language::}}/verify-email">Email</a>
     </div>
     <br>
     <div>

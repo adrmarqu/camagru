@@ -4,18 +4,53 @@ require_once BACKEND . 'base/BaseController.php';
 
 class TokenController extends BaseController
 {
+    private array   $includes = 
+    [
+        'links' => 
+        [
+            'path' => COMPONENTS . 'link.tpl',
+            'n' => 1,
+            'data' => [['filename' => 'form.css']]
+        ],
+        'scripts' => 
+        [
+            'path' => COMPONENTS . 'script.tpl',
+            'n' => 1,
+            'data' => [['filename' => 'checkForm.js']]
+        ],
+        'form_content' => 
+        [
+            'path' => FORMS . "verification.tpl",
+            'n' => 0,
+            'data' => [] 
+        ]
+    ];
+
     public function generateTokenAccount()
     {
-        $this->render('form.tpl', [], []);
     }
 
-    public function checkTokenAccount()
+    public function generateTokenEmail()
     {
-        $this->render('form.tpl', [], []);
     }
 
-    public function checkTokenEmail()
+    public function checkAccount()
     {
-        $this->load('gallery');
+        $this->render('form.tpl',
+        [
+            'name' => 'verify-account',
+            'verification' => t('form.verification_account'),
+            'send_code' => t('form.send_code')
+        ], $this->includes);
+    }
+
+    public function checkEmail()
+    {
+        $this->render('form.tpl',
+        [
+            'name' => 'verify-email',
+            'verification' => t('form.verification_email'),
+            'send_code' => t('form.send_code')
+        ], $this->includes);
     }
 }

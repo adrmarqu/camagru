@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/css/{{::filename::}}.css">
+<link rel="stylesheet" href="/css/{{::filename::}}">

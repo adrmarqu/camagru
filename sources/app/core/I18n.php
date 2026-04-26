@@ -36,7 +36,7 @@ abstract class I18n
     {
         self::$lang = $lang;
 
-        $path = BACKEND . "language/langs/{$lang}.php";
+        $path = BACKEND . "langs/{$lang}.php";
         if (file_exists($path))
             self::$texts = require $path;
     }

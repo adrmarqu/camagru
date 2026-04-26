@@ -9,8 +9,13 @@ return
     'signin' => ['auth', 'AuthController', 'signin'],
 
     // Verification
-    'verify-account' => ['auth', 'TokenController', 'account'],
-    'verify-email' => ['auth', 'TokenController', 'email'],
+    'verify-account' => ['auth', 'TokenController', 'checkAccount'],
+    'verify-email' => ['auth', 'TokenController', 'checkEmail'],
+
+    // Update user
+    'update-user' => ['auth', 'UpdateController', 'user'],
+    'update-email' => ['auth', 'UpdateController', 'email'],
+    'update-password' => ['auth', 'UpdateController', 'password'],
     
     // Photo editor
     'photo-editor' => ['main', 'EditorController', 'editor'],
@@ -22,10 +27,7 @@ return
     'profile/settings' => ['profile', 'SettingsController', 'settings'],
     'profile/gallery' => ['profile', 'PhotoController', 'gallery'],
 
-    // Update user
-    'update-user' => ['profile', 'UpdateController', 'user'],
-    'update-email' => ['profile', 'UpdateController', 'email'],
-    'update-password' => ['profile', 'UpdateController', 'password'],
+    
 
 
     // Profile

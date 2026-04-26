@@ -42,17 +42,58 @@ abstract class BaseController
         $this->redirect($path);
     }
 
-    private function setGlobals(): array
+    private function addGlobalsVars(array $data): array
     {
-        return 
+        $global = 
         [
+            'links' => '',
+            'scripts' => '',
+
             'language' => I18n::getLanguage(),
-            'page' => $this->name
+            'page' => $this->name,
+
+            'gallery' => t('header.gallery'),
+            'editor' => t('header.editor'),
+            'settings' => t('header.settings'),
+            'my_gallery' => t('header.my_gallery'),
+            'username' => $_SESSION['user']['username'] ?? 'Bot_1'
         ];
+
+        return array_merge($data, $global);
+    }
+
+    private function addGlobalsIncs(array $incs): array
+    {
+        $css =
+        [
+            ['filename' => 'style.css'],
+            ['filename' => 'header.css?v=1'],
+            ['filename' => 'footer.css']
+        ];
+
+        if (!isset($incs['links']))
+        {
+            $incs['links'] =
+            [
+                'path' => COMPONENTS . 'link.tpl',
+                'n' => 3,
+                'data' => $css
+            ];
+        }
+        else
+        {
+            $incs['links']['n'] += 3;
+            $incs['links']['data'] = array_merge($incs['links']['data'], $css);
+        }
+
+        return $incs;
     }
 
     protected function render(string $screen, array $data, array $incs = [])
     {
+        $data = $this->addGlobalsVars($data);
+        $incs = $this->addGlobalsIncs($incs);
+
         $view = new View();
         $view->printHtml($screen, $data, $incs);
     }

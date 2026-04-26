@@ -5,9 +5,11 @@ require_once BACKEND . 'core/Router.php';
 
 class App
 {
+    private array $allowedLangs = ['es', 'ca', 'en'];
+
     public function __construct()
     {
-        I18n::init(['es', 'ca', 'en'], 'es');
+        I18n::init($this->allowedLangs, 'es');
     }
 
     public function run()
@@ -17,7 +19,7 @@ class App
 
         $page = $this->parseUrl();
 
-        $routes = require BACKEND . 'config/routes.php';
+        $routes = require BACKEND . 'core/routes.php';
 
         $router = new Router();
 
@@ -31,7 +33,7 @@ class App
     {
         $page = $_GET['page'] ?? 'login';
         $page = strtolower($page);
-        $page = preg_replace('/[^a-z0-9-]/', '', $page);
+        $page = preg_replace('/[^a-z0-9-\/]/', '', $page);
 
         $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $requestPath = rtrim($requestPath, '/');
