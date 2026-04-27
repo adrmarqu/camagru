@@ -1,0 +1,14 @@
+#btn-send:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    
+    color: #888;
+    background-color: #ccc;
+}
+
+.sticker-cross:checked ~ .sticker-cross button
+{
+  color: red;
+}

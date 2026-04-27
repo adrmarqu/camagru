@@ -66,9 +66,9 @@ abstract class BaseController
     {
         $css =
         [
-            ['filename' => 'style.css'],
+            ['filename' => 'style.css?v=1'],
             ['filename' => 'header.css?v=1'],
-            ['filename' => 'footer.css']
+            ['filename' => 'footer.css?v=1']
         ];
 
         if (!isset($incs['links']))

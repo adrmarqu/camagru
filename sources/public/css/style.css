@@ -6,7 +6,7 @@
     font-family: Arial, sans-serif;
 }
 
-button
+/* .btn
 {
     border: 1px solid transparent;
     border-radius: 10px;
@@ -23,5 +23,14 @@ button
 {
     color: white;
     background-color: rgb(0, 140, 255);
+} */
+
+.transparent
+{
+    opacity: 0;
 }
 
+.hidden
+{
+    display: none;
+}

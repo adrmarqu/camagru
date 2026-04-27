@@ -1,28 +1,70 @@
-<h1>Este es el editor de fotos</h1>
-
 <main style="border: 3px solid blue;">
 
-    <h2>Camera</h2>
+    <div id="stickers-container">{{::stickers::}}</div>
 
-    <video id="webcam" autoplay playsinline></video>
+    <video id="webcam" autoplay playsinline muted></video>
+    <canvas id="canvas" class="hidden"></canvas>
+    <img id="final-img" class="hidden" alt="final_photo" title="Final photo">
+
+    <div id="dinamic-stickers-container">
+
+    </div>
     
-    <!-- <div>
-        {{::stickers::}}
-    </div> -->
+    <!-- Crear imagenes por js -->
 
-    <button id="capture" class="{{::captureBtn::}}">
-        {{::image_photo::}}
-    </button>
+    <div id="btn-container">
+        <button id="btn-cancel" class="transparent"></button>
+        <button id="btn-send" disabled></button>
+        <button id="btn-upload" class="transparent"></button>
+    </div>
 
 </main>
 
-<!-- <aside>
-    <h2>Previews</h2>
+<aside>
+    {{::thumbnails::}}
+</aside>
+
+    <!-- Estado 1 - Conseguir stickers -->
     <div>
-        {{::thumbnails::}}
+        <div>
+            stickers
+        </div>
+        <div>
+            <video src=""></video>
+            <button>desactivado</button>
+        </div>
     </div>
-</aside> -->
 
-<!-- <canvas id="canvas" style="display: none;"></canvas> -->
+    <!-- Estado 2 - Finalizar eleccion de stickers -->
+    <div>
+        <div>
+            stickers
+        </div>
+        <div>
+            <video src=""></video>
+            <img src="" alt="">
+            <button>activado</button>
+        </div>
+    </div>
 
-<img id="final">
+    <!-- Estado 3 - Conseguir la imagen -->
+    <div>
+        <div>
+            <video src=""></video>
+            <img src="" alt="">
+            <div>
+                <button>cancelar</button>
+                <button>capturar</button>
+                <button>archivos</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado 4 - Confirmar imagen fusionada -->
+    <div>
+        <div>
+            <img src="" alt="">
+            <button>cancelar</button>
+            <button>enviar</button>
+        </div>
+    </div>
