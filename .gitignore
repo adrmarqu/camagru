@@ -7,5 +7,5 @@ secrets/
 !.env.example
 
 *.swp
-*.png
-*.jpg
+
+media/uploads
