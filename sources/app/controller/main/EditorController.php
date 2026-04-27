@@ -16,4 +16,17 @@ class EditorController extends BaseController
             ],
         ]);
     }
+
+    public function uploadImg()
+    {
+        const $uploadDir = BACKEND . 'media/uploads/';
+
+        if (!is_dir($uploadDir))
+            mkdir($uploadDir, 0777, true);
+
+        $nombreArchivo = basename($_FILES["imagen"]["name"]);
+        $rutaFinal = $uploadDir . $nombreArchivo;
+
+        move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaFinal);
+    }
 }
