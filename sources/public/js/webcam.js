@@ -1,140 +1,129 @@
-/* List of stickers */
-const stickersContainer = document.getElementById("stickers-container");
-const stickers = document.querySelectorAll("#stickers-container img");
-
-/* Cam */
-const dinContainer = document.getElementById("dinamic-stickers-container");
-
+/* 1. Referencias al DOM (Sincronizadas con tu .tpl) */
 const webcam = document.getElementById("webcam");
-const canvas = document.getElementById("canvas");
-const result = document.getElementById("final-img");
+const stickerPicker = document.getElementById("stickers-container"); // Asumiendo que el {{::stickers::}} genera este ID
+const stickerOverlay = document.getElementById("sticker-overlay");
+const canvas = document.getElementById("photo-canvas");
+const photoFinal = document.getElementById("photo-final");
+const fileInput = document.getElementById("file-input");
 
-
-/* Buttons */
-const btnContainer = document.getElementById("btn-container");
-
+/* Botones */
+const btnCapture = document.getElementById("btn-capture");
 const btnCancel = document.getElementById("btn-cancel");
-const btnSend = document.getElementById("btn-send");
 const btnUpload = document.getElementById("btn-upload");
 
-let state = 0;
-
+/* 2. Inicialización de la Cámara */
 navigator.mediaDevices.getUserMedia({ video: true })
-.then(stream => {
-    webcam.srcObject = stream;
-    webcam.play();
-})
-.catch(err => console.error("Camera error: ", err));
+    .then(stream => {
+        webcam.srcObject = stream;
+    })
+    .catch(err => {
+        console.error("Error al acceder a la webcam: ", err);
+        // Aquí podrías mostrar un mensaje en el UI indicando que la cámara no está disponible
+    });
 
-const reset = () =>
-{
-    state = 0;
-    dinamicContainer.innerHTML = "";
+/* 3. Lógica de Stickers */
+// Función para añadir el sticker a la pantalla (previsualización)
+const addSticker = (imgSource) => {
+    // Limpiamos el overlay si solo quieres un sticker a la vez (opcional)
+    // stickerOverlay.innerHTML = ""; 
 
-    btnSend.disabled = true;
+    const newSticker = document.createElement("img");
+    newSticker.src = imgSource.src;
+    newSticker.alt = imgSource.alt;
+    newSticker.classList.add("active-sticker");
     
-    btnCancel.classList.add("transparent");
-    
-    btnUpload.classList.remove("hidden");
-    btnUpload.classList.add("transparent");
+    // Añadimos una equis o simplemente hacemos que al clickar se borre
+    newSticker.onclick = () => {
+        newSticker.remove();
+        checkCaptureAbility();
+    };
 
-    stickersContainer.classList.remove("transparent");
-    webcam.classList.remove("hidden");
-    canvas.classList.add("hidden");
-    result.classList.add("hidden");
+    stickerOverlay.appendChild(newSticker);
+    checkCaptureAbility();
 };
 
-reset();
-
-const manageSendBtn = () =>
-{
-    btnSend.disabled = (dinContainer.getElementsByClassName('img-cam').length === 0)
-}
-
-const addSticker = (sticker) =>
-{
-    const div = document.createElement("div");
-    div.classList.add("sticker-cross");
-
-    const img = document.createElement("img");
-    img.src = sticker.src;
-    img.alt = sticker.alt;
-    img.title = sticker.title;
-
-    const cross = document.createElement("btn");
-    cross.innerHTML = "X";
-    cross.classList.add("cross");
-    cross.addEventListener("click", removeSticker(div));
-
-    div.appendChild(img);
-    div.appendChild(cross);
-    dinContainer.appendChild(div);
-    manageSendBtn();
+// Activar/Desactivar botón de foto (solo si hay stickers)
+const checkCaptureAbility = () => {
+    const hasStickers = stickerOverlay.querySelectorAll(".active-sticker").length > 0;
+    btnCapture.disabled = !hasStickers;
 };
 
-const removeSticker = (data) =>
-{
-    if (!data) return;
-    
-    data.remove();
-    manageSendBtn();
-};
-
-/* State 1 - Select and confirm the stickers */
-const saveStickers = () =>
-{
-    stickersContainer.classList.add("transparent");
-    btnCancel.classList.remove("transparent");
-    btnUpload.classList.remove("transparent");
-
-    state = 1;
-};
-
-/* State 2 - Get the image (photo or upload file) */
-const makePhoto = () =>
-{
-    if (webcam.videoWidth === 0) return; 
-
+/* 4. Captura y Fusión (Frontend Preview) */
+const takePhoto = () => {
     const ctx = canvas.getContext("2d");
 
+    // Sincronizar tamaño del canvas con el video real
     canvas.width = webcam.videoWidth;
     canvas.height = webcam.videoHeight;
 
+    // A. Dibujar el fondo (la webcam)
     ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 
-    previewContainer.classList.add("hidden");
-    ResultContainer.classList.remove("hidden");
-    image = true;
+    // B. Dibujar los stickers encima
+    const activeStickers = stickerOverlay.querySelectorAll(".active-sticker");
+    activeStickers.forEach(sticker => {
+        // Aquí los dibujamos en una posición fija (ej: 0,0) o relativa
+        // Para 42, esto es solo visual, la magia real la hará tu PHP
+        ctx.drawImage(sticker, 10, 10, 150, 150); 
+    });
 
+    // C. Mostrar resultado final y ocultar webcam
     const dataURL = canvas.toDataURL("image/png");
-    img.src = dataURL;
-
-    // Enviarlo al server y fusionarlo
-};
-
-const uploadPhoto = () =>
-{
-    // Abrir archivo png
-    // Enviarlo al server y fusionarlo
-};
-
-/* State 3 - Show the result and decide */
-const sendImage = () =>
-{
-    btnUpload.classList.add("hidden");
+    photoFinal.src = dataURL;
     
-    /* Enviarlo al server para que lo guarde en la bbdd y en uploads */
+    photoFinal.classList.remove("hidden");
+    webcam.classList.add("hidden");
+    stickerOverlay.classList.add("hidden");
 };
 
-stickers.forEach(img =>
-{
-    img.addEventListener("click", () => addSticker(img));
+/* 5. Subida de Archivos */
+const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            photoFinal.src = canvas.toDataURL("image/png");
+            photoFinal.classList.remove("hidden");
+            webcam.classList.add("hidden");
+            stickerOverlay.classList.add("hidden");
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+};
+
+/* 6. Resetear todo */
+const resetApp = () => {
+    stickerOverlay.innerHTML = "";
+    photoFinal.classList.add("hidden");
+    photoFinal.src = "";
+    webcam.classList.remove("hidden");
+    stickerOverlay.classList.remove("hidden");
+    canvas.classList.add("hidden");
+    btnCapture.disabled = true;
+    fileInput.value = ""; // Limpiar el input de archivo
+};
+
+/* 7. Event Listeners */
+
+// Delegación de eventos para los stickers que vienen del PHP
+document.addEventListener("click", (e) => {
+    if (e.target.matches("#stickers-container img")) {
+        addSticker(e.target);
+    }
 });
 
-btnCancel.addEventListener("click", reset);
-btnSend.addEventListener("click", () =>
-{
-    if (state === 0)    saveStickers();
-    else                makePhoto();
-});
-btnUpload.addEventListener("click", sendImage);
+btnCapture.addEventListener("click", takePhoto);
+btnCancel.addEventListener("click", resetApp);
+
+// El botón "Subir" solo abre el selector de archivos
+btnUpload.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", handleFileUpload);

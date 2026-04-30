@@ -1,0 +1,36 @@
+#sticker-picker img
+{
+    width: 100px;
+    height: 100px;
+}
+
+.hidden
+{
+    display: none;
+}
+
+.transparent
+{
+    opacity: 0;
+}
+
+video
+{
+    width: 400px;
+    height: 300px;
+}
+
+.sticker-on-webcam
+{
+    width: 100px;
+    height: 100px;
+}
+
+/* .sticker-on-webcam
+{
+    position: absolute;
+    width: 80px;
+    touch-action: none;
+    user-select: none;
+    cursor: move;
+} */

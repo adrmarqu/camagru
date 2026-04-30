@@ -1,70 +1,57 @@
-<main style="border: 3px solid blue;">
+<main id="camera-app">
 
-    <div id="stickers-container">{{::stickers::}}</div>
+    <!-- 1. Selección de stickers -->
+    <div id="sticker-picker">
+        {{::stickers::}}
+    </div>
 
-    <video id="webcam" autoplay playsinline muted></video>
-    <canvas id="canvas" class="hidden"></canvas>
-    <img id="final-img" class="hidden" alt="final_photo" title="Final photo">
+    <!-- 2. Zona cámara + overlay -->
+    <div id="camera-stage">
 
-    <div id="dinamic-stickers-container">
+        <video
+            id="webcam"
+            autoplay
+            playsinline
+            muted
+        ></video>
+
+        <!-- stickers superpuestos -->
+        <div id="sticker-overlay"></div>
 
     </div>
-    
-    <!-- Crear imagenes por js -->
 
-    <div id="btn-container">
-        <button id="btn-cancel" class="transparent"></button>
-        <button id="btn-send" disabled></button>
-        <button id="btn-upload" class="transparent"></button>
+    <!-- 3. Resultado final -->
+    <div id="photo-result">
+        <canvas id="photo-canvas" class="hidden"></canvas>
+        <img
+            id="photo-final"
+            class="hidden"
+            alt="final photo"
+            title="Final photo"
+        >
+    </div>
+
+    <!-- 4. Controles -->
+    <div id="camera-controls">
+
+        <button id="btn-cancel" class="transparent">
+            Cancelar
+        </button>
+
+        <button id="btn-capture" disabled>
+            Foto
+        </button>
+
+        <input type="file" id="file-input" accept=".jpg .jpeg .png" class="hidden">
+        <button id="btn-upload" class="transparent">
+            Subir
+        </button>
+
     </div>
 
 </main>
 
-<aside>
+<!-- 5. Historial / thumbnails -->
+<aside id="thumbnails">
     {{::thumbnails::}}
 </aside>
-
-    <!-- Estado 1 - Conseguir stickers -->
-    <div>
-        <div>
-            stickers
-        </div>
-        <div>
-            <video src=""></video>
-            <button>desactivado</button>
-        </div>
-    </div>
-
-    <!-- Estado 2 - Finalizar eleccion de stickers -->
-    <div>
-        <div>
-            stickers
-        </div>
-        <div>
-            <video src=""></video>
-            <img src="" alt="">
-            <button>activado</button>
-        </div>
-    </div>
-
-    <!-- Estado 3 - Conseguir la imagen -->
-    <div>
-        <div>
-            <video src=""></video>
-            <img src="" alt="">
-            <div>
-                <button>cancelar</button>
-                <button>capturar</button>
-                <button>archivos</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Estado 4 - Confirmar imagen fusionada -->
-    <div>
-        <div>
-            <img src="" alt="">
-            <button>cancelar</button>
-            <button>enviar</button>
-        </div>
-    </div>
