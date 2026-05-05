@@ -1,66 +1,108 @@
+/* Photo elements */
 const webcam = document.getElementById("webcam");
-const stickerList = document.querySelectorAll("#sticker-picker img");
-const stickerOverlay = document.getElementById("sticker-overlay");
 const canvas = document.getElementById("photo-canvas");
 const photoFinal = document.getElementById("photo-final");
+
+/* Containers */
+const stickerContainer = document.getElementById("sticker-picker");
+const previewContainer = document.getElementById("preview-container");
+const stickerOverlay = document.getElementById("sticker-overlay");
+
+/* stickers list */
+const stickerList = document.querySelectorAll("#sticker-picker img");
+
+/* input to take pictures from your machine */
 const fileInput = document.getElementById("file-input");
 
+/* buttons */
 const btnCapture = document.getElementById("btn-capture");
 const btnCancel = document.getElementById("btn-cancel");
 const btnUpload = document.getElementById("btn-upload");
 
-const startCamera = () =>
+const STAGES =
 {
-    navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        webcam.srcObject = stream;
-    })
-    .catch(err => {
-        console.error("Error al acceder a la webcam: ", err);
-    });
+    INITIAL: 'INITIAL',
+    MANAGE_STICKERS: 'STICKER',
+    GET_PHOTO: 'PHOTO',
+    RESULT: 'RESULT'
 };
 
-const stopCamera = () =>
+let currentState;
+
+const stateManage = () =>
 {
-    const stream = webacam.srcObject;
-
-    if (stream)
+    switch (currentState)
     {
-        const tracks = stream.getTraacks();
-        tracks.forEach(track => track.stop());
-        webcam.srcObject = null; 
-    }
-};
+        case STAGES.INITIAL:
 
-const cloneSticker = (img) =>
-{
-    if (stickerOverlay.childElementCount >= 5)
-    {
-        console.log("You reached the limit");
-        return ;
-    }
+            webcam.className = "";
+            photoFinal.className = "hidden";
 
-    const clone = document.createElement("img");
-    clone.src = img.src;
-    clone.alt = img.alt;
-    clone.title = img.title;
-    clone.dataset.stickerName = img.src.split('/').pop();
-    console.log("POP:", img.src.split('/').pop());
-    clone.classList.add("sticker-on-webcam");
+            stickerContainer.className = "";
+            previewContainer.className = "";
+            stickerOverlay.innerHTML = "";
 
-    clone.style.left = "50px";
-    clone.style.top = "50px";
-
-    stickerOverlay.appendChild(clone);
-    btnCapture.disabled = false;
-
-    clone.onclick = () =>
-    {
-        clone.remove();
-        if (stickerOverlay.children.length === 0)
+            btnCancel.className = "transparent";
+            btnUpload.className = "transparent";
             btnCapture.disabled = true;
-    };
+
+            break;
+        case STAGES.MANAGE_STICKERS:
+
+            webcam.className = "";
+            photoFinal.className = "hidden";
+            
+            stickerContainer.className = "";
+            previewContainer.className = "";
+
+            btnCancel.className = "";
+            btnUpload.className = "transparent";
+            btnCapture.disabled = false;
+
+            break;
+        case STAGES.GET_PHOTO:
+
+            webcam.className = "";
+            photoFinal.className = "hidden";
+
+            stickerContainer.className = "transparent";
+            previewContainer.className = "transparent";
+
+            btnUpload.className = "";
+
+            break;
+        case STAGES.RESULT:
+
+            webcam.className = "hidden";
+            photoFinal.className = "";
+
+            stickerContainer.className = "hidden";
+            previewContainer.className = "hidden";
+
+            btnUpload.className = "hidden";
+
+            /* Cancelar: Mantener stickers */
+            /* Subir: Dejar limpieza al estado 1 */
+
+            break;
+        default:
+            state = STAGES.INITIAL;
+            console.log("Unknown error (state: " + state + ")");
+    }
 };
+
+const setStage = (newState) =>
+{
+    currentState = newState;
+    stateManage();
+};
+
+setStage(STAGES.INITIAL);
+
+
+
+
+
 
 const sentToServer = (img) =>
 {
@@ -110,20 +152,6 @@ const sentToServer = (img) =>
     {
         console.log("Error:", e);
     });
-};
-
-const setImage = () =>
-{
-    canvas.width = webcam.videoWidth;
-    canvas.height = webcam.videoHeight;
-
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(webcam, 0, 0);
-
-    canvas.toBlob(blob =>
-    {
-        sentToServer(blob);
-    }, 'image/jpeg');
 };
 
 stickerList.forEach(img =>
