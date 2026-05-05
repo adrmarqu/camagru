@@ -1,36 +1,43 @@
-#sticker-picker img
+#sticker-picker img, #sticker-overlay img
 {
     width: 100px;
     height: 100px;
 }
 
-.hidden
-{
-    display: none;
-}
+/* Estado 1 */
 
-.transparent
-{
-    opacity: 0;
-}
+col: 1fr 8fr 1fr
+row: 9fr 1fr
 
-video
-{
-    width: 400px;
-    height: 300px;
-}
+/* Estado 2 */
 
-.sticker-on-webcam
-{
-    width: 100px;
-    height: 100px;
-}
+col: 1fr 8fr 1fr
+row: 9fr 1fr
 
-/* .sticker-on-webcam
-{
-    position: absolute;
-    width: 80px;
-    touch-action: none;
-    user-select: none;
-    cursor: move;
-} */
+overlay: absolute
+modificador: absolute
+
+/* Estado 3 */
+
+col: 1fr 8fr 1fr
+row: 9fr 1fr
+
+/* Estado 4 */
+
+col: 1fr
+
+buttons: absolute
+
+
+
+
+
+
+
+
+
+#camera-app aside { border: 2px solid red; }
+#camera-app section { border: 2px solid blue; }
+
+.hidden { display: none; }
+.transparent { opacity: 0; }

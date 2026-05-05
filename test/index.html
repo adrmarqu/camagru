@@ -7,70 +7,72 @@
     <link rel="stylesheet" href="css/style.css">
     <script type="module" src="js/editor.js"></script>
 </head>
-<body>
+<body id="editor">
     <main id="camera-app">
 
         <!-- 1. Selección de stickers -->
-        <div id="sticker-picker">
+        <aside id="sticker-picker">
             <img src="images/bright.png" alt="bright" title="bright">
             <img src="images/fire.png" alt="fire" title="fire">
             <img src="images/flowers.png" alt="flowers" title="flowers">
             <img src="images/fog.png" alt="fog" title="fog">
             <img src="images/glasses.png" alt="glasses" title="glasses">
-        </div>
+        </aside>
 
-        <!-- 2. Zona cámara + overlay -->
-        <div id="camera-stage">
+        <section>
+            <!-- 2. Zona cámara + overlay -->
+            <div id="camera-stage">
 
-            <video
-                id="webcam"
-                autoplay
-                playsinline
-                webkit-playsinline
-                muted
-                disablepictureinpicture
-            ></video>
+                <video
+                    id="webcam"
+                    autoplay
+                    playsinline
+                    webkit-playsinline
+                    muted
+                    disablepictureinpicture
+                ></video>
 
-            <!-- stickers superpuestos -->
-            <div id="sticker-overlay"></div>
+                <!-- stickers superpuestos -->
+                <div id="sticker-overlay" class="small"></div>
 
-        </div>
+            </div>
 
-        <!-- 3. Resultado final -->
-        <div id="photo-result">
-            <canvas id="photo-canvas" class="hidden"></canvas>
-            <img
-                id="photo-final"
-                class="hidden"
-                alt="final photo"
-                title="Final photo"
-            >
-        </div>
+            <!-- 3. Resultado final -->
+            <div id="photo-result">
+                <canvas id="photo-canvas" class="hidden"></canvas>
+                <img
+                    id="photo-final"
+                    class="hidden"
+                    alt="final photo"
+                    title="Final photo"
+                >
+            </div>
 
-        <!-- 4. Controles -->
-        <div id="camera-controls">
+            <!-- 4. Controles -->
+            <div id="camera-controls">
 
-            <button id="btn-cancel" class="transparent">
-                Cancelar
-            </button>
+                <button id="btn-cancel" class="transparent">
+                    Cancelar
+                </button>
 
-            <button id="btn-capture" disabled>
-                Foto
-            </button>
+                <button id="btn-capture" disabled>
+                    Foto
+                </button>
 
-            <input type="file" id="file-input" accept=".jpg .jpeg .png" class="hidden">
-            <button id="btn-upload" class="transparent">
-                Subir
-            </button>
-
-        </div>
+                <input type="file" id="file-input" accept=".jpg .jpeg .png" class="hidden">
+                <button id="btn-upload" class="transparent">
+                    Subir
+                </button>
+            </div>
+        </section>
 
         <!-- 5. Modificador de stickers -->
-        <div id="sticker-mod"></div>
-
+        <aside id="sticker-mod">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, suscipit modi minus id at odio dignissimos vero explicabo ipsam quia optio? Velit voluptatibus, nam ad ipsam placeat voluptas porro possimus.
+        </aside>
     </main>
-    <aside>
-        <div id="preview-container"></div>
+    <aside id="preview-container">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, suscipit modi minus id at odio dignissimos vero explicabo ipsam quia optio? Velit voluptatibus, nam ad ipsam placeat voluptas porro possimus.
     </aside>
 </body>
 </html>
