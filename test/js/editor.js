@@ -1,5 +1,5 @@
 import Camera from './camera.js';
-import StickerManager from './stickerManager.js';
+import { StickerManager } from './stickerManager.js';
 
 /* Photo elements */
 const webcam = document.getElementById("webcam");
@@ -14,6 +14,7 @@ const stickerOverlay = document.getElementById("sticker-overlay");
 /* stickers */
 const stickerList = document.querySelectorAll("#sticker-picker img");
 const stickerMod = document.getElementById("sticker-mod");
+const modTitle = document.getElementById("sticker-title");
 
 /* input to take pictures from your machine */
 const fileInput = document.getElementById("file-input");
@@ -23,6 +24,12 @@ const btnCapture = document.getElementById("btn-capture");
 const btnCancel = document.getElementById("btn-cancel");
 const btnUpload = document.getElementById("btn-upload");
 
+/* Modificator */
+const sizeMod = document.querySelector("#sticker-mod #size");
+const rotMod = document.querySelector("#sticker-mod #rotate");
+const delMod = document.querySelector("#sticker-mod #delete");
+const reset = document.querySelector("#camera-app section");
+
 const STATES =
 {
     INITIAL: 'INITIAL',
@@ -31,73 +38,72 @@ const STATES =
     RESULT: 'RESULT'
 };
 
-const LIMIT_STICKERS = 5;
-
 let currentState = null;
+let imgSelected = null;
 
 const stateManage = () =>
 {
     switch (currentState)
     {
         case STATES.INITIAL:
-
+            
+            stickerContainer.className = "";
+            
             webcam.className = "";
             photoFinal.className = "hidden";
-
-            stickerContainer.className = "";
-            previewContainer.className = "";
             stickerOverlay.innerHTML = "";
+            
             stickerMod.className = "hidden";
+            previewContainer.className = "";
 
-            btnCancel.className = "transparent";
-            btnUpload.className = "transparent";
+            btnCancel.className = "hidden";
             btnCapture.disabled = true;
-
-            /* Iniciar camara */
+            btnUpload.className = "hidden";
 
             Camera.start(webcam);
 
             break;
         case STATES.MANAGE_STICKERS:
 
+            stickerContainer.className = "";
+            
             webcam.className = "";
             photoFinal.className = "hidden";
             
-            stickerContainer.className = "";
-            previewContainer.className = "hidden";
-            stickerMod.className = "";
+            stickerMod.className = "hidden";
+            previewContainer.className = "";
 
             btnCancel.className = "";
-            btnUpload.className = "transparent";
             btnCapture.disabled = false;
-
-            /* Movimiento de los stickers */
+            btnUpload.className = "hidden";
 
             break;
         case STATES.GET_PHOTO:
 
+            stickerContainer.className = "transparent";
+            
             webcam.className = "";
             photoFinal.className = "hidden";
-
-            stickerContainer.className = "transparent";
-            previewContainer.className = "transparent";
+            
             stickerMod.className = "hidden";
+            previewContainer.className = "transparent";
 
+            btnCancel.className = "";
+            btnCapture.disabled = false;
             btnUpload.className = "";
 
             break;
         case STATES.RESULT:
 
+            stickerContainer.className = "hidden";
             webcam.className = "hidden";
             photoFinal.className = "";
-
-            stickerContainer.className = "hidden";
+            stickerMod.className = "hidden";
             previewContainer.className = "hidden";
 
-            btnUpload.className = "hidden";
-
-            /* Cancelar: Mantener stickers */
-            /* Subir: Dejar limpieza al estado 1 */
+            btnCancel.className = "";
+            btnCapture.disabled = false;
+            btnUpload.className = "";
 
             break;
         default:
@@ -138,7 +144,11 @@ const handleActions = async (action) =>
             break ;
         case STATES.RESULT:
             if (action === "PREV") setState(STATES.GET_PHOTO);
-            else if (action === "NEXT") setState(STATES.INITIAL);
+            else if (action === "NEXT")
+            {
+                saveImg();
+                setState(STATES.INITIAL);
+            }
             break ;
         default:
             currentState = STATES.INITIAL;
@@ -185,6 +195,27 @@ const getPictureFiles = () =>
     };
 };
 
+const saveImg = () =>
+{
+    alert("Imagen guardada");
+    return ;
+};
+
+const setModContainer = () =>
+{
+    if (!imgSelected)
+        return ;
+
+    stickerMod.className = "";
+    previewContainer.className = "hidden";
+
+    const n = imgSelected.dataset.stickerName;
+
+    modTitle.innerHTML = n.split('.').shift();
+    sizeMod.value = imgSelected.dataset.scale;
+    rotMod.value = imgSelected.dataset.rotate;
+};
+
 btnCapture.addEventListener("click", () => handleActions("NEXT"));
 btnCancel.addEventListener("click", () => handleActions("PREV"));
 btnUpload.addEventListener("click", () => fileInput.click());
@@ -192,29 +223,57 @@ fileInput.addEventListener("change", getPictureFiles);
 
 stickerList.forEach(sticker =>
 {
-    sticker.addEventListener("click", () =>
+    sticker.addEventListener("click", () => 
     {
-        if (currentState === STATES.GET_PHOTO || currentState === STATES.RESULT)
-            return ;
-
-        if (stickerOverlay.children.length < LIMIT_STICKERS)
+        const clone = StickerManager.create(sticker);
+        if (clone)
         {
-            const clone = StickerManager.createSticker(sticker);
-
-            clone.onclick = () =>
+            clone.addEventListener("click", () =>
             {
-                if (currentState === STATES.GET_PHOTO || currentState === STATES.RESULT) return ;
-
-                clone.remove();
-                if (stickerOverlay.children.length === 0)
-                    setState(STATES.INITIAL);
-            };
-
-            stickerOverlay.appendChild(clone);
-
-            setState(STATES.MANAGE_STICKERS);
+                imgSelected = clone;
+                setModContainer();
+            });
         }
+        if (stickerOverlay.children.length === 1)
+            setState(STATES.MANAGE_STICKERS);
+        imgSelected = clone;
+        setModContainer();
     });
+});
+
+sizeMod.addEventListener("input", () =>
+{
+    if (!imgSelected) return ;
+
+    imgSelected.dataset.scale = sizeMod.value;
+    StickerManager.modify(imgSelected);
+});
+
+rotMod.addEventListener("input", () =>
+{
+    if (!imgSelected) return ;
+
+    imgSelected.dataset.rotate = rotMod.value;
+    StickerManager.modify(imgSelected);
+});
+
+delMod.addEventListener("click", () =>
+{
+    if (!imgSelected)
+        return ;
+
+    imgSelected.remove();
+    imgSelected = null;
+
+    if (stickerOverlay.children.length === 0)
+        setState(STATES.INITIAL);
+});
+
+webcam.addEventListener("click", () =>
+{
+    imgSelected = null;
+    stickerMod.className = "hidden";
+    previewContainer.className = "";
 });
 
 setState(STATES.INITIAL);

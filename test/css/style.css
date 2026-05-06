@@ -4,37 +4,21 @@
     height: 100px;
 }
 
-/* Estado 1 */
+video
+{
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
 
-col: 1fr 8fr 1fr
-row: 9fr 1fr
+#camera-app
+{
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+}
 
-/* Estado 2 */
-
-col: 1fr 8fr 1fr
-row: 9fr 1fr
-
-overlay: absolute
-modificador: absolute
-
-/* Estado 3 */
-
-col: 1fr 8fr 1fr
-row: 9fr 1fr
-
-/* Estado 4 */
-
-col: 1fr
-
-buttons: absolute
-
-
-
-
-
-
-
-
+.text-center { text-align: center; }
 
 #camera-app aside { border: 2px solid red; }
 #camera-app section { border: 2px solid blue; }

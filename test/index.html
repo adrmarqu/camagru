@@ -10,7 +10,7 @@
 <body id="editor">
     <main id="camera-app">
 
-        <!-- 1. Selección de stickers -->
+        <!-- 1. Lista de stickers a escoger -->
         <aside id="sticker-picker">
             <img src="images/bright.png" alt="bright" title="bright">
             <img src="images/fire.png" alt="fire" title="fire">
@@ -68,7 +68,10 @@
 
         <!-- 5. Modificador de stickers -->
         <aside id="sticker-mod">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, suscipit modi minus id at odio dignissimos vero explicabo ipsam quia optio? Velit voluptatibus, nam ad ipsam placeat voluptas porro possimus.
+            <h3 id="sticker-title" class="text-center"></h3>
+            <input id="size" type="range" min="0.5" max="5" step="0.1" value="1">
+            <input id="rotate" type="range" min="0" max="360" step="1" value="0">
+            <button id="delete">Delete</button>
         </aside>
     </main>
     <aside id="preview-container">
