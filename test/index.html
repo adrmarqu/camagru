@@ -69,8 +69,13 @@
         <!-- 5. Modificador de stickers -->
         <aside id="sticker-mod">
             <h3 id="sticker-title" class="text-center"></h3>
-            <input id="size" type="range" min="0.5" max="5" step="0.1" value="1">
-            <input id="rotate" type="range" min="0" max="360" step="1" value="0">
+
+            <label for="size">Size</label>
+            <input id="size" type="range" name="size" min="0.5" max="5" step="0.1" value="1">
+
+            <label for="rotate">Rotation</label>
+            <input id="rotate" name="rotate" type="range" min="-180" max="180" step="1" value="0">
+            
             <button id="delete">Delete</button>
         </aside>
     </main>

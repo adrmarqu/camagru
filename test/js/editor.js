@@ -1,4 +1,5 @@
 import Camera from './camera.js';
+import { Merge } from './serverCam.js';
 import { StickerManager } from './stickerManager.js';
 
 /* Photo elements */
@@ -40,6 +41,7 @@ const STATES =
 
 let currentState = null;
 let imgSelected = null;
+let imgDownloaded = false;
 
 const stateManage = () =>
 {
@@ -47,6 +49,9 @@ const stateManage = () =>
     {
         case STATES.INITIAL:
             
+            URL.revokeObjectURL(photoFinal.src);
+            photoFinal.src = "";
+
             stickerContainer.className = "";
             
             webcam.className = "";
@@ -92,6 +97,9 @@ const stateManage = () =>
             btnCapture.disabled = false;
             btnUpload.className = "";
 
+            URL.revokeObjectURL(photoFinal.src);
+            photoFinal.src = "";
+
             break;
         case STATES.RESULT:
 
@@ -104,6 +112,8 @@ const stateManage = () =>
             btnCancel.className = "";
             btnCapture.disabled = false;
             btnUpload.className = "";
+
+            imgDownloaded = false;
 
             break;
         default:
@@ -134,11 +144,9 @@ const handleActions = async (action) =>
             else if (action === "NEXT")
             {
                 const blob = await Camera.elementToBlob(webcam, canvas);
-                const objectUrl = URL.createObjectURL(blob);
                 
-                photoFinal.src = objectUrl;
-                URL.revokeObjectURL(objectUrl);
-
+                photoFinal.src = URL.createObjectURL(blob);
+                
                 setState(STATES.RESULT);
             }
             break ;
@@ -146,7 +154,7 @@ const handleActions = async (action) =>
             if (action === "PREV") setState(STATES.GET_PHOTO);
             else if (action === "NEXT")
             {
-                saveImg();
+                Merge.upload(photoFinal, stickerOverlay, imgDownloaded);
                 setState(STATES.INITIAL);
             }
             break ;
@@ -166,21 +174,16 @@ const getPictureFiles = () =>
         return;
     }
     const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    img.src = objectUrl;
+    img.src = URL.createObjectURL(file);
 
     img.onload = async () =>
     {
         try
         {
             const blob = await Camera.elementToBlob(img, canvas);
-            const finalUrl = URL.createObjectURL(blob);
-            photoFinal.src = finalUrl;
-
+            photoFinal.src = URL.createObjectURL(blob);
+            
             setState(STATES.RESULT);
-
-            URL.revokeObjectURL(objectUrl);
         }
         catch (err)
         {
@@ -191,14 +194,8 @@ const getPictureFiles = () =>
     img.onerror = () =>
     {
         console.error("Invalid image file");
-        URL.revokeObjectURL(objectUrl);
+        URL.revokeObjectURL(img.src);
     };
-};
-
-const saveImg = () =>
-{
-    alert("Imagen guardada");
-    return ;
 };
 
 const setModContainer = () =>
@@ -216,11 +213,33 @@ const setModContainer = () =>
     rotMod.value = imgSelected.dataset.rotate;
 };
 
+const showPreviews = () =>
+{
+    stickerMod.className = "hidden";
+    previewContainer.className = "";
+}
+
+/* Next */
 btnCapture.addEventListener("click", () => handleActions("NEXT"));
+
+/* Previous */
 btnCancel.addEventListener("click", () => handleActions("PREV"));
-btnUpload.addEventListener("click", () => fileInput.click());
+
+/* Upload - Download */
+btnUpload.addEventListener("click", async () =>
+{
+    if (currentState === STATES.GET_PHOTO)
+        fileInput.click();
+    else if (currentState === STATES.RESULT)
+    {
+        photoFinal.src = await Merge.download(photoFinal, stickerOverlay, imgDownloaded);
+        if (photoFinal.src)
+            imgDownloaded = true;
+    }
+});
 fileInput.addEventListener("change", getPictureFiles);
 
+/* Stickers - Overlay */
 stickerList.forEach(sticker =>
 {
     sticker.addEventListener("click", () => 
@@ -241,6 +260,7 @@ stickerList.forEach(sticker =>
     });
 });
 
+/* Modificator */
 sizeMod.addEventListener("input", () =>
 {
     if (!imgSelected) return ;
@@ -248,7 +268,6 @@ sizeMod.addEventListener("input", () =>
     imgSelected.dataset.scale = sizeMod.value;
     StickerManager.modify(imgSelected);
 });
-
 rotMod.addEventListener("input", () =>
 {
     if (!imgSelected) return ;
@@ -256,7 +275,6 @@ rotMod.addEventListener("input", () =>
     imgSelected.dataset.rotate = rotMod.value;
     StickerManager.modify(imgSelected);
 });
-
 delMod.addEventListener("click", () =>
 {
     if (!imgSelected)
@@ -265,15 +283,15 @@ delMod.addEventListener("click", () =>
     imgSelected.remove();
     imgSelected = null;
 
+    showPreviews();
+
     if (stickerOverlay.children.length === 0)
         setState(STATES.INITIAL);
 });
-
 webcam.addEventListener("click", () =>
 {
     imgSelected = null;
-    stickerMod.className = "hidden";
-    previewContainer.className = "";
+    showPreviews();
 });
 
 setState(STATES.INITIAL);
