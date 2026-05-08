@@ -4,6 +4,8 @@
     height: 100px;
 }
 
+body { background-color: black; }
+
 video
 {
     width: 100%;

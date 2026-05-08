@@ -21,6 +21,29 @@ body
 5- Modificador de stickers (aside2)
 6- Contenedor con las previews (aside3)
 
+export default class Camera {
+    start() { console.log("Cámara ON"); }
+}
+
+
+-- INPUT --
+
+const input = document.getElementById('miInput');
+const file = input.files[0];
+
+const formData = new FormData();
+formData.append('foto', file); // 'foto' es el nombre del campo que recibirá el servidor
+
+
+-- CANVAS --
+
+canvas.toBlob((blob) => {
+  const formData = new FormData();
+  // El tercer parámetro 'foto.jpg' es importante para que el servidor 
+  // crea que es un archivo real con nombre.
+  formData.append('foto', blob, 'foto.jpg'); 
+}, 'image/jpeg');
+
 src/
 │
 ├── editor.js
