@@ -4,7 +4,7 @@
     height: 100px;
 }
 
-body { background-color: black; }
+body { background-color: white; }
 
 video
 {
@@ -27,3 +27,15 @@ video
 
 .hidden { display: none; }
 .transparent { opacity: 0; }
+
+.sticker-on-webcam
+{
+    position: absolute;
+    left: -100px;
+    top: -100px;
+
+    cursor: grab;
+    user-select: none;
+}
+
+.sticker-on-webcam.dragging { cursor: grabbing; }

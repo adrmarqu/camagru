@@ -1,4 +1,5 @@
 import DOM from './dom.js';
+import Capture from '../camera/capture.js';
 
 const States = 
 {
@@ -32,8 +33,9 @@ const States =
 
     sumState()
     {
+        if (this._current === 3) Capture.getPhoto(true); 
         this._current++;
-        if (this._current > 4) this._current = 0;
+        if (this._current > 4) this.initial();
         this._setState(this._current);
     },
 
@@ -67,11 +69,12 @@ const States =
 
         /* ACTION */
         
-        this._trans(this.ui.prev); this._trans(this.ui.port);
+        this._trans(this.ui.prev);
+        this._trans(this.ui.port);
         this.ui.next.disabled = true;
     },
 
-    stiker()
+    sticker()
     {
         this._current = 2;
 
@@ -162,7 +165,7 @@ const States =
                 this.initial();
                 break ;
             case 2:
-                this.stiker();
+                this.sticker();
                 break ;
             case 3:
                 this.photo();
@@ -171,7 +174,7 @@ const States =
                 this.result();
                 break ;
             default:
-                console.log("Inknown error: State.setState(" + state + ")");
+                console.log("Unknown error: State.setState(" + state + ")");
                 this.initial();
         }
     }
