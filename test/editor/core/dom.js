@@ -19,12 +19,11 @@ const DOM =
     /* Sticker modificator */
     stickerMod: document.getElementById("sticker-mod"),
     modTitle: document.getElementById("sticker-title"),
-
-    /* Modificator actions */
     sizeMod: document.querySelector("#sticker-mod #size"),
     rotMod: document.querySelector("#sticker-mod #rotate"),
-    delMod: document.querySelector("#sticker-mod #delete"),
-    reset: document.querySelector("#camera-app section"),
+    btnClose: document.getElementById("btn-close"),
+    btnReset: document.getElementById("btn-reset"),
+    btnDelete: document.getElementById("btn-delete"),
 
     /* buttons */
     btnCapture: document.getElementById("btn-capture"),

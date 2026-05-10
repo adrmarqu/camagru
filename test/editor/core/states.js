@@ -153,7 +153,8 @@ const States =
 
     _clean(obj)
     {
-        URL.revokeObjectURL(obj.src);
+        if (obj.src.startsWith('blob:'))
+            URL.revokeObjectURL(obj.src);
         obj.src = "";
     },
 

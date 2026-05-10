@@ -12,7 +12,25 @@ const Export =
 
     async merge(formData)
     {
-        return false;
+        const response = await fetch('mi_archivo.php',
+        {
+            method: 'POST',
+            body: formData
+        });
+
+        /*
+            response =
+            {
+                ok: bool,
+                status: code
+                message: message
+                headers {...}
+                body: stream (imagen)
+            }
+        */
+
+        if (!response.ok) throw new Error(`Server error: ${response.message}`);
+        return await response.blob();
     },
 
     async download()

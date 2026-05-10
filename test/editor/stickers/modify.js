@@ -1,5 +1,5 @@
 import DOM from "../core/dom.js";
-import States from "../core/states.js";
+import Sticker from "./stickers.js";
 
 const Modify = 
 {
@@ -7,6 +7,7 @@ const Modify =
     {
         container: null,
         preview: null,
+        overlay: null,
 
         title: null,
         size: null,
@@ -18,6 +19,7 @@ const Modify =
     {
         this.ui.container = DOM.stickerMod;
         this.ui.preview = DOM.previewContainer;
+        this.ui.overlay = DOM.stickerOverlay;
         this.ui.title = DOM.modTitle;
         this.ui.size = DOM.sizeMod;
         this.ui.rotate = DOM.rotMod;
@@ -48,16 +50,27 @@ const Modify =
         const x = this.sticker.dataset.x || 0;
         const y = this.sticker.dataset.y || 0;
         const scale = this.ui.size.value || 1;
-        const rotation = this.ui.rotate.value || 0;
+        const rotate = this.ui.rotate.value || 0;
 
         this.sticker.dataset.scale = scale;
-        this.sticker.dataset.rotation = rotation;
+        this.sticker.dataset.rotate = rotate;
 
         this.sticker.style.transform = `
             translate(${x}px, ${y}px)
             scale(${scale})
-            rotate(${rotation}deg)
+            rotate(${rotate}deg)
         `;
+    },
+
+    reset()
+    {
+        const newSticker = document.createElement("img");
+        newSticker.src = this.sticker.src;
+        newSticker.alt = this.sticker.alt;
+        newSticker.title = this.sticker.title;
+
+        this.delete();
+        Sticker.create(newSticker);
     },
 
     delete()

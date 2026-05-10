@@ -33,8 +33,7 @@ const Sticker =
         clone.dataset.x = 0;
         clone.dataset.y = 0;
         clone.dataset.scale = 1;
-        clone.dataset.rotation = 0;
-        /* Init pos in css */
+        clone.dataset.rotate = 0;
 
         Events.stickerMod(clone);
 

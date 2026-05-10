@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/show.css">
     <script type="module" src="editor/script.js"></script>
 </head>
 <body id="editor">
     <main id="camera-app">
 
         <!-- 1. Lista de stickers a escoger -->
-        <aside id="sticker-picker">
+        <article id="sticker-picker">
             <img src="images/bright.png" alt="bright" title="bright">
             <img src="images/fire.png" alt="fire" title="fire">
             <img src="images/flowers.png" alt="flowers" title="flowers">
             <img src="images/fog.png" alt="fog" title="fog">
             <img src="images/glasses.png" alt="glasses" title="glasses">
-        </aside>
+        </article>
 
-        <section>
+        <section id="main-interface">
             <!-- 2. Zona cámara + overlay -->
             <div id="camera-stage">
 
@@ -67,17 +67,23 @@
         </section>
 
         <!-- 5. Modificador de stickers -->
-        <aside id="sticker-mod">
-            <h3 id="sticker-title" class="text-center"></h3>
+        <form id="sticker-mod">
+            <div id="mod-header">
+                <h3 id="sticker-title" class="text-center"></h3>
+                <button id="btn-close" class="close-x" type="button">x</button>
+            </div>
 
             <label for="size">Size</label>
             <input id="size" type="range" name="size" min="0.5" max="5" step="0.1" value="1">
 
             <label for="rotate">Rotation</label>
             <input id="rotate" name="rotate" type="range" min="-180" max="180" step="1" value="0">
-            
-            <button id="delete">Delete</button>
-        </aside>
+
+            <div id="mod-actions">
+                <button id="btn-reset" type="reset">Reset</button>
+                <button id="btn-delete" type="button">Delete</button>
+            </div>
+        </form>
     </main>
     <aside id="preview-container">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, suscipit modi minus id at odio dignissimos vero explicabo ipsam quia optio? Velit voluptatibus, nam ad ipsam placeat voluptas porro possimus.

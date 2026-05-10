@@ -1,5 +1,6 @@
 import Export from "../export/export.js";
 import DOM from "../core/dom.js";
+import States from "../core/states.js";
 
 const Capture =
 {
@@ -18,18 +19,30 @@ const Capture =
 
     async getPhoto(local)
     {
-        let blob = local ? await this._fromSelfie() : this._fromInput();
-        if (!blob) return ;
+        try
+        {
+            let blob = local ? await this._fromSelfie() : this._fromInput();
+            if (!blob) throw new Error("Failed to get the image");
 
-        const stickers = this._getStickers();
-        if (!stickers) return ;
+            const stickers = this._getStickers();
+            if (!stickers) throw new Error("No stickers selected");
 
-        const formData = new FormData();
-        
-        formData.append('photo', blob);
-        formData.append("stickers", JSON.stringify(stickers));
+            const formData = new FormData();            
+            formData.append('photo', blob);
+            formData.append("stickers", JSON.stringify(stickers));
 
-        return Export.merge(formData);
+            const blobFinal = await Export.merge(formData);
+
+            States._clean(this.photo);
+            this.photo.src = URL.createObjectURL(blobFinal);
+            return true;
+        }
+        catch (error)
+        {
+            console.error("Error:", error.message);
+            States.initial();
+            return false;
+        }
     },
 
     async _fromSelfie()
@@ -58,7 +71,7 @@ const Capture =
             x: Number(sticker.dataset.x || 0),
             y: Number(sticker.dataset.y || 0),
             scale: Number(sticker.dataset.scale || 1),
-            rotation: Number(sticker.dataset.rotation || 0),
+            rotate: Number(sticker.dataset.rotate || 0),
             src: sticker.dataset.stickerFile
         }));
         return stickers;

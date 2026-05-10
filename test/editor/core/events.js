@@ -25,6 +25,8 @@ const Events =
         btnSize: null,
         btnRotate: null,
         btnDel: null,
+        btnClose: null,
+        btnReset: null
     },
 
     prepare()
@@ -36,7 +38,9 @@ const Events =
         this.ui.stickerList = DOM.stickerList;
         this.ui.btnSize = DOM.sizeMod;
         this.ui.btnRotate = DOM.rotMod;
-        this.ui.btnDel = DOM.delMod;
+        this.ui.btnDel = DOM.btnDelete;
+        this.ui.btnClose = DOM.btnClose;
+        this.ui.btnReset = DOM.btnReset;
 
         this.init();
     },
@@ -74,6 +78,8 @@ const Events =
             Modify.delete();
             Sticker.remove();
         });
+        this.ui.btnClose.addEventListener("click", () => Modify.hide());
+        this.ui.btnReset.addEventListener("click", () => Modify.reset());
 
         /* Sticker move */
 
@@ -97,7 +103,11 @@ const Events =
 
     stickerMod(sticker)
     {
-        sticker.addEventListener("click", () => Modify.show(sticker));
+        sticker.addEventListener("click", () =>
+        {
+            if (States.getState() === 2)
+                Modify.show(sticker);
+        });
         Modify.show(sticker);
         this._stickerMove(sticker);
     },
@@ -106,6 +116,8 @@ const Events =
     {
         sticker.addEventListener("mousedown", e =>
         {
+            if (States.getState() !== 2) return;
+
             this.moving = true;
 
             this.offsetX = e.clientX - sticker.offsetLeft;
