@@ -45,7 +45,7 @@ abstract class BaseController
     private function addGlobalsVars(array $data): array
     {
         $global = 
-        [
+        [ 
             'links' => '',
             'scripts' => '',
 
@@ -75,7 +75,7 @@ abstract class BaseController
         {
             $incs['links'] =
             [
-                'path' => COMPONENTS . 'link.tpl',
+                'path' => COMPONENTS . '/link.tpl',
                 'n' => 3,
                 'data' => $css
             ];

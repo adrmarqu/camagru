@@ -68,10 +68,10 @@ class View
 
     public function printHtml(string $screen, array $data, array $incs = []): void
     {
-        $html = $this->convertTpl(GLOBALS . 'head.tpl');
-        $html .= $this->convertTpl(GLOBALS . 'header.tpl');
+        $html = $this->convertTpl(LAYOUTS . '/head.tpl');
+        $html .= $this->convertTpl(LAYOUTS . '/header.tpl');
         $html .= $this->convertTpl(SCREENS . $screen);
-        $html .= $this->convertTpl(GLOBALS . 'footer.tpl');
+        $html .= $this->convertTpl(LAYOUTS . '/footer.tpl');
 
         /* Include other tpl */
         $html = $this->setIncludes($html, $incs);

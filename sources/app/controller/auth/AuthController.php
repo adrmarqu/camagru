@@ -14,19 +14,19 @@ class AuthController extends BaseController
         [
             'links' => 
             [
-                'path' => COMPONENTS . 'link.tpl',
+                'path' => COMPONENTS . '/link.tpl',
                 'n' => 1,
                 'data' => [['filename' => 'form.css']]
             ],
             'scripts' => 
             [
-                'path' => COMPONENTS . 'script.tpl',
+                'path' => COMPONENTS . '/script.tpl',
                 'n' => 1,
                 'data' => [['filename' => 'checkForm.js']]
             ],
             'form_content' => 
             [
-                'path' => FORMS . "{$this->name}.tpl",
+                'path' => FORMS . "/{$this->name}.tpl",
                 'n' => 0,
                 'data' => [] 
             ]
@@ -40,7 +40,7 @@ class AuthController extends BaseController
         if ($this->isPost())
             $this->load($this->name);
 
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'title' => 'Camagru | Login',
 
@@ -59,7 +59,7 @@ class AuthController extends BaseController
         if ($this->isPost())
             $this->load($this->name);
 
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'title' => 'Camagru | Signin',
 

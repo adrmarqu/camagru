@@ -8,19 +8,19 @@ class TokenController extends BaseController
     [
         'links' => 
         [
-            'path' => COMPONENTS . 'link.tpl',
+            'path' => COMPONENTS . '/link.tpl',
             'n' => 1,
             'data' => [['filename' => 'form.css']]
         ],
         'scripts' => 
         [
-            'path' => COMPONENTS . 'script.tpl',
+            'path' => COMPONENTS . '/script.tpl',
             'n' => 1,
             'data' => [['filename' => 'checkForm.js']]
         ],
         'form_content' => 
         [
-            'path' => FORMS . "verification.tpl",
+            'path' => FORMS . "/verification.tpl",
             'n' => 0,
             'data' => [] 
         ]
@@ -36,7 +36,7 @@ class TokenController extends BaseController
 
     public function checkAccount()
     {
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'name' => 'verify-account',
             'verification' => t('form.verification_account'),
@@ -46,7 +46,7 @@ class TokenController extends BaseController
 
     public function checkEmail()
     {
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'name' => 'verify-email',
             'verification' => t('form.verification_email'),

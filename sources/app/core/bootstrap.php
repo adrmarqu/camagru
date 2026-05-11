@@ -4,7 +4,9 @@ define('ROOT', dirname(__DIR__, 2) . '');
 
 /* Public */
 
-define('FRONTEND', ROOT . '/public');
+define('FRONTEND', '/');
+define('ASSETS', '/media/assets');
+define('UPLOADS', '/media/uploads');
 
 /* Server */
 
@@ -12,7 +14,7 @@ define('BACKEND', ROOT . '/app/');
 define('TEMPLATES', BACKEND . '/view/templates');
 define('COMPONENTS', TEMPLATES . '/components');
 define('SCREENS', TEMPLATES . '/screens');
-define('GLOBALS', TEMPLATES . '/globals');
+define('LAYOUTS', TEMPLATES . '/layouts');
 define('FORMS', TEMPLATES . '/forms');
 
 /* Others */

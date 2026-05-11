@@ -1,57 +1,72 @@
 <main id="camera-app">
 
-    <!-- 1. Selección de stickers -->
-    <div id="sticker-picker">
-        {{::stickers::}}
-    </div>
+    <article id="sticker-picker">
+        {{::images::}}
+    </article>
 
-    <!-- 2. Zona cámara + overlay -->
-    <div id="camera-stage">
+    <section id="main-interface">
+        <div id="camera-stage">
 
-        <video
-            id="webcam"
-            autoplay
-            playsinline
-            muted
-        ></video>
+            <video
+                id="webcam"
+                autoplay
+                playsinline
+                webkit-playsinline
+                muted
+                disablepictureinpicture
+            ></video>
 
-        <!-- stickers superpuestos -->
-        <div id="sticker-overlay"></div>
+            <div id="sticker-overlay" class="small"></div>
 
-    </div>
+        </div>
 
-    <!-- 3. Resultado final -->
-    <div id="photo-result">
-        <canvas id="photo-canvas" class="hidden"></canvas>
-        <img
-            id="photo-final"
-            class="hidden"
-            alt="final photo"
-            title="Final photo"
-        >
-    </div>
+        <div id="photo-result">
+            <canvas id="photo-canvas" class="hidden"></canvas>
+            <img
+                id="photo-final"
+                class="hidden"
+                alt="final photo"
+                title="Final photo"
+            >
+        </div>
 
-    <!-- 4. Controles -->
-    <div id="camera-controls">
+        <div id="camera-controls">
 
-        <button id="btn-cancel" class="transparent">
-            Cancelar
-        </button>
+            <button id="btn-cancel" class="transparent">
+                {{::cancel::}}
+            </button>
 
-        <button id="btn-capture" disabled>
-            Foto
-        </button>
+            <button id="btn-capture" disabled>
+                <!-- Imagen o dibujo de camara -->
+                {{::photo::}}
+            </button>
 
-        <input type="file" id="file-input" accept=".jpg .jpeg .png" class="hidden">
-        <button id="btn-upload" class="transparent">
-            Subir
-        </button>
+            <input type="file" id="file-input" accept=".jpg .jpeg .png" class="hidden">
+            <button id="btn-upload" class="transparent">
+                <!-- Imagen de subir/descargar -->
+                {{::upload::}}
+            </button>
+        </div>
+    </section>
 
-    </div>
+    <form id="sticker-mod">
+        <div id="mod-header">
+            <h3 id="sticker-title" class="text-center"></h3>
+            <button id="btn-close" class="close-x" type="button">x</button>
+        </div>
 
+        <label for="size">{{::scale::}}</label>
+        <input id="size" type="range" name="size" min="0.5" max="5" step="0.1" value="1">
+
+        <label for="rotate">{{::rotation::}}</label>
+        <input id="rotate" name="rotate" type="range" min="-180" max="180" step="1" value="0">
+
+        <div id="mod-actions">
+            <button id="btn-reset" type="reset">{{::reset::}}</button>
+            <button id="btn-delete" type="button">{{::delete::}}</button>
+        </div>
+    </form>
 </main>
-
-<!-- 5. Historial / thumbnails -->
-<aside id="thumbnails">
+<aside id="preview-container">
     {{::thumbnails::}}
 </aside>

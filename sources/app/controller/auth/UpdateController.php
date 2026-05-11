@@ -8,13 +8,13 @@ class UpdateController extends BaseController
     [
         'links' => 
         [
-            'path' => COMPONENTS . 'link.tpl',
+            'path' => COMPONENTS . '/link.tpl',
             'n' => 1,
             'data' => [['filename' => 'form.css']]
         ],
         'scripts' => 
         [
-            'path' => COMPONENTS . 'script.tpl',
+            'path' => COMPONENTS . '/script.tpl',
             'n' => 1,
             'data' => [['filename' => 'checkForm.js']]
         ],
@@ -26,13 +26,13 @@ class UpdateController extends BaseController
         [
             'form_content' =>
             [
-                'path' => FORMS . "updateUser.tpl",
+                'path' => FORMS . "/updateUser.tpl",
                 'n' => 0,
                 'data' => [] 
             ]
         ];
 
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'user' => t('form.new.user'),
             'pass' => t('form.current.pass')
@@ -45,13 +45,13 @@ class UpdateController extends BaseController
         [
             'form_content' =>
             [
-                'path' => FORMS . "updateEmail.tpl",
+                'path' => FORMS . "/updateEmail.tpl",
                 'n' => 0,
                 'data' => [] 
             ]
         ];
 
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'email' => t('form.new.email'),
             'pass' => t('form.current.pass')
@@ -64,13 +64,13 @@ class UpdateController extends BaseController
         [
             'form_content' =>
             [
-                'path' => FORMS . "updatePass.tpl",
+                'path' => FORMS . "/updatePass.tpl",
                 'n' => 0,
                 'data' => [] 
             ]
         ];
 
-        $this->render('form.tpl',
+        $this->render('/form.tpl',
         [
             'current' => t('form.current.pass'),
             'new' => t('form.new.pass'),

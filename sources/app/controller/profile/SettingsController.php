@@ -6,6 +6,6 @@ class SettingsController extends BaseController
 {
     public function settings()
     {
-        $this->render('settings.tpl', [], []);
+        $this->render('/settings.tpl', [], []);
     }
 }

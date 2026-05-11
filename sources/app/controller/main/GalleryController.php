@@ -6,6 +6,6 @@ class GalleryController extends BaseController
 {
     public function gallery()
     {
-        $this->render('gallery.tpl', [], []);
+        $this->render('/gallery.tpl', [], []);
     }
 }

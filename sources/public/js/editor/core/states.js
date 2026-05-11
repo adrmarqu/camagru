@@ -1,5 +1,6 @@
 import DOM from './dom.js';
 import Capture from '../camera/capture.js';
+import Export from '../export/export.js';
 
 const States = 
 {
@@ -33,8 +34,11 @@ const States =
 
     sumState()
     {
-        if (this._current === 3) Capture.getPhoto(true); 
+        if (this._current === 3 && !Capture.getPhoto(true)) return ;
+        if (this._current === 4 && !Export.upload()) return ;
+
         this._current++;
+
         if (this._current > 4) this.initial();
         this._setState(this._current);
     },

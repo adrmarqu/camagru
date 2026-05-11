@@ -6,7 +6,7 @@ class PhotoController extends BaseController
 {
     public function gallery()
     {
-        $this->render('photos.tpl',
+        $this->render('/photos.tpl',
         [
             
         ],
