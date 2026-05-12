@@ -17,12 +17,11 @@ class App
         if (session_status() === PHP_SESSION_NONE)
             session_start();
 
+        $this->checkUser();
         $page = $this->parseUrl();
-
         $routes = require BACKEND . 'core/routes.php';
-
+        
         $router = new Router();
-
         foreach ($routes as $path => [$dir, $controller, $method])
             $router->add($path, $dir, $controller, $method);
 
@@ -46,5 +45,16 @@ class App
             exit();
         }
         return $page;
+    }
+
+    private function checkUser(): void
+    {
+        if (!isset($_SESSION['user_id']))
+        {
+            if (isset($_COOKIE['remember_user']))
+            {
+                $token = $_COOKIE['remember_user'];
+            }
+        }
     }
 }

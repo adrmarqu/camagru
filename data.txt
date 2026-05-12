@@ -8,6 +8,7 @@
 ├── settings.php
 ├── logout.php
 
+brew install --cask docker
 
 Combinación recomendada (la óptima)
 Haz esto y casi seguro tienes +25:

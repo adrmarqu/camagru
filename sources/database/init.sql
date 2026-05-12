@@ -1,19 +1,24 @@
 /* TABLES */
 
+CREATE TYPE user_role AS ENUM('super', 'user');
+CREATE TYPE token_type AS ENUM('account_creation', 'new_email', 'remember_user');
+CREATE TYPE img_format AS ENUM('jpg', 'png', 'gif');
+
 CREATE TABLE users
 (
     id              SERIAL PRIMARY KEY,
     username        VARCHAR(30) UNIQUE NOT NULL,
     email           VARCHAR(100) UNIQUE NOT NULL,
     password_hash   VARCHAR(255) NOT NULL,
-    is_verified     BOOLEAN
+    is_active       BOOLEAN DEFAULT FALSE,
+    role            user_role NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE tokens
 (
     id              SERIAL PRIMARY KEY,
     token           VARCHAR(255) NOT NULL,
-    type            VARCHAR(20) NOT NULL,
+    type            token_type NOT NULL DEFAULT 'account',
     new_value       VARCHAR(100),
     attempts        INTEGER NOT NULL DEFAULT 0,
     expires_at      TIMESTAMP NOT NULL,
@@ -24,6 +29,8 @@ CREATE TABLE images
 (
     id              SERIAL PRIMARY KEY,
     filename        VARCHAR(50) UNIQUE NOT NULL,
+    type            img_format NOT NULL DEFAULT 'png',
+    title           VARCHAR(50),
     created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
@@ -61,5 +68,10 @@ CREATE INDEX idx_com_imageid ON comments(image_id);
 
 
 /* OTHERS */
-    
+
 ALTER TABLE tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);
+
+/* INSERTS */
+
+INSERT INTO users (username, email, password_hash, is_active, role)
+VALUES ('super', 'super@super.com', 'super', true, 'super');
