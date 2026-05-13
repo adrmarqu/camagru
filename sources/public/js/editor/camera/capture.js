@@ -49,7 +49,7 @@ const Capture =
     {
         return new Promise(resolve =>
         {
-            this.canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.9);
+            this.canvas.toBlob(blob => resolve(blob), 'image/png');
         });
     },
 

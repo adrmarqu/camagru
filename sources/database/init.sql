@@ -11,7 +11,8 @@ CREATE TABLE users
     email           VARCHAR(100) UNIQUE NOT NULL,
     password_hash   VARCHAR(255) NOT NULL,
     is_active       BOOLEAN DEFAULT FALSE,
-    role            user_role NOT NULL DEFAULT 'user'
+    role            user_role NOT NULL DEFAULT 'user',
+    notification    BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE tokens
@@ -29,7 +30,7 @@ CREATE TABLE images
 (
     id              SERIAL PRIMARY KEY,
     filename        VARCHAR(50) UNIQUE NOT NULL,
-    type            img_format NOT NULL DEFAULT 'png',
+    format          img_format NOT NULL DEFAULT 'png',
     title           VARCHAR(50),
     created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
@@ -73,5 +74,7 @@ ALTER TABLE tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);
 
 /* INSERTS */
 
-INSERT INTO users (username, email, password_hash, is_active, role)
-VALUES ('super', 'super@super.com', 'super', true, 'super');
+INSERT INTO users 
+(username, email, password_hash, is_active, role, notification)
+VALUES 
+('super', 'super@super.com', 'super', true, 'super', false);

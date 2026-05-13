@@ -4,12 +4,13 @@
 
 ### Acceso 
 
-Puedes acceder a la página de login siempre que estes desconectado, el link está en el header. Para acceder a la página de signin lo puedes hacer en la página de login.
+Puedes acceder a la página de login y signin siempre que estes desconectado, el link está en el header. También puedes acceder a la página de signin desde la página de login.
 
 ### Estructura Login
-- Usuario/Correo
+- Usuario o correo
 - Contraseña
 - Recuerdame
+- He olvidado mi contraseña
 - Crear cuenta
 
 ### Estructura Singin
@@ -49,7 +50,7 @@ Si superas el formulario, iras al backend y ahi volveras a comprobar los datos d
 - Login
     - Usuario o correo no existe
     - Contraseña incorrecta
-    - Cuenta no activada: Redirige a verificar cuenta y envia un nuevo codigo
+    - Cuenta no activada: Redirige a verificacion y envia un nuevo link
     - Fallo al conectar a la bd
 
 - Signin
@@ -66,35 +67,14 @@ En caso de exito:
 
 - Signin
     - Se creara tu cuenta con estado desacticado
-    - Se te enviar un correo con un codigo
-    - Se te redirigira a verificar cuenta
+    - Se te enviar un correo con un link
+    - Se te redirigira a verificación
 
 
-## Verificar cuenta nueva
+## Verificacion
 
-### Estructura
+Después de hacer signin, o de haber actualizado tu correo seras redirigido aqui. Este apartado tiene un texto con instrucciones para activar tu cuenta o tu nuevo email. Además habrá un boton que podras pulsar para poder volver a enviar un nuevo link a tu correo. Solo se generara un nuevo token cada 60 segundos.
 
-- Codigo: Donde introducir el codigo
-- Generar nuevo codigo: Puedes generar un nuevo codigo cada 60 segundos
-- Enviar
-
-Después de hacer el signin, se generara un token de tipo cuenta y recibirás un correo con un codigo numerico de 6 digitos que deberás introducir en la página de verificar cuenta para activar tu cuenta.
-
-### Caracteristicas
-
-- Dura 10 minutos
-- Tienes 3 intentos
-
-En caso de cumplir una de estas caracteristicas podras generar un nuevo codigo
-
-
-## Verificar correo
-
-Cuando te cambies el correo que tienes por otro, se generar un token de tipo correo, se enviara un link a tu nuevo correo y cuando hagas click al link tu correo se cambiara por el nuevo.
-
-### Caracteristicas
-
-- Dura 10 minutos
 
 ## Actualizar
 
@@ -126,7 +106,7 @@ En caso de que el usuario ya exista o de que la contraseña este mal, dará erro
 
 En caso de que el correo ya este en uso o de que la contraseña este mal, dará error.
 
-Si lo acepta, enviara un correo con un link para comprobar que ese correo sea tuyo. Necesitaras hacer click en el link para cambiar el correo.
+Si lo acepta, se te redirigira a verificacion y enviara un correo con un link para comprobar que ese correo sea tuyo. Necesitaras hacer click en el link para cambiar el correo.
 
 ### Actualizar contraseña
 
@@ -138,3 +118,21 @@ Si lo acepta, enviara un correo con un link para comprobar que ese correo sea tu
 - Enviar
 
 En caso de que la contraseña actual sea incorrecta dara error.
+
+
+### Actualizar contraseña olvidada
+
+#### Contraseña olvidada
+
+- Introduce tu correo
+- Enviar
+
+Envia un correo con un link
+
+#### Nueva contraseña
+
+- Nueva contraseña
+- Repetir nueva contraseña
+- Enviar
+
+Al aceptar el link con el token, te redirigira aqui para introducir tu nueva contraseña. Una vez dado a enviar, si no hay errores redirigira a login.
