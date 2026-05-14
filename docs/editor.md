@@ -87,14 +87,16 @@ El backend de la edicion tendra dos funciones: juntar imagenes y subirlas al ser
 
 Aqui el servidor recibira un fetch con la imagen y un json con los datos de todos los stickers.
 
-Para la imagen se llamara a una funcion auxiliar que comprobara si la imagen es una imagen permitida (png, jpg, gif) o si no es una imagen.
+Para la imagen se llamara a una funcion auxiliar que comprobara si la imagen es una imagen permitida (png, jpg, gif) o si no es una imagen. Si falla no se harra la fusion y devolvera error.
 
 Para los stickers se llamara a otra funcion que ira recogiendo los stickers de donde esten guardados. 
-- Warning: En caso de que un sticker no se pueda conseguir, se eliminara de la lista de stickers, mandara un warning y pasara con el siguiente sticker.
+- Warning: En caso de que un sticker no se pueda conseguir, se eliminara de la lista de stickers enviados, mandara un warning y pasara con el siguiente sticker.
 - Error: En caso de que no haya stickers devolvera un error.
 
-Por ultimo se fusionaran la imagen con los stickers.
+Por ultimo se fusionaran la imagen con los stickers y lo devolvera al frontend como un PNG.
 
 ## Upload
 
-Aqui el servidor recibira un fetch con la informacion de la imagen final, creare la imagen y la subira al servidor.
+Aqui el servidor recibira un fetch con la informacion de la imagen final, creara la imagen y la subira al servidor.
+
+La imagen sera un PNG y se guardara en public/media/uploads/hash_usuario/

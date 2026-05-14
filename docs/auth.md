@@ -66,6 +66,7 @@ En caso de exito:
     - Obtener 'user_id' y ganar acceso al resto de la página
 
 - Signin
+    - Se creare un hash_user
     - Se creara tu cuenta con estado desacticado
     - Se te enviar un correo con un link
     - Se te redirigira a verificación

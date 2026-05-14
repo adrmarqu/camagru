@@ -1,14 +1,14 @@
 /* TABLES */
 
-CREATE TYPE user_role AS ENUM('super', 'user');
-CREATE TYPE token_type AS ENUM('account_creation', 'new_email', 'remember_user');
-CREATE TYPE img_format AS ENUM('jpg', 'png', 'gif');
+CREATE TYPE user_role AS ENUM('admin', 'user');
+CREATE TYPE token_type AS ENUM('account_creation', 'new_email', 'remember_user', 'new_pass');
 
 CREATE TABLE users
 (
     id              SERIAL PRIMARY KEY,
     username        VARCHAR(30) UNIQUE NOT NULL,
     email           VARCHAR(100) UNIQUE NOT NULL,
+    user_hash       VARCHAR(255) NOT NULL UNIQUE,
     password_hash   VARCHAR(255) NOT NULL,
     is_active       BOOLEAN DEFAULT FALSE,
     role            user_role NOT NULL DEFAULT 'user',
@@ -18,10 +18,9 @@ CREATE TABLE users
 CREATE TABLE tokens
 (
     id              SERIAL PRIMARY KEY,
-    token           VARCHAR(255) NOT NULL,
+    token           VARCHAR(255) NOT NULL UNIQUE,
     type            token_type NOT NULL DEFAULT 'account',
-    new_value       VARCHAR(100),
-    attempts        INTEGER NOT NULL DEFAULT 0,
+    new_email       VARCHAR(100),
     expires_at      TIMESTAMP NOT NULL,
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
@@ -30,8 +29,6 @@ CREATE TABLE images
 (
     id              SERIAL PRIMARY KEY,
     filename        VARCHAR(50) UNIQUE NOT NULL,
-    format          img_format NOT NULL DEFAULT 'png',
-    title           VARCHAR(50),
     created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
@@ -77,4 +74,4 @@ ALTER TABLE tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);
 INSERT INTO users 
 (username, email, password_hash, is_active, role, notification)
 VALUES 
-('super', 'super@super.com', 'super', true, 'super', false);
+('super', 'super@super.com', 'super', true, 'admin', false);
