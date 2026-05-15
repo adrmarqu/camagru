@@ -1,40 +1,63 @@
 <?php
 
-require_once BACKEND . 'view/View.php';
+require_once VIEWS . '/View.php';
 
 abstract class BaseController
 {
     protected string    $name;
+    protected string    $errors;
 
-    public function __construct(string $name)
+    protected function __construct(string $name)
     {
-        $this->name = $name;
+        $this->name = $name ?? '';
+        $this->errors = $this->getFlash($name);
     }
 
-    protected function isPost()
+    protected function isPost(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
-    
-    protected function redirect(string $path)
+
+    protected function setFlash(string $value, ?string $path = null)
     {
-        header('Location: /' . t('lang') . '/' . $path, true, 302);
-        exit();
+        $_SESSION['flash'][$this->name] = $value;
+        $this->redirect($path);
     }
 
-    protected function setFlash($key, $value)
-    {
-        $_SESSION['flash'][$key] = $value;
-    }
-
-    protected function getFlash($key)
+    protected function getFlash($key): string
     {
         $val = $_SESSION['flash'][$key] ?? '';
         unset($_SESSION['flash'][$key]);
         return $val;
     }
 
-    /* path: new page, key: key of flash */
+    protected function redirect(?string $path = null): never
+    {
+        if (!$path) $path = $this->name;
+        header('Location: /' . l() . '/' . $path, true, 302);
+        exit();
+    }
+
+    protected function getPostData($elements): array
+    {
+        $data = [];
+        foreach ($elements as $post)
+        {
+            $value = $_POST[$post] ?? '';
+            $val = trim($value);
+
+            if ($val === '') $this->setFlash(t('e.form.invalid'));
+            
+            $data[$post] = htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+        }
+        return $data;
+    }
+
+
+
+
+   /*  
+
     protected function load(string $path, string $key = '', string $msg = ''): void
     {
         if (!empty($key))
@@ -96,5 +119,5 @@ abstract class BaseController
 
         $view = new View();
         $view->printHtml($screen, $data, $incs);
-    }
+    } */
 }

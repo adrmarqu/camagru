@@ -6,7 +6,10 @@
     <meta name="google" content="notranslate">
 
     <title>{{::title::}}</title>
-    
+
+    <link rel="stylesheet" href="/css/style.css?v=1">
+    <link rel="stylesheet" href="/css/header.css?v=1">
+    <link rel="stylesheet" href="/css/footer.css?v=1">
     {{::links::}}
     {{::scripts::}}
 </head><body>

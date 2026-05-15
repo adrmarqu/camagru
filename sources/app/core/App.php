@@ -1,7 +1,7 @@
 <?php
 
-require_once BACKEND . 'core/I18n.php';
-require_once BACKEND . 'core/Router.php';
+require_once CORE . '/I18n.php';
+require_once CORE . '/Router.php';
 
 class App
 {
@@ -17,9 +17,9 @@ class App
         if (session_status() === PHP_SESSION_NONE)
             session_start();
 
-        $this->checkUser();
+        //$this->checkUser();
         $page = $this->parseUrl();
-        $routes = require BACKEND . 'core/routes.php';
+        $routes = require CORE . '/routes.php';
         
         $router = new Router();
         foreach ($routes as $path => [$dir, $controller, $method])
@@ -54,6 +54,7 @@ class App
             if (isset($_COOKIE['remember_user']))
             {
                 $token = $_COOKIE['remember_user'];
+                // Conectar usuario
             }
         }
     }

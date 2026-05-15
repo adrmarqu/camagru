@@ -31,8 +31,8 @@ Cuando le das a enviar, checkForm.js envia los datos a la api de validateFormJs.
     - En caso de que empieze por numero
     - En caso de que contenga algo diferente a una letra, un numero o un guion medio o bajo.
 - Correo
-    - Longitud superior a 100 caracteres
-    - No pasar el filtro de php 'filter_var($email, FILTER_VALIDATE_EMAIL)'
+    - Longitud superior a 255 caracteres
+    - No pasar el filtro de php filter_var($email, FILTER_VALIDATE_EMAIL)
 - Contraseña
     - Menos de 8 caracteres
     - Mas de 72 caracteres
@@ -70,6 +70,9 @@ En caso de exito:
     - Se creara tu cuenta con estado desacticado
     - Se te enviar un correo con un link
     - Se te redirigira a verificación
+
+Si la cookie no exsite el remember estara desactivado.
+Si la cookie existe el remember estara activado en el login. Si haces login con el remember desactivado, la cookie se eliminara, si no se renovara.
 
 
 ## Verificacion

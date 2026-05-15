@@ -26,6 +26,7 @@ Estara formado por:
 - Correo: Correo electronico con un boton a la derecha para cambiarlo.
 - Contraseña: Tu contraseña con asteriscos con un boton a la derecha para cambiarla.
 - Notificaciones: Un checkbox para preguntarte si quieres recibir notificaciones de los comentarios de tus imagenes.
+- Recordar usuario: Un checkbox para preguntarte si quieres recordar al usuario.
 - Eliminar cuenta: Un boton para eliminar tu cuenta, una vez pulsado te pedira una confirmacion. Esta accion es irreversible.
 
 En caso de actualizar tu cuenta seras redirigido a otra ventana.

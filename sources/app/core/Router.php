@@ -19,7 +19,7 @@ class Router
 
         [$dir, $controller, $method] = $this->routes[$path];
 
-        $file = BACKEND . "controller/{$dir}/{$controller}.php";
+        $file = CONTROLLERS . "/{$dir}/{$controller}.php";
         if (file_exists($file))
         {
             require_once $file;
@@ -29,7 +29,12 @@ class Router
         }
         else
         {
-            echo '500 - Internal server error';
+            echo "500 - Internal server error</br></br>";
+            echo "Page: $path</br>";
+            echo "Directory: $dir</br>";
+            echo "Controller: $controller</br>";
+            echo "Method: $method</br>";
+            echo "URL: $dir/$controller -> $method";
             return;
         }
     }

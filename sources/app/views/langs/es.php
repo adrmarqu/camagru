@@ -2,7 +2,11 @@
 
 return
 [
-    'errors' =>
+    
+
+
+
+    /* 'errors' =>
     [
         
     ],
@@ -49,7 +53,7 @@ return
     'footer' =>
     [
 
-    ]
+    ] */
 
     /* 'form' =>
     [

@@ -1,6 +1,6 @@
 <?php
 
-// name page => [name controller, name function]
+// page => [directory, controller, function]
 
 return
 [
@@ -24,28 +24,7 @@ return
     'gallery' => ['main', 'GalleryController', 'gallery'],
 
     // Profile
-    'profile/settings' => ['profile', 'SettingsController', 'settings'],
-    'profile/gallery' => ['profile', 'PhotoController', 'gallery'],
-
-    
-
-
-    // Profile
-
-    /* 
-    
-        Configuracion
-            - Datos de la cuenta (poder cambiarlos)
-            - Activar o no notificaciones
-            - Eliminar cuenta (usuario + pass + id)
-
-        Galeria de fotos subidas (las preview)
-            - Al seleccionar una imagen
-                - Foto completa
-                - Comentarios
-                - Likes
-                - Eliminar foto
-                - Descargar foto
-        
-    */
+    'user/settings' => ['user', 'SettingsController', 'settings'],
+    'user/favorites' => ['user', 'FavoriteController', 'favorite'],
+    'user/gallery' => ['user', 'PhotoController', 'gallery'],
 ];

@@ -36,9 +36,9 @@ abstract class I18n
     {
         self::$lang = $lang;
 
-        $path = BACKEND . "langs/{$lang}.php";
+        $path = LANGS . "/{$lang}.php";
         if (file_exists($path))
-            self::$texts = require $path;
+            self::$texts = require $path; 
     }
 
     public static function getLanguage(): string
@@ -60,6 +60,11 @@ abstract class I18n
 
         return (string)$value;
     }
+}
+
+function l(): string
+{
+    return I18n::getLanguage();
 }
 
 function t(string $key): string
