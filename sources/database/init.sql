@@ -1,7 +1,12 @@
 /* TABLES */
 
 CREATE TYPE user_role AS ENUM('admin', 'user');
-CREATE TYPE token_type AS ENUM('account_creation', 'new_email', 'remember_user', 'new_pass');
+CREATE TYPE token_type AS ENUM('account', 'email', 'user', 'pass');
+
+/* account -> confirm new account */
+/* email -> confirm new email */
+/* user -> save token to rememeber user */
+/* pass -> If you forgot the password, to access a recuperate password  */
 
 CREATE TABLE users
 (
@@ -72,6 +77,6 @@ ALTER TABLE tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);
 /* INSERTS */
 
 INSERT INTO users 
-(username, email, password_hash, is_active, role, notification)
+(username, email, user_hash, password_hash, is_active, role, notification)
 VALUES 
-('super', 'super@super.com', 'super', true, 'admin', false);
+('super', 'super@super.com', 'super', 'super', true, 'admin', false);

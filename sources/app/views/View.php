@@ -11,26 +11,25 @@ abstract class View
         $data['page'] = $page;
         $data['error'] = $e;
         $data['language'] = l();
-        $data['gallery'] = t('gallery');
 
         /* Header */
-        if (isset($_SESSION['user']['user_id']))
-        {
-            $data['gallery'] = t('gallery');
-            $data['editor'] = t('editor');
-            $data['my_gallery'] = t('my_gallery');
-            $data['favorite'] = t('favorite');
-            $data['settings'] = t('settings');
-            $data['logout'] = t('logout');
-            $data['username'] = t('username');
+        //if (isset($_SESSION['user']['user_id']))
+        //{
+            $data['gallery'] = t('header.gallery');
+            $data['editor'] = t('header.editor');
+            $data['my_gallery'] = t('header.my_gallery');
+            $data['favorite'] = t('header.favorite');
+            $data['settings'] = t('header.settings');
+            $data['logout'] = t('header.logout');
+            $data['username'] = 'adrmarqu';
 
             // Botones idiomas, marcar seleccionado
-        }
-        else
+        //}
+        /*else
         {
             $data['login'] = t('login');
             $data['signin'] = t('signin');
-        }
+        }*/
         return $data;
     }
 

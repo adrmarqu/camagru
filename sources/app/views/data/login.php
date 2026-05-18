@@ -35,7 +35,7 @@ return
             'remember' => t('form.remember'),
 
             'forgot' => t('form.forgot'),
-            'signin' => t('form.sign')
+            'sign' => t('form.sign')
         ]]
     ]
 ];

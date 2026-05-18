@@ -9,11 +9,12 @@
 
             <div class="dropdown-content">
                 <div class="dropdown-links">
-                    <a href="/{{::language::}}/profile/settings">{{::settings::}}</a>
+                    <a href="/{{::language::}}/profile/favorites">{{::favorite::}}</a>
                     <a href="/{{::language::}}/profile/gallery">{{::my_gallery::}}</a>
+                    <a href="/{{::language::}}/profile/settings">{{::settings::}}</a>
                 </div>
             </div>
-
         </div>
+        <a href="/{{::language::}}/logout">{{::logout::}}</a>
     </nav>
 </header>

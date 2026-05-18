@@ -2,14 +2,45 @@
 
 return
 [
-    
-
-
-
-    /* 'errors' =>
+    'header' => 
     [
-        
+        'gallery' => 'Galeria',
+        'editor' => 'Editor',
+        'my_gallery' => 'Mi galeria',
+        'favorite' => 'Mis favoritos',
+        'settings' => 'Configuración',
+        'logout' => 'Desconectarse',
     ],
+
+    'footer' =>
+    [
+
+    ],
+
+    'form' =>
+    [
+
+    ],
+
+    'bbdd' =>
+    [
+
+    ],
+
+    'errors' =>
+    [
+        'form' =>
+        [
+
+        ],
+
+        'bbdd' =>
+        [
+
+        ],
+    ]
+
+    /* 
 
     'header' =>
     [
