@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+    <header>
+        <a href="./gallery.html">Camagru</a>
+
+        <nav id="n1">
+            <a href="./gallery.html">Galeria</a>
+            <a href="./editor.html">Editor</a>
+
+            <button>Invitado</button>
+            <div>
+                <a href="./fotos.html">Mis fotos</a>
+                <a href="./favorite.html">Mis favoritos</a>
+                <a href="./settings.html">Settings</a>
+
+                <div>
+                    <a href="./gallery.html">Español</a>
+                    <a href="./gallery.html">Catalan</a>
+                    <a href="./gallery.html">Ingles</a>
+                </div>
+            </div>
+
+            <a href="./gallery.html">Log out</a>
+        </nav>
+
+        <nav id="n2" class="hidden">
+            <a href="./login.html">Login</a>
+            <a href="./signin.html">Signin</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image">
+                <img src="" alt="">
+            </div>
+
+            <div class="info">
+                <span class="likes"></span>
+                <span class="comment"></span>
+            </div>
+        </div>
+
+
+
+
+        <!-- Indice -->
+    </main>
+
+    <footer>
+        <button id="change">Change</button>
+    </footer>
+
+    <script>
+        const btn = document.getElementById("change");
+        const n1 = document.getElementById("n1");
+        const n2 = document.getElementById("n2");
+
+        const change = () =>
+        {
+            n1.classList.toggle("hidden");
+            n2.classList.toggle("hidden");
+        };
+
+        btn.addEventListener("click", () => change());
+    </script>
+</body>
+</html>
