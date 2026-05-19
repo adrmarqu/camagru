@@ -2,37 +2,22 @@
 
 abstract class View
 {
+    /* Get vars to replace */
     private static function getDataScreen(string $page, string $e): array
     {
-        $data = require DATA . "/$page.php";
+        $header = require DATA . "/header.php";
+        $main = require DATA . "/$page.php";
 
-        /* Globals */
+        $data = array_merge($header, $main);
 
         $data['page'] = $page;
         $data['error'] = $e;
         $data['language'] = l();
 
-        /* Header */
-        //if (isset($_SESSION['user']['user_id']))
-        //{
-            $data['gallery'] = t('header.gallery');
-            $data['editor'] = t('header.editor');
-            $data['my_gallery'] = t('header.my_gallery');
-            $data['favorite'] = t('header.favorite');
-            $data['settings'] = t('header.settings');
-            $data['logout'] = t('header.logout');
-            $data['username'] = 'adrmarqu';
-
-            // Botones idiomas, marcar seleccionado
-        //}
-        /*else
-        {
-            $data['login'] = t('login');
-            $data['signin'] = t('signin');
-        }*/
         return $data;
     }
 
+    /* Replace vars */
     private static function setData(string $html, array $data): string
     {
         foreach ($data as $key => $value)
@@ -55,12 +40,14 @@ abstract class View
         return $html;
     }
 
+    /* In case of error redirect */
     private static function redir($n, $a = '')
     {
         //header('Location: /' . l() . '/gallery'); exit;
         echo "Error: $n -> $a"; exit;
     }
 
+    /* Get the template */
     private static function convertTpl(string $url): string
     {
         if (!is_readable($url)) self::redir(1, $url);
@@ -71,6 +58,7 @@ abstract class View
         return $html;
     }
 
+    /* Join the templates in one and show them in the frontend */
     public static function render(string $page, string $error): void
     {
         $data = self::getDataScreen($page, $error);
