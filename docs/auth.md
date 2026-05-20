@@ -12,6 +12,8 @@ Puedes acceder a la página de login y signin siempre que estes desconectado, el
 - Recuerdame
 - He olvidado mi contraseña
 - Crear cuenta
+- Cancelar
+- Enviar
 
 ### Estructura Singin
 - Usuario
@@ -19,6 +21,8 @@ Puedes acceder a la página de login y signin siempre que estes desconectado, el
 - Contraseña
 - Repetir contraseña
 - Terminos y servicios
+- Cancelar
+- Enviar
 
 ### Funcionamiento
 
@@ -96,6 +100,7 @@ Cuando actualizes tus datos de la cuenta, sera igual al login y al signin, prime
 
 - Nuevo usuario
 - Contraseña actual
+- Cancelar
 - Enviar
 
 En caso de que el usuario ya exista o de que la contraseña este mal, dará error.
@@ -106,6 +111,7 @@ En caso de que el usuario ya exista o de que la contraseña este mal, dará erro
 
 - Nuevo correo
 - Contraseña actual
+- Cancelar
 - Enviar
 
 En caso de que el correo ya este en uso o de que la contraseña este mal, dará error.
@@ -119,6 +125,7 @@ Si lo acepta, se te redirigira a verificacion y enviara un correo con un link pa
 - Contraseña actual
 - Nueva contraseña
 - Repetir nueva contraseña
+- Cancelar
 - Enviar
 
 En caso de que la contraseña actual sea incorrecta dara error.
@@ -129,6 +136,7 @@ En caso de que la contraseña actual sea incorrecta dara error.
 #### Contraseña olvidada
 
 - Introduce tu correo
+- Cancelar
 - Enviar
 
 Envia un correo con un link
@@ -137,6 +145,7 @@ Envia un correo con un link
 
 - Nueva contraseña
 - Repetir nueva contraseña
+- Cancelar
 - Enviar
 
 Al aceptar el link con el token, te redirigira aqui para introducir tu nueva contraseña. Una vez dado a enviar, si no hay errores redirigira a login.

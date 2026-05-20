@@ -1,4 +1,25 @@
 header
 {
-    background-color: gray;
+    border: 3px solid red;
+
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    background-color: black;
+}
+
+#nav-guest
+{
+}
+
+.btn
+{
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid white;
+    color: orange;
+
+    text-decoration: none;
 }
