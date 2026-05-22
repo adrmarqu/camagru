@@ -5,68 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
     <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/components.css">
     <script src="../scripts/header.js" defer></script>
 </head>
 <body>
-    <header>
-        <a id="home" href="./gallery.html">Camagru</a>
+    <header class="flex-between">
+        <a id="home" class="link" href="./gallery.html">Camagru</a>
 
         <nav>
-            <div id="nav-auth">
-                <a class="header-btn" href="./gallery.html">Galeria</a>
-                <a class="header-btn" href="./editor.html">Editor</a>
+            <div id="nav-auth" class="">
+                <div class="flex-between">
+                    <a class="link header" href="./gallery.html">Gallery</a>
+                    <a class="link header" href="./editor.html">Editor</a>
 
-                <div class="dropdown">    
-                    <button class="drop-btn">Invitado ▾</button>
-                    <div class="drop-list">
-                        <a class="header-btn" href="./fotos.html">Mis fotos</a>
-                        <a class="header-btn" href="./favorite.html">Mis favoritos</a>
-                        <a class="header-btn" href="./settings.html">Settings</a>
+                    <div class="nav-auth-pc dropdown">
+                        <button id="btn-drop" class="btn-drop">Invitado</button>
 
-                        <!-- <div>
-                            <button id="drop-lang" class="dropdown-toggle">Español</button>
-
-                            <div id="menu-lang">
-                                <a href="./header.html?lang=es">Español</a>
-                                <a href="./header.html?lang=ca">Catalan</a>
-                                <a href="./header.html?lang=en">Ingles</a>
+                        <div id="drop-auth" class="hidden">
+                            <div class="dropdown-list">
+                                <a class="link header drop" href="./gallery.html">Gallery</a>
+                                <a class="link header drop" href="./editor.html">Editor</a>
+                                <a class="link header drop" href="./editor.html">Mis fotos</a>
+                                <a class="link header drop" href="./editor.html">Mis favoritos</a>
+                                <a class="link header drop" href="./editor.html">Settings</a>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
+
+                    <img id="logout" class="icon" src="../assets/logout.png" alt="logout" title="logout">
                 </div>
-                
-                <img id="logout" src="../assets/logout.png" alt="logout" title="Logout">
             </div>
 
             <div id="nav-guest" class="hidden">
-                <a class="header-btn" href="./login.html">Login</a>
-                <a class="header-btn" href="./signin.html">Signin</a>
+                <div class="flex-between">
+                    
+                    <a class="nav-guest-pc link header" href="./login.html">Login</a>
+                    <a class="nav-guest-pc link header" href="./signin.html">Signin</a>
+                    
+                    <div class="nav-guest-mobile dropdown">
+                        <button id="burguer-guest" class="burguer">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <div id="drop-guest" class="hidden">
+                            <div class="dropdown-list">
+                                <a class="link header drop" href="./login.html">Login</a>
+                                <a class="link header drop" href="./signin.html">Signin</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>        
+        </nav>
     </header>
 
-
-<br><br><br><br><br>
-    <button id="change">Change</button>
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<hr><footer>
+   
+    <br><br><br><br><button id="change">Change</button>
+    <br><br><br><br><br><br><hr><footer>
         <a href="./gallery.html">Gallery</a><br>
         <a href="./editor.html">Editor</a><br>
         <a href="./fotos.html">Mis fotos</a><br>

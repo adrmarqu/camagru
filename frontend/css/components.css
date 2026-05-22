@@ -1,0 +1,104 @@
+.btn
+{
+
+}
+
+/* Dropdown button */
+.btn-drop
+{
+    padding: 10px 20px;
+    color: rgb(196, 196, 196);
+    background: none;
+    border: none;
+    font-size: 16px;
+
+    border-bottom: 2px solid transparent;
+}
+.btn-drop:hover
+{
+    color: orange;
+    border-bottom: 2px solid white;
+}
+
+/* Primary button */
+.btn-primary
+{
+
+}
+.btn-primary:hover
+{
+
+}
+
+/* Secondary button */
+.btn-secondary
+{
+
+}
+.btn-secondary:hover
+{
+
+}
+
+/* Danger button */
+.btn-danger
+{
+
+}
+.btn-danger:hover
+{
+
+}
+
+/* Links without decoration */
+.link
+{
+    text-decoration: none;
+}
+
+/* Header */
+.link.header
+{
+    padding: 10px 20px;
+    color: rgb(196, 196, 196);
+    border-bottom: 2px solid transparent;
+}
+.link.header:hover
+{
+    color: orange;
+    border-bottom: 2px solid white;
+}
+
+/* Footer */
+.link.footer
+{
+    
+}
+.link.footer:hover
+{
+    
+}
+
+/* Dropdown-list links */
+.link.header.drop
+{
+    width: 100%;
+    padding: 10px 0;
+}
+
+/* Images */
+.icon
+{
+    width: 40px;
+    height: 40px;
+}
+
+.image
+{
+
+}
+
+.btn-image
+{
+    
+}
