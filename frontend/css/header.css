@@ -1,25 +1,102 @@
+/* GENERAL */
+
 header
 {
-    border: 3px solid red;
-
-    padding: 20px;
+    padding: 20px 10px;
+    background-color: var(--color-bg);
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
-    background-color: black;
 }
 
-#nav-guest
+#home
 {
-}
-
-.btn
-{
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid white;
-    color: orange;
-
+    color: var(--color-primary);
     text-decoration: none;
+    font-size: x-large;
+}
+
+#logout
+{
+    width: 30px;
+    height: 30px;
+
+    cursor: pointer;
+}
+
+#nav-auth
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+    
+}
+
+.header-btn
+{
+    text-decoration: none;
+    text-align: center;
+    padding: 5px 0;
+
+    color: white;
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+.header-btn:hover
+{
+    color: gray;
+    background-color: black;
+    border-bottom: 2px solid white;
+}
+
+/* DROPDOWN */
+
+.dropdown
+{
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+}
+
+.drop-list
+{
+    display: none;
+    position: absolute;
+    top: 35px;
+
+    min-width: 120px;
+    
+    padding: 5px;
+    background-color: black;
+
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+    z-index: 10;
+}
+
+.drop-list a
+{
+    margin: 4px 0;
+}
+
+.dropdown:hover .drop-list
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drop-btn
+{
+    border: 0;
+    font-size: 15px;
+    padding: 5px 0;
+
+    color: white;
+    background-color: transparent;
 }

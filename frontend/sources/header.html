@@ -11,16 +11,38 @@
 </head>
 <body>
     <header>
-        <a href="./gallery.html">Camagru</a>
+        <a id="home" href="./gallery.html">Camagru</a>
 
         <nav>
             <div id="nav-auth">
+                <a class="header-btn" href="./gallery.html">Galeria</a>
+                <a class="header-btn" href="./editor.html">Editor</a>
+
+                <div class="dropdown">    
+                    <button class="drop-btn">Invitado ▾</button>
+                    <div class="drop-list">
+                        <a class="header-btn" href="./fotos.html">Mis fotos</a>
+                        <a class="header-btn" href="./favorite.html">Mis favoritos</a>
+                        <a class="header-btn" href="./settings.html">Settings</a>
+
+                        <!-- <div>
+                            <button id="drop-lang" class="dropdown-toggle">Español</button>
+
+                            <div id="menu-lang">
+                                <a href="./header.html?lang=es">Español</a>
+                                <a href="./header.html?lang=ca">Catalan</a>
+                                <a href="./header.html?lang=en">Ingles</a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
                 
+                <img id="logout" src="../assets/logout.png" alt="logout" title="Logout">
             </div>
 
             <div id="nav-guest" class="hidden">
-                <a class="btn" href="./login.html">Login</a>
-                <a class="btn" href="./signin.html">Signin</a>
+                <a class="header-btn" href="./login.html">Login</a>
+                <a class="header-btn" href="./signin.html">Signin</a>
             </div>
         </nav>        
     </header>
@@ -28,8 +50,6 @@
 
 <br><br><br><br><br>
     <button id="change">Change</button>
-
-
 
 
 
