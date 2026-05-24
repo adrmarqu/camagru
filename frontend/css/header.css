@@ -81,24 +81,24 @@ header
 
 /* RESPONSIVE */
 
-.nav-guest-pc
+.nav-pc
 {
     display: block;
 }
 
-.nav-guest-mobile
+.nav-mobile
 {
     display: none;
 }
 
 @media screen and (max-width: 800px)
 {
-    .nav-guest-mobile
+    .nav-mobile
     {
         display: block;
     }
 
-    .nav-guest-pc
+    .nav-pc
     {
         display: none;
     }
