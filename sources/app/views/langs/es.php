@@ -2,12 +2,19 @@
 
 return
 [
+    'lang' =>
+    [
+        'es' => 'Español',
+        'ca' => 'Catalán',
+        'en' => 'Inglés'
+    ],
+
     'header' => 
     [
         'gallery' => 'Galeria',
         'editor' => 'Editor',
         'my_gallery' => 'Mi galeria',
-        'favorite' => 'Mis favoritos',
+        'favorites' => 'Mis favoritos',
         'settings' => 'Configuración',
         'logout' => 'Desconectarse',
     ],

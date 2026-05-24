@@ -71,3 +71,9 @@ function t(string $key): string
 {
     return I18n::getText($key);
 }
+
+function n(): string
+{
+    $lang = l();
+    return t("lang.$lang");
+}

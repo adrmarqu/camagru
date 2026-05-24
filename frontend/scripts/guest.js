@@ -1,14 +1,14 @@
-const btn = document.getElementById("btn-drop");
-const dropdown = document.getElementById("drop");
+const burguer = document.getElementById("burguer");
+const burguerDrop = document.getElementById("burguer-drop");
 
 const btnLang = document.getElementById("btn-lang");
 const langDrop = document.getElementById("drop-lang");
 
-const toggleDrop = (e) =>
+const toggleBurguer = (e) =>
 {
     e.stopPropagation();
-    btn.classList.toggle("active"); // Only works offline (no auth)
-    dropdown.classList.toggle("hidden");
+    burguer.classList.toggle("active");
+    burguerDrop.classList.toggle("hidden");
 };
 
 const toggleLang = (e) =>
@@ -19,17 +19,16 @@ const toggleLang = (e) =>
 
 const closeMenus = (e) =>
 {
-
-    if (!e.target.closest("#btn-drop") && !e.target.closest("#drop"))
+    if (!e.target.closest("#burguer") && !e.target.closest("#burguer-drop"))
     {
-        btn.classList.remove("active");
-        dropdown.classList.add("hidden");
+        burguer.classList.remove("active");
+        burguerDrop.classList.add("hidden");
     }
     
     if (!e.target.closest("#btn-lang") && !e.target.closest("#drop-lang"))
         langDrop.classList.add("hidden");
 };
 
-btn.addEventListener("click", (e) => toggleDrop(e));
+burguer.addEventListener("click", (e) => toggleBurguer(e));
 btnLang.addEventListener("click", (e) => toggleLang(e));
 document.addEventListener("click", (e) => closeMenus(e));

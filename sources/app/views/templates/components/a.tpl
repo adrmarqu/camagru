@@ -1,0 +1,1 @@
+<a href="/{{::language::}}/{{::a_href::}}" class="{{::a_class::}}">{{::a_text::}}</a>

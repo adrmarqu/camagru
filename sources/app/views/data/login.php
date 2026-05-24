@@ -13,7 +13,7 @@ return
     [
         'file' => COMPONENTS . '/link.tpl',
         
-        'data' => [[ 'filename' => 'form.css' ],['filename' => 'hola.js']]
+        'data' => [[ 'filename' => 'form.css' ], ['filename' => 'hola.js']]
     ],
 
     'scripts' =>

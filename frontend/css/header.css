@@ -78,6 +78,16 @@ header
     /* Colores */
     background-color: black;
 }
+.dropdown-list.lang-pos
+{
+    top: 100%;
+    right: 0%;
+}
+
+#btn-lang
+{
+    margin-top: 10px;
+}
 
 /* RESPONSIVE */
 

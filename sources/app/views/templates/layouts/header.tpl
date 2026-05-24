@@ -1,27 +1,37 @@
-<header>
-    <a href="/{{::language::}}/gallery" class="logo">Camagru</a>
-    
-    <nav class="{{::conn_class::}}">
-        <a href="/{{::language::}}/gallery">{{::gallery::}}</a>
-        <a href="/{{::language::}}/photo-editor">{{::editor::}}</a>
+<header class="flex-between">
+    <a id="home" class="link" href="/gallery">Camagru</a>
 
-        <div class="dropdown">
-            <button class="dropbtn">{{::username::}} ▼</button>
+    <nav class="flex-between">
+        <a class="link header nav-pc" href="/{{::language::}}/{{::a_href::}}">
+            {{::a_text::}}
+        </a>
+        <a class="link header nav-pc" href="/{{::language::}}/{{::b_href::}}">
+            {{::b_text::}}
+        </a>
 
-            <div class="dropdown-content">
-                <div class="dropdown-links">
-                    <a href="/{{::language::}}/profile/favorites">{{::favorite::}}</a>
-                    <a href="/{{::language::}}/profile/gallery">{{::my_gallery::}}</a>
-                    <a href="/{{::language::}}/profile/settings">{{::settings::}}</a>
-                    <!-- Desplegable con idiomas -->
+        <div class="dropdown {{::nav_mobile::}}">
+            <button id="btn-drop" class="{{::btn_drop_type::}}">
+                {{::btn_drop_content::}}
+            </button>
+
+            <div id="drop" class="hidden">
+                <div class="dropdown-list">
+                    {{::drop_links::}}
+
+                    <button id="btn-lang" class="btn btn-lang">
+                        {{::language_name::}}
+                    </button>
+                    
+                    <div id="drop-lang" class="hidden">
+                        <div class="dropdown-list lang-pos">
+                            <a class="link header drop" href="/{{::language::}}/{{::page::}}">{{::lang_es::}}</a>
+                            <a class="link header drop" href="/{{::language::}}/{{::page::}}">{{::lang_ca::}}</a>
+                            <a class="link header drop" href="/{{::language::}}/{{::page::}}">{{::lang_en::}}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <a href="/{{::language::}}/logout">{{::logout::}}</a>
-    </nav>
-
-    <nav class="{{::discon_class::}}">
-        <a href="/{{::language::}}/login">{{::login::}}</a>
-        <a href="/{{::language::}}/signin">{{::signin::}}</a>
+        {{::logout::}}
     </nav>
 </header>

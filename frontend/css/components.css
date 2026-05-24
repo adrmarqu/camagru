@@ -1,12 +1,11 @@
 .btn
 {
-
+    padding: 10px 20px;
 }
 
 /* Dropdown button */
 .btn-drop
 {
-    padding: 10px 20px;
     color: rgb(196, 196, 196);
     background: none;
     border: none;
@@ -48,6 +47,14 @@
 .btn-danger:hover
 {
 
+}
+
+/* Language button */
+.btn-lang
+{
+    width: 100%;
+    color: black;
+    background-color: white;
 }
 
 /* Links without decoration */
