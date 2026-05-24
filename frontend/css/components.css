@@ -1,6 +1,8 @@
 .btn
 {
     padding: 10px 20px;
+    cursor: pointer;
+    border: none;
 }
 
 /* Dropdown button */
@@ -22,21 +24,24 @@
 /* Primary button */
 .btn-primary
 {
-
+    color: white;
+    background-color: var(--color-primary);
 }
 .btn-primary:hover
 {
-
+    background-color: var(--color-primary-hover);
 }
 
 /* Secondary button */
 .btn-secondary
 {
+    color: white;
+    background-color: var(--color-secondary);
 
 }
 .btn-secondary:hover
 {
-
+    background-color: var(--color-secondary-hover);
 }
 
 /* Danger button */

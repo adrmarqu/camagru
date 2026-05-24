@@ -16,7 +16,7 @@ class AuthController extends BaseController
         if ($this->isPost())
         {
             /* Get data */
-            $data = $this->getPostData(['user', 'pass']);
+            $data = $this->getPostData(['usermail', 'pass']);
             $data['remember'] = isset($_POST['remember']);
 
             /* Check data */

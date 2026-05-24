@@ -3,24 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update pass</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/components.css">
 </head>
 <body>
-    <hr><footer>
-        <a href="./gallery.html">Gallery</a><br>
-        <a href="./editor.html">Editor</a><br>
-        <a href="./fotos.html">Mis fotos</a><br>
-        <a href="./favorite.html">Mis favoritos</a><br>
-        <a href="./settings.html">Settings</a><br>
-        <a href="./login.html">Login</a><br>
-        <a href="./signin.html">Signin</a><br>
-        <a href="./user.html">Update user</a><br>
-        <a href="./email.html">Update email</a><br>
-        <a href="./pass.html">Update pass</a><br>
-        <a href="./recuperate.html">Recuperar contraseña</a><br>
-        <a href="./send.html">Enviar correo</a><br>
-        <a href="./header.html">Header</a><br>
-    </footer><hr>
+    <main class="flex flex-column flex-center">
+
+        <h1 class="h text-white">Actualizar contraseña del usuario</h1>
+
+        <p class="p text-white">
+            Introduce tu contraseña, y la nueva contraseña más el seguro.
+        </p>
+
+        <form class="form flex flex-column">
+            <div class="flex flex-column">
+                <label class="form-label" for="pass_curr">Contraseña</label>
+                <input class="form-input" type="password" name="pass_curr">
+            </div>
+
+            <div class="flex flex-column">
+                <label class="form-label" for="pass">Nueva contraseña</label>
+                <input class="form-input" type="password" name="pass">
+            </div>
+
+            <div class="flex flex-column">
+                <label class="form-label" for="pass_rep">
+                    Repetir nueva contraseña</label>
+                <input class="form-input" type="password" name="pass_rep">
+            </div>
+
+            <div class="form-btn-container">
+                <button class="btn btn-secondary" type="button">Cancelar</button>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>

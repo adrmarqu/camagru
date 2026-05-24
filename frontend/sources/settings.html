@@ -4,23 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <script src="../scripts/settings.js" defer></script>
 </head>
 <body>
-    <hr><footer>
-        <a href="./gallery.html">Gallery</a><br>
-        <a href="./editor.html">Editor</a><br>
-        <a href="./fotos.html">Mis fotos</a><br>
-        <a href="./favorite.html">Mis favoritos</a><br>
-        <a href="./settings.html">Settings</a><br>
-        <a href="./login.html">Login</a><br>
-        <a href="./signin.html">Signin</a><br>
-        <a href="./user.html">Update user</a><br>
-        <a href="./email.html">Update email</a><br>
-        <a href="./pass.html">Update pass</a><br>
-        <a href="./recuperate.html">Recuperar contraseña</a><br>
-        <a href="./send.html">Enviar correo</a><br>
-        <a href="./header.html">Header</a><br>
-    </footer><hr>
+    <main class="flex flex-column flex-center">
+        <form class="form big flex flex-column">
+            <h1>Settings</h1>
+            
+            <hr>
+            
+            <div class="flex flex-between">
+                <label>Cambiar nombre de usuario</label>
+                <button class="btn btn-secondary" type="button">Actualizar</button>
+            </div>
+            
+            <div class="flex flex-between">
+                <label>Cambiar correo</label>
+                <button class="btn btn-secondary" type="button">Actualizar</button>
+            </div>
+
+            <div class="flex flex-between">
+                <label>Cambiar contraseña</label>
+                <button class="btn btn-secondary" type="button">Actualizar</button>
+            </div>
+
+            <hr>
+
+            <div class="flex flex-between">
+                <label>Notificaciones de comentarios</label>
+                <button id="noti" class="btn btn-secondary" type="button" value="1">
+                    Activar
+                </button>
+            </div>
+
+            <div class="flex flex-between">
+                <label>Recoradr usuario</label>
+                <button
+                id="remember" class="btn btn-secondary" type="button" value="0">
+                    Recordar
+                </button>
+            </div>
+
+            <hr>
+            <button class="btn btn-primary form-btn-max" type="submit">
+                Aplicar cambios
+            </button>
+        </form>
+    </main>
 </body>
 </html>

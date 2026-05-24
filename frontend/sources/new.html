@@ -11,21 +11,22 @@
 <body>
     <main class="flex flex-column flex-center">
 
-        <h1 class="h text-white">Actualizar correo de usuario</h1>
+        <h1 class="h text-white">Actualizar contraseña del usuario</h1>
 
         <p class="p text-white">
-            Introduce la nueva direccion de correo y tu contraseña. <br>Luego se enviara un correo para a tu nuevo correo para confirmar.
+            Introduce la nueva contraseña más el seguro para actualizar la contraseña.
         </p>
 
         <form class="form flex flex-column">
             <div class="flex flex-column">
-                <label class="form-label" for="email">Nuevo correo</label>
-                <input class="form-input" type="email" name="email">
+                <label class="form-label" for="pass">Nueva contraseña</label>
+                <input class="form-input" type="password" name="pass">
             </div>
 
             <div class="flex flex-column">
-                <label class="form-label" for="pass">Contraseña</label>
-                <input class="form-input" type="password" name="pass">
+                <label class="form-label" for="pass_rep">
+                    Repetir nueva contraseña</label>
+                <input class="form-input" type="password" name="pass_rep">
             </div>
 
             <div class="form-btn-container">

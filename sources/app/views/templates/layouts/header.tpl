@@ -1,7 +1,7 @@
-<header class="flex-between">
+<header class="flex flex-between">
     <a id="home" class="link" href="/gallery">Camagru</a>
 
-    <nav class="flex-between">
+    <nav class="flex flex-between">
         <a class="link header nav-pc" href="/{{::language::}}/{{::a_href::}}">
             {{::a_text::}}
         </a>
