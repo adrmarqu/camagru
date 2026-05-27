@@ -46,16 +46,24 @@ galleryElements.forEach(e =>
 
     const closeX = (event) =>
     {
+        /* Btn x */
         const btn = event.target.closest(".btn-x");
         if (!btn) return false;
 
-        const container = btn.closest(".gallery-element");
-        if (!container) return false;
+        /* Gallery element */
+        const gallery = btn.closest(".gallery-element");
+        if (!gallery) return false;
 
-        const commentContainer = container.querySelector(".comments-container");
-        commentContainer.classList.remove("show");
+        /* Comment */
+        const comment = gallery.querySelector(".comments-container");
+        if (!comment) return false;
 
+        /* Icon */
+        const icon = gallery.querySelector(".btn-com .element-icon");
+        if (!icon) return false;
 
+        comment.classList.remove("show");
+        icon.classList.remove("selected");
 
         return true;
     };
@@ -67,15 +75,3 @@ galleryElements.forEach(e =>
         if (closeX(event)) return ;
     })
 });
-
-/* 
-
-- Gallery element
-
-    - Mirar que se ha pulsado
-
-    - Conseguir los elementos necesarios
-
-    - Actuar
-    
-*/
