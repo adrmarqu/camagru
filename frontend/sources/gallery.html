@@ -4,26 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/gallery.css">
+
+    <script src="../scripts/gallery.js" defer></script>
 </head>
 <body>
-    <hr><footer>
-        <a href="./gallery.html">Gallery</a><br>
-        <a href="./editor.html">Editor</a><br>
-        <a href="./fotos.html">Mis fotos</a><br>
+    <main>
+        <section class="flex flex-center gallery-container">
 
-        <a href="./favorite.html">Mis favoritos</a><br>
-        <a href="./settings.html">Settings</a><br>
-        <a href="./login.html">Login</a><br>
+            <div class="gallery-element">
 
-        <a href="./signin.html">Signin</a><br>
-        <a href="./user.html">Update user</a><br>
-        <a href="./email.html">Update email</a><br>
-        
-        <a href="./pass.html">Update pass</a><br>
-        <a href="./recuperate.html">Recuperar contraseña</a><br>
-        <a href="./send.html">Enviar correo</a><br>
-        <a href="./header.html">Header</a><br>
-    </footer><hr>
+                <!-- User + delete -->
+                <p class="element-user">Usuario</p>
+
+                <!-- Image -->
+                <img class="element-image" src="../assets/favicon.png" alt="image">
+
+                <!-- Likes + comments buttons -->
+                <div class="flex flex-around element-btn-container">
+                    
+                    <button class="flex flex-center element-icon-btn btn-like">
+                        <img class="element-icon" src="../assets/like.svg" alt="like">
+                        <span class="element-icon-span">24</span>
+                    </button>
+
+                    <button class="flex flex-center element-icon-btn btn-com">
+                        <img class="element-icon" src="../assets/comment.svg" alt="comment">
+                        <span class="element-icon-span">42</span>
+                    </button>
+                    
+                </div>
+
+                <!-- Comments container -->
+                <div class="comments-container show">
+
+                    <div class="flex flex-end btn-x-container">
+                        <button class="btn-x">X</button>
+                    </div>
+                    
+                    <div class="flex flex-column comments-list">
+                        <div>
+                            <p class="comment-title">Usuario + fecha</p>
+                            <p class="comment-text">Comentario</p>
+                        </div>
+
+                        <div>
+                            <p class="comment-title">Usuario + fecha</p>
+                            <p class="comment-text">Comentario</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-around upload-container">
+                        <input type="text" class="upload-text">
+                        <button class="upload-btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </section>
+    </main>
 </body>
 </html>

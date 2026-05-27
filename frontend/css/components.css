@@ -101,16 +101,35 @@
 /* Images */
 .icon
 {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
+}
+.icon.selected
+{
+    background-color: black;
 }
 
 .image
 {
-
+    width: 100%;
 }
 
-.btn-image
+.b-red
 {
-    
+    border: 2px solid red;
+}
+
+.b-blue
+{
+    border: 2px solid blue;
+}
+
+.b-green
+{
+    border: 2px solid green;
+}
+
+.b-yellow
+{
+    border: 2px solid yellow;
 }

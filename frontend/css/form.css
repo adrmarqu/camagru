@@ -16,10 +16,7 @@ body
 
     background-color: white;
 }
-.form.big
-{
-    width: 70%;
-}
+.form.big { width: 70%; }
 
 .form-input
 {
@@ -37,6 +34,7 @@ body
     margin-right: 5px;
 }
 
+/* Container with the buttons */
 .form-btn-container
 {
     width: 100%;
@@ -45,6 +43,18 @@ body
     display: flex;
     justify-content: space-around;
     gap: 10px;
+}
+
+/* Output with the errors */
+.form-error
+{
+    padding: 15px;
+    font-weight: bold;
+
+    color: black;
+    background-color: lightcoral;
+    border: 2px solid red;
+    border-radius: 20px;
 }
 
 .form-btn-container button { width: 150px; }
