@@ -1,13 +1,13 @@
 header
 {
     padding: 20px 15px;
-    background-color: var(--color-bg-hover);
+    background-color: black;
 }
 
 #home
 {
     font-size: x-large;
-    color: var(--color-home);
+    color: yellow;
 }
 
 #nav-guest div, #nav-auth div
@@ -44,7 +44,7 @@ header
 .burguer span
 {
     height: 3px;
-    background-color: var(--color-header-primary-hover);
+    background-color: white;
     border-radius: 3px;
 }
 

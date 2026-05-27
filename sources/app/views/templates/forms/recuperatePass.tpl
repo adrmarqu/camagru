@@ -1,5 +1,12 @@
-<label for="pass">{{::new::}}</label>
-<input type="password" name="pass">
+<div class="flex flex-column">
+    <label class="form-label" for="pass">{{::pass::}}</label>
+    <input class="form-input" type="password" name="pass">
+</div>
 
-<label for="passRep">{{::rep::}}</label>
-<input type="password" name="passRep">
+<div class="flex flex-column">
+    <label class="form-label" for="pass_rep">
+        {{::pass_rep::}}
+    </label>
+    <input class="form-input" type="password" name="pass_rep">
+</div>
+

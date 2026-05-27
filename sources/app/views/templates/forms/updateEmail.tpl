@@ -1,5 +1,9 @@
-<label for="email">{{::email::}}</label>
-<input type="email" name="email">
+<div class="flex flex-column">
+    <label class="form-label" for="email">{{::email::}}</label>
+    <input class="form-input" type="email" name="email">
+</div>
 
-<label for="currPass">{{::pass::}}</label>
-<input type="password" name="currPass">
+<div class="flex flex-column">
+    <label class="form-label" for="pass">{{::pass::}}</label>
+    <input class="form-input" type="password" name="pass">
+</div>

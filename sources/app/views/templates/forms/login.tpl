@@ -1,12 +1,17 @@
-<label for="user">{{::user::}}</label>
-<input type="text" name="user">
+<div class="flex flex-column">
+    <label class="form-label" for="usermail">{{::usermail::}}</label>
+    <input class="form-input" type="text" name="usermail">
+</div>
 
-<label for="pass">{{::pass::}}</label>
-<input type="password" name="pass">
+<div class="flex flex-column">
+    <label class="form-label" for="pass">{{::pass::}}</label>
+    <input class="form-input" type="password" name="pass">
+</div>
 
-<input type="checkbox" name="rememeber" {{::checked::}}>
-<label for="">{{::remember::}}</label>
-
-
-<a href="">{{::forgot::}}</a>
-<a href="">{{::sign::}}</a>
+<div class="flex flex-between">
+    <div class="flex flex-end flex-row-reverse">
+        <label class="form-label" for="remember">{{::remember_user::}}</label>
+        <input class="form-checkbox" type="checkbox" name="remember" {{::checked::}}>
+    </div>
+    <a class="link" href="">{{::forgot_pass::}}</a>
+</div>
