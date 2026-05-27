@@ -1,4 +1,4 @@
-<footer style="border: 3px solid red;">
+<!-- <footer style="border: 3px solid red;">
     
     <div>
         <a href="/{{::language::}}/login">Login</a>
@@ -18,4 +18,4 @@
     
 </footer>
 </body>
-</html>
+</html> -->

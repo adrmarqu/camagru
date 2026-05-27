@@ -4,27 +4,24 @@
 
 return
 [
+    // Main
+    'gallery' => ['main', 'GalleryController', 'gallery'],
+    'photo-editor' => ['main', 'EditorController', 'editor'],
+
     // Auth
     'login' => ['auth', 'AuthController', 'login'],
     'signin' => ['auth', 'AuthController', 'signin'],
 
-    // Verification
-    'verify-account' => ['auth', 'TokenController', 'checkAccount'],
-    'verify-email' => ['auth', 'TokenController', 'checkEmail'],
-
-    // Update user
-    'update-user' => ['auth', 'UpdateController', 'user'],
-    'update-email' => ['auth', 'UpdateController', 'email'],
-    'update-password' => ['auth', 'UpdateController', 'password'],
-    
-    // Photo editor
-    'photo-editor' => ['main', 'EditorController', 'editor'],
-
-    // Gallery
-    'gallery' => ['main', 'GalleryController', 'gallery'],
+    // Update
+    'update-user' => ['update', 'UpdateController', 'user'],
+    'update-email' => ['update', 'UpdateController', 'email'],
+    'update-password' => ['update', 'UpdateController', 'pass'],
 
     // Profile
+    'user/gallery' => ['user', 'GalleryController', 'user'],
+    'user/favorites' => ['user', 'GalleryController', 'favorites'],
     'user/settings' => ['user', 'SettingsController', 'settings'],
-    'user/favorites' => ['user', 'FavoriteController', 'favorite'],
-    'user/gallery' => ['user', 'PhotoController', 'gallery'],
+
+    // Others
+    'send-email' => ['others', 'TokenController', 'send']
 ];

@@ -3,15 +3,16 @@
 abstract class View
 {
     /* Get vars to replace */
-    private static function getDataScreen(string $page, string $e): array
+    private static function getDataScreen(string $screen, string $e): array
     {
         $header = require DATA . "/header.php";
-        $main = require DATA . "/$page.php";
+        $main = require DATA . "/$screen.php";
 
         $data = array_merge($header, $main);
 
-        $data['page'] = $page;
+        $data['screen'] = $screen;
         $data['error'] = $e;
+        $data['output_transparent'] = empty($e) ? 'transparent' : '';
         $data['language'] = l();
 
         return $data;
@@ -59,13 +60,13 @@ abstract class View
     }
 
     /* Join the templates in one and show them in the frontend */
-    public static function render(string $page, string $error): void
+    public static function render(string $screen, string $error): void
     {
-        $data = self::getDataScreen($page, $error);
+        $data = self::getDataScreen($screen, $error);
 
         $html = self::convertTpl(LAYOUTS . '/head.tpl');
         $html .= self::convertTpl(LAYOUTS . '/header.tpl');
-        $html .= self::convertTpl(SCREENS . $data['screen']);
+        $html .= self::convertTpl(SCREENS . $data['file']);
         $html .= self::convertTpl(LAYOUTS . '/footer.tpl');
 
         echo self::setData($html, $data); exit();

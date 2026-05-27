@@ -11,7 +11,9 @@
 <div class="flex flex-between">
     <div class="flex flex-end flex-row-reverse">
         <label class="form-label" for="remember">{{::remember_user::}}</label>
-        <input class="form-checkbox" type="checkbox" name="remember" {{::checked::}}>
+        <input class="form-checkbox" type="checkbox" name="remember">
     </div>
-    <a class="link" href="">{{::forgot_pass::}}</a>
-</div>
+    <a class="link" href="{{::language::}}/send-email?type=forgot">
+        {{::forgot_pass::}}
+    </a>
+</div> 

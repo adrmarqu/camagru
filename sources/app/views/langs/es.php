@@ -11,12 +11,14 @@ return
 
     'header' => 
     [
+        'login' => 'Conectarse',
+        'signin' => 'Crear usuario',
+        'guest' => 'Invitado',
         'gallery' => 'Galeria',
-        'editor' => 'Editor',
+        'photo-editor' => 'Editor',
         'my_gallery' => 'Mi galeria',
         'favorites' => 'Mis favoritos',
         'settings' => 'Configuración',
-        'logout' => 'Desconectarse',
     ],
 
     'footer' =>
@@ -26,7 +28,23 @@ return
 
     'form' =>
     [
+        'title' =>
+        [
+            'login' => 'Bienvenido de vuelta'
+        ],
 
+        'text' =>
+        [
+            'login' => 'Rellena el formulario para poder conectarte'
+        ],
+
+        'usermail' => 'Introduce el usuario/correo',
+        'pass' => 'Introduce la contraseña',
+        'remember' => 'Recuerdame',
+        'forgot' => 'Recuperar contraseña',
+
+        'cancel' => 'Cancelar',
+        'send' => 'Enviar'
     ],
 
     'bbdd' =>
