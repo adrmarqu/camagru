@@ -31,4 +31,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all up down restart status logs clean fclean re
+open:
+	@echo "Abriendo Camagru en el navegador..."
+	open http://camagru || open http://localhost
+
+.PHONY: all up down restart status logs clean fclean re open

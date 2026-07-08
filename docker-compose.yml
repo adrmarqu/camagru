@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Servidor Web / Reverse Proxy (Nginx)
   webserver:
@@ -9,7 +7,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./src:/var/www/html
+      - ./sources:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app
@@ -24,7 +22,7 @@ services:
     container_name: camagru_app
     restart: always
     volumes:
-      - ./src:/var/www/html
+      - ./sources:/var/www/html
     env_file:
       - .env
     networks:
