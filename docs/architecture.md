@@ -29,6 +29,13 @@ Dondes està todo el código del servidor. El backend
 - Variables
 - Carpetas que no tengan clases
 
+### camel_case
+
+- Variables de session, cookies...
+- Variables de templates
+    - Variables: {{ var }}
+    - Includes: [[ var ]]
+
 
 ## Checklist de Seguridad Obligatoria
 - [ ] **Inyección SQL:** Usar SIEMPRE `PDO::prepare()` y ejecutar con arrays.

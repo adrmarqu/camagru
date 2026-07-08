@@ -31,8 +31,18 @@ fclean: clean
 
 re: fclean all
 
-open:
-	@echo "Abriendo Camagru en el navegador..."
-	open http://camagru || open http://localhost
+chrome:
+	@echo "Abriendo Camagru en Google Chrome..."
+	@open -a "Google Chrome" http://camagru.42barcelona || open http://localhost
 
-.PHONY: all up down restart status logs clean fclean re open
+fire:
+	@echo "Abriendo Camagru en Google Chrome..."
+	@open -a "Google Chrome" http://camagru.42barcelona || open http://localhost
+
+open:
+	@echo "Abriendo Camagru..."
+	@open -a "Google Chrome" http://camagru.42barcelona 2>/dev/null || \
+	 open -a "Firefox" http://camagru.42barcelona 2>/dev/null || \
+	 open http://camagru.42barcelona
+
+.PHONY: all up down restart status logs clean fclean re chrome fire open
