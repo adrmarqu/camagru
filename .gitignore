@@ -1,12 +1,22 @@
-.
-..
+# Archivos del Sistema Operativo
 .DS_Store
+Thumbs.db
+.ipynb_checkpoints/
 
-secrets/
-
+# Configuración y Credenciales
 .env
 !.env.example
 
+# Archivos temporales de editores (Vim, VSCode, etc.)
 *.swp
+*~
+.vscode/
+.idea/
 
-media/uploads
+# Contenido dinámico (Fotos de prueba de los usuarios)
+# Esto ignora las imágenes subidas pero mantendrá la estructura de carpetas limpia
+src/public/uploads/*
+!.gitkeep
+
+# Logs de error de Nginx, PHP o MySQL en local
+*.log

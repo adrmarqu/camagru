@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Servidor Web / Reverse Proxy (Nginx)
+  webserver:
+    image: nginx:alpine
+    container_name: camagru_webserver
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - camagru-network
+
+  # Procesador PHP (PHP-FPM) con librerías nativas para imágenes (GD)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: camagru_app
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - camagru-network
+    depends_on:
+      - db
+
+  # Base de Datos (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: camagru_db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - camagru-network
+
+volumes:
+  db_data:
+
+networks:
+  camagru-network:
+    driver: bridge
