@@ -1,10 +1,10 @@
 # Arquitectura y Convenciones de Código - Camagru
 
 ## Estructura del Proyecto (Seguridad MVC)
-### src/public/
+### sources/public/
 Único punto de entrada index.php accesible desde la URL. El Frontend
 
-### src/app/
+### sources/app/
 Dondes està todo el código del servidor. El backend
 
 - app/Controllers: Clases controladoras
@@ -35,6 +35,11 @@ Dondes està todo el código del servidor. El backend
 - Variables de templates
     - Variables: {{::%s::}}
     - Includes: [[::%s::]]
+
+
+### Templates code
+- <?php?>: require, if, foreach...
+- <?=?>: variables y resultados de funciones
 
 
 ## Checklist de Seguridad Obligatoria

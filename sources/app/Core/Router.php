@@ -4,6 +4,12 @@ class Router
 {
     private $allowedLangs = ['en', 'es', 'ca'];
     private $defaultLang = 'en';
+    private $routes = [];
+
+    public function __construct(array $routes)
+    {
+        $this->routes = $routes;
+    }
 
     public function dispatch()
     {
@@ -16,8 +22,8 @@ class Router
         if (!in_array($currentLang, $this->allowedLangs))
         {
             $newLang = (isset($_GET['lang']) && in_array($_GET['lang'], $this->allowedLangs)) ? $_GET['lang'] : $this->defaultLang;
-
-            $remainingPath = (count($parts) > 1) ? $parts[1] : 'gallery';
+            
+            $remainingPath = (count($parts) > 1) ? $parts[1] : (!empty($parts[0]) ? $parts[0] : 'gallery');
 
             Navigator::redirect($remainingPath, $newLang);
         }
@@ -25,46 +31,44 @@ class Router
         if (empty($uri))
             Navigator::redirect("gallery", $currentLang);
 
-        $components = parse_url($uri);
-
-        $page = $components['path'] ?? 'gallery';
-        $query = $components['query'] ?? '';
-
+        $page = $uri;
+        $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY) ?? '';
         parse_str($query, $queryParams);
 
         $_SESSION['lang'] = $currentLang;
+        Lang::setLang($currentLang);
 
-        $this->route($page, $currentLang, $queryParams);
+        $this->route($page, $queryParams);
     }
 
-    private function route($page, $lang, $query)
+    private function route($page, $query)
     {
-        $map = 
-        [
-            'gallery'           => ['controller' => 'GalleryController', 'method' => 'gallery'],
-            'photo-editor'      => ['controller' => 'EditorController', 'method' => 'editor'],
-            'login'             => ['controller' => 'AuthController', 'method' => 'login'],
-            'register'          => ['controller' => 'AuthController', 'method' => 'register'],
-            'forgot-password'   => ['controller' => 'AuthController', 'method' => 'forgot'],
-            'profile'           => ['controller' => 'UserController', 'method' => 'profile'],
-            'private-gallery'   => ['controller' => 'UserController', 'method' => 'privateGallery'],
-            'verify'            => ['controller' => 'TokenController', 'method' => 'verify'],
-            'reset-password'    => ['controller' => 'TokenController', 'method' => 'reset']
-        ];
+        if (!isset($this->routes[$page]))
+            throw new AppException(404);
 
-        if (!isset($map[$page]))
-            Response::error404($lang);
+        $config = $this->routes[$page];
+        $controllerName = $config['controller'];
+        $methodName = $config['method'];
 
-        $config = $map[$page];
-        $controller = new $config['controller']($lang);
-        $method = $config['method'];
+        if (!class_exists($controllerName))
+        {
+            throw new AppException(500, Lang::t('500.no_class') . $controllerName);
+        }
 
-        $reflection = new ReflectionMethod($controller, $method);
+        $controller = new $controllerName();
+        
+        if (!method_exists($controller, $methodName))
+        {
+            throw new AppException(500, Lang::t('500.no_method') . "$controllerName->$methodName()");
+        }
+
+        $reflection = new ReflectionMethod($controller, $methodName);
         $parameters = $reflection->getParameters();
 
-        if (!empty($parameters))
-            $controller->$method($query);
-        else
-            $controller->$method();
+        if (!empty($parameters)) {
+            $controller->$methodName($query);
+        } else {
+            $controller->$methodName();
+        }
     }
 }

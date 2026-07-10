@@ -4,7 +4,6 @@ class GalleryController extends BaseController
 {
     public function gallery(array $params = [])
     {
-        echo "galeria";
-        exit;
+        $this->render('/core/gallery', CoreSources::gallery());
     }
 }

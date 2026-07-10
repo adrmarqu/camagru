@@ -4,11 +4,10 @@ class AuthController extends BaseController
 {
     public function login()
     {
-        echo "Login";
-        exit;
+        $this->render('/auth/login', AuthSources::login());
     }
 
-    public function register()
+    public function signin()
     {
         // Mirar si hay post
             // Mirar formato correcto
@@ -17,12 +16,12 @@ class AuthController extends BaseController
             // Si hay error salir del if
             // Guardar datos del usuario y redirigir
         
-        $this->render(AuthSources::signin());
+        $this->render('/auth/signin', AuthSources::signin());
     }
 
     public function forgot()
     {
-        echo "Olvidar contraseña";
-        exit;
+        $this->render('/auth/forgot', AuthSources::forgot());
+
     }
 }

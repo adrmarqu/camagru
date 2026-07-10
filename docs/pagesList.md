@@ -9,7 +9,7 @@ Paginas: /language/page?parameter
 ## Usuario no registrado
 
 - /login (username | email && password)
-- /register
+- /signin
 - /forgot-password (pagina para enviar correo para nueva pass)
 
 ## Usuario registrado
@@ -18,8 +18,7 @@ Paginas: /language/page?parameter
 - /profile
 - /private-gallery
 
-
 ## Especiales - Solo entras si tienes un token valido como parrametro
 
 - /verify (Verificar cuenta, correo)
-- /reset-password (Resetear password forget-password)
+- /reset-password (Resetear password forgot-password)

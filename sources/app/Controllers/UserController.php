@@ -4,13 +4,11 @@ class UserController extends BaseController
 {
     public function profile()
     {
-        echo "Perfil";
-        exit;
+        $this->render('/user/profile', UserSources::profile());
     }
      
     public function privateGallery(array $params = [])
     {
-        echo "Galeria privada";
-        exit;
+        $this->render('/user/gallery', UserSources::gallery());
     }
 }

@@ -15,7 +15,7 @@ Thumbs.db
 
 # Contenido dinámico (Fotos de prueba de los usuarios)
 # Esto ignora las imágenes subidas pero mantendrá la estructura de carpetas limpia
-src/public/uploads/*
+sources/public/uploads/*
 !.gitkeep
 
 # Logs de error de Nginx, PHP o MySQL en local

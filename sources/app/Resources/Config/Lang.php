@@ -1,6 +1,6 @@
 <?php
 
-abstract class LangService
+abstract class Lang
 {
     private static $lang = 'en';
     private static $langData = [];
@@ -18,12 +18,21 @@ abstract class LangService
 
     public static function t(string $key): string
     {
-        return self::$langData[$key] ?? $key;
+        $keys = explode('.', $key);
+        $data = self::$langData;
+
+        foreach ($keys as $part)
+        {
+            if (isset($data[$part]))
+                $data = $data[$part];
+            else
+                return $key;
+        }
+        return (string) $data;
     }
 
     public static function getLang(): string
     {
         return self::$lang ?? 'en';
     }
-
 }

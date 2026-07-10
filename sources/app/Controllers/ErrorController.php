@@ -2,14 +2,8 @@
 
 class ErrorController extends BaseController
 {
-    public function render($code, $msg)
-    {
-        echo "Error $code: $msg";
-        exit;
-    }
-
-    public function getErrorText($code)
-    {
-        return $this->t($code);
+    public function display(AppException $e): void
+    {        
+        $this->render('/error', ErrorSources::error($e));
     }
 }

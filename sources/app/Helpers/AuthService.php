@@ -11,7 +11,7 @@ class AuthService
     {
     }
 
-    public function forgetPass(string $email): string
+    public function forgotPass(string $email): string
     {
     }
 
@@ -30,6 +30,11 @@ class AuthService
     }
 
     public function password(string $password, string $confirm): array
+    {
+        
+    }
+
+    public function loginWithCookie(string $token): void
     {
         
     }

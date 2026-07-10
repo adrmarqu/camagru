@@ -1,1 +1,1 @@
-// Login + Register + Forgot password
+// Login + Signin + Forgot password

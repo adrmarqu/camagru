@@ -4,7 +4,6 @@ class EditorController extends BaseController
 {
     public function editor()
     {
-        echo "Editor";
-        exit;
+        $this->render('/core/editor', CoreSources::editor());
     }
 }

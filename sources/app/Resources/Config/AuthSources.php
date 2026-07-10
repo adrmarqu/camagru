@@ -1,13 +1,12 @@
 <?php
 
-abstract class AuthSources extends BaseSources
+abstract class AuthSources
 {
     public static function login(): array
     {
         return 
         [
-            'lang' => self::t('lang'),
-            'title' => self::t('title.login')
+            'title' => Lang::t('title.login')
         ];
     }
 
@@ -15,8 +14,15 @@ abstract class AuthSources extends BaseSources
     {
         return 
         [
-            'lang' => self::t('lang'),
-            'title' => self::t('title.signin')
+            'title' => Lang::t('title.signin')
+        ];
+    }
+
+    public static function forgot(): array
+    {
+        return
+        [
+            'title' => Lang::t('title.forgot')
         ];
     }
 }

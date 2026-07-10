@@ -1,34 +1,29 @@
 <?php
 
+// Quitar al final
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
+// Load configuration and autoloader
 require_once __DIR__ . '/../app/bootstrap.php';
 
-// Rememeber me
-/* if (!isset($_SESSION['user']) || isset($_COOKIE['remember_me']))
+// Remember me
+if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
+    AuthService::loginWithCookie($_COOKIE['remember_me']);
+
+// Main
+try
 {
-    try
-    {
-        $token = $_COOKIE['remember_me'];
-        $user = getUserByToken($token);
-
-        if ($user)
-        {
-            $_SESSION['user'] =
-            [
-                'id' = $user['id'],
-                'username' = $user['username'],
-                'email' = $user['email']
-            ];
-        }
-        else
-            setcookie('remember_me', '', time() - 3600, '/');
-    }
-    catch (PDOException $e)
-    {
-        setErrorPage(500, $lang['500']);
-    }
-} */
-
-$router = new Router();
-$router->dispatch();
+    $paths = require CONF_PATH . '/routes.php';
+    
+    $router = new Router($paths);
+    $router->dispatch();
+}
+catch (AppException $e) 
+{
+    $error = new ErrorController();
+    $error->display($e);
+}

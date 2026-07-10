@@ -4,13 +4,12 @@ class TokenController extends BaseController
 {
     public function verify(array $params = [])
     {
-        echo "Verificar";
-        exit;
+        $this->render('/token/verify', TokenSources::verify());
     }
      
     public function reset(array $params = [])
     {
-        echo "Resetear";
-        exit;
+        $this->render('/token/reset', TokenSources::reset());
+
     }
 }
