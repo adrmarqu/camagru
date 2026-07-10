@@ -2,19 +2,25 @@
 
 class AuthController extends BaseController
 {
-    public function login(array $params = [])
+    public function login()
     {
         echo "Login";
         exit;
     }
 
-    public function register(array $params = [])
+    public function register()
     {
-        echo "Registro";
-        exit;
+        // Mirar si hay post
+            // Mirar formato correcto
+            // Si hay error salir del if
+            // Enviar datos
+            // Si hay error salir del if
+            // Guardar datos del usuario y redirigir
+        
+        $this->render(AuthSources::signin());
     }
 
-    public function forgot(array $params = [])
+    public function forgot()
     {
         echo "Olvidar contraseña";
         exit;

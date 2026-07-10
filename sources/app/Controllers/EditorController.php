@@ -2,7 +2,7 @@
 
 class EditorController extends BaseController
 {
-    public function editor(array $params = [])
+    public function editor()
     {
         echo "Editor";
         exit;

@@ -6,16 +6,12 @@ abstract class BaseController
 
     public function __construct($lang)
     {
-        $path = LANG_PATH . "/$lang.php";
-
-        if (file_exists($path))
-            $this->langData = require $path;
-        else
-            $this->langData = require APP_PATH . "/en.php";
+        LangService::setLang($lang);
     }
 
-    protected function t(string $key): string
+    protected function render(array $data): void
     {
-        return $this->langData[$key] ?? $key;
+        $view = new View();
+        $view->render($data);
     }
 }

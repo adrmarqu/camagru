@@ -19,15 +19,11 @@ class Router
 
             $remainingPath = (count($parts) > 1) ? $parts[1] : 'gallery';
 
-            header("Location: /$newUrl/$remainingPath");
-            exit;
+            Navigator::redirect($remainingPath, $newLang);
         }
 
         if (empty($uri))
-        {
-            header("Location: /$currentLang/gallery");
-            exit;
-        }
+            Navigator::redirect("gallery", $currentLang);
 
         $components = parse_url($uri);
 
@@ -60,10 +56,15 @@ class Router
             Response::error404($lang);
 
         $config = $map[$page];
-        $controllerName = $config['controller'];
-        $methodName = $config['method'];
+        $controller = new $config['controller']($lang);
+        $method = $config['method'];
 
-        $controller = new $controllerName($lang);
-        $controller->$methodName($query);
+        $reflection = new ReflectionMethod($controller, $method);
+        $parameters = $reflection->getParameters();
+
+        if (!empty($parameters))
+            $controller->$method($query);
+        else
+            $controller->$method();
     }
 }

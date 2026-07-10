@@ -2,7 +2,7 @@
 
 class UserController extends BaseController
 {
-    public function profile(array $params = [])
+    public function profile()
     {
         echo "Perfil";
         exit;

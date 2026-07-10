@@ -33,8 +33,8 @@ Dondes està todo el código del servidor. El backend
 
 - Variables de session, cookies...
 - Variables de templates
-    - Variables: {{ var }}
-    - Includes: [[ var ]]
+    - Variables: {{::%s::}}
+    - Includes: [[::%s::]]
 
 
 ## Checklist de Seguridad Obligatoria
