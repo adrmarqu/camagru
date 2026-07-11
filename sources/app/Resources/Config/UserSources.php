@@ -6,7 +6,8 @@ abstract class UserSources
     {
         return 
         [
-            'title' => Lang::t('title.profile')
+            'title' => Lang::t('title.profile'),
+            'page' => "/" . Lang::getLang() . "/profile"
         ];
     }
 
@@ -14,7 +15,8 @@ abstract class UserSources
     {
         return 
         [
-            'title' => Lang::t('title.private_gallery')
+            'title' => Lang::t('title.private_gallery'),
+            'page' => "/" . Lang::getLang() . "/private-gallery"
         ];
     }
 }

@@ -6,7 +6,10 @@ abstract class BaseController
 
     protected function render(string $page, array $data = []): void
     {
+        // Fusionar datos
+        $sources = array_merge(GlobalSources::all(), $data);
+
         $view = new View();
-        $view->render($page, $data);
+        $view->render($page, $sources);
     }
 }

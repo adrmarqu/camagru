@@ -7,7 +7,7 @@ $lang =
     [
         'login' => 'Iniciar sessión',
         'signin' => 'Registrar cuenta',
-        'forgot' => 'Contraseña olvidada'
+        'forgot' => 'Recuperar contraseña'
     ],
 
     'page' =>
@@ -16,6 +16,18 @@ $lang =
         [
             'file' => 'Archivo: ',
             'line' => 'Línea: ',
+        ],
+        'form' =>
+        [
+            'usermail' => 'Introduce tu nombre de usuario o tu correo',
+            'user' => 'Introduce tu nombre de usuario',
+            'email' => 'Introduce tu correo',
+            'pass' => 'Introduce tu contraseña',
+            'confirm' => 'Vuelve a introducir tu contraseña',
+            'terms' => 'Aceptar terminos y condiciones',
+            'remember' => 'Recuerdame',
+            'no_account' => '¿Aún no tienes cuenta? ',
+            'create' => 'Registrate aquí'
         ]
     ],
 

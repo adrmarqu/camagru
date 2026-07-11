@@ -23,6 +23,7 @@ define('LANG_PATH', RSRC_PATH . '/languages');
 
 // /sources/public
 define('URL_UPLOAD', '/uploads');
+define('URL_ASSETS', '/assets');
 define('URL_CSS', '/css');
 define('URL_JS', '/js');
 

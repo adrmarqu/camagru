@@ -33,6 +33,8 @@ abstract class Lang
 
     public static function getLang(): string
     {
-        return self::$lang ?? 'en';
+        if (self::$lang === 'en' && isset($_SESSION['lang']))
+            self::$lang = $_SESSION['lang'];
+        return self::$lang;
     }
 }

@@ -6,7 +6,8 @@ abstract class TokenSources
     {
         return 
         [
-            'title' => Lang::t('title.verify')
+            'title' => Lang::t('title.verify'),
+            'page' => "/" . Lang::getLang() . "/verify"
         ];
     }
 
@@ -14,7 +15,8 @@ abstract class TokenSources
     {
         return 
         [
-            'title' => Lang::t('title.reset')
+            'title' => Lang::t('title.reset'),
+            'page' => "/" . Lang::getLang() . "/reset-password"
         ];
     }
 }

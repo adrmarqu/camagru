@@ -1,5 +1,6 @@
 <meta charset="UTF-8">
 <title><?= $title ?? 'Camagru' ?></title>
+<link rel="icon" href="/assets/logo.webp" type="image/webp">
 
 <!-- Common Css -->
 <!-- 
@@ -10,5 +11,5 @@
 -->
 
 <?php foreach ($css ?? [] as $file): ?>
-    <link rel="stylesheet" href="<?= URL_CSS . $file ?>">
+    <link rel="stylesheet" href="<?= URL_CSS . $file ?>?v1">
 <?php endforeach; ?>
