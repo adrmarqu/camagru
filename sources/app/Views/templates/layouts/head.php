@@ -10,6 +10,6 @@
     ...
 -->
 
-<?php foreach ($glob['css'] ?? [] as $file): ?>
+<?php foreach ($global['css'] ?? [] as $file): ?>
     <link rel="stylesheet" href="<?= URL_CSS . $file ?>?v1">
 <?php endforeach; ?>

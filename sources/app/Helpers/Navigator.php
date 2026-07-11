@@ -1,6 +1,6 @@
 <?php
 
-abstract class Redir
+abstract class Navigator
 {
     public static function redirect(string $page, $lang = null)
     {

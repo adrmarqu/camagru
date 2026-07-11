@@ -5,6 +5,6 @@
     ...
 -->
 
-<?php foreach ($glob['scripts'] ?? [] as $file): ?>
+<?php foreach ($global['scripts'] ?? [] as $file): ?>
     <script type="module" src="<?= URL_JS . $file ?>"></script>
 <?php endforeach; ?>

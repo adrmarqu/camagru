@@ -6,6 +6,8 @@ class View
     {
         // Convert the array into local variables
         extract($data);
+        if (isset($global) && is_array($global))
+            extract($global);
         // Open buffer
         ob_start();
         // import page

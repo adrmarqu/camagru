@@ -17,6 +17,7 @@ Paginas: /language/page?parameter
 - /photo-editor
 - /profile
 - /private-gallery
+- /favorites
 
 ## Especiales - Solo entras si tienes un token valido como parrametro
 

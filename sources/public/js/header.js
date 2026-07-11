@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () =>
 {
     document.addEventListener("click", (e) =>
     {
+        if (!e.target || typeof e.target.closest !== 'function') return;
+
         const burger = document.getElementById("burger");
         const dropMobile = document.getElementById("drop");
         
@@ -23,14 +25,15 @@ document.addEventListener("DOMContentLoaded", () =>
             return;
         }
 
-        // Handle dropdown toggle buttons
-        const toggleBtn = e.target.closest('button.nav-item');
+        // Handle dropdown toggle buttons and links
+        const toggleBtn = e.target.closest('.nav-item');
         if (toggleBtn)
         {
             const nextEl = toggleBtn.nextElementSibling;
             if (nextEl && (nextEl.classList.contains('dropdown') 
                 || nextEl.tagName === 'DIV'))
             {
+                e.preventDefault();
                 nextEl.classList.toggle('open');
                 
                 // If closing dropdown, also close its nested dropdowns

@@ -33,7 +33,7 @@
     <nav id="nav-pc">
         <a class="nav-item" href="<?= $pages['gallery'] ?>"><?= $header['gallery'] ?></a>
         <a class="nav-item" href="<?= $pages['editor'] ?>"><?= $header['editor'] ?></a>
-        <button class="nav-item"><?= $glob['username'] ?></button>
+        <button class="nav-item"><?= $global['username'] ?></button>
         <div id="drop-user" class="dropdown">
             <a class="nav-item" href="<?= $pages['profile'] ?>"><?= $header['profile'] ?></a>
             <a class="nav-item" href="<?= $pages['private'] ?>"><?= $header['private'] ?></a>

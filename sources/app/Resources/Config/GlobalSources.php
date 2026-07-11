@@ -69,7 +69,7 @@ abstract class GlobalSources
     {
         return
         [
-            'glob' => self::globalData(),
+            'global' => self::globalData(),
             'header' => self::header()
             /* 'footer' => self::footer() */
         ];

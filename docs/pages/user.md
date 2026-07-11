@@ -1,1 +1,1 @@
-// Profile + Private Gallery
+// Profile + Private Gallery + Favorites
