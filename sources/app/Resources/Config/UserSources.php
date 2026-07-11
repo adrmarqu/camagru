@@ -7,7 +7,7 @@ abstract class UserSources
         return 
         [
             'title' => Lang::t('title.profile'),
-            'page' => "/" . Lang::getLang() . "/profile"
+            'page' => "profile"
         ];
     }
 
@@ -16,7 +16,16 @@ abstract class UserSources
         return 
         [
             'title' => Lang::t('title.private_gallery'),
-            'page' => "/" . Lang::getLang() . "/private-gallery"
+            'page' => "private-gallery"
+        ];
+    }
+
+    public static function favorites(): array
+    {
+        return 
+        [
+            'title' => Lang::t('title.favorite'),
+            'page' => "favorites"
         ];
     }
 }

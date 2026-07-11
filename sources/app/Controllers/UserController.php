@@ -11,4 +11,9 @@ class UserController extends BaseController
     {
         $this->render('/user/gallery', UserSources::gallery());
     }
+
+    public function favorites(array $params = [])
+    {
+        $this->render('/user/favorites', UserSources::favorites());
+    }
 }

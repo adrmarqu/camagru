@@ -7,7 +7,7 @@ abstract class AuthSources
         return 
         [
             'title' => Lang::t('title.login'),
-            'page' => "/" . Lang::getLang() . "/login",
+            'page' => "login",
             'formTitle' => Lang::t('title.login'),
             'usermail' => Lang::t('page.form.usermail'),
             'usermailErr' => '',
@@ -24,7 +24,7 @@ abstract class AuthSources
         return 
         [
             'title' => Lang::t('title.signin'),
-            'page' => "/" . Lang::getLang() . "/signin"
+            'page' => "signin"
         ];
     }
 
@@ -33,7 +33,7 @@ abstract class AuthSources
         return
         [
             'title' => Lang::t('title.forgot'),
-            'page' => "/" . Lang::getLang() . "/forgot-password"
+            'page' => "forgot-password"
         ];
     }
 }

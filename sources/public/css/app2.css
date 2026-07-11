@@ -1,0 +1,70 @@
+/* Import Google Fonts (Inter and Outfit) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+:root
+{
+    /* Fonts */
+    --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+
+    /* Colors - Light Mode */
+    --bg-color: #f8fafc;        /* Fondo principal (slate-50) */
+    --bg-surface: #ffffff;      /* Tarjetas, headers (white) */
+    --bg-surface-hover: #f1f5f9;/* Hover en elementos de superficie */
+    
+    --text-primary: #0f172a;    /* Texto principal (slate-900) */
+    --text-secondary: #475569;  /* Texto secundario (slate-600) */
+    --text-muted: #94a3b8;      /* Texto muy sutil (slate-400) */
+    
+    --border-color: #e2e8f0;    /* Bordes sutiles (slate-200) */
+    
+    /* Brand Colors - Premium Indigo */
+    --brand-primary: #6366f1;   /* indigo-500 */
+    --brand-hover: #4f46e5;     /* indigo-600 */
+    --brand-light: #e0e7ff;     /* indigo-100 */
+
+    /* Semantic Colors */
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+
+    /* Spacing & Radii (Consistency) */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Dark Mode Variables */
+html.dark, .dark
+{
+    /* Colors - Dark Mode */
+    --bg-color: #0f172a;        /* Fondo oscuro profundo (slate-900) */
+    --bg-surface: #1e293b;      /* Tarjetas, headers (slate-800) */
+    --bg-surface-hover: #334155;/* Hover en elementos oscuros */
+    
+    --text-primary: #f8fafc;    /* Texto claro (slate-50) */
+    --text-secondary: #cbd5e1;  /* Texto secundario claro (slate-300) */
+    --text-muted: #64748b;      /* Texto muy sutil oscuro (slate-500) */
+    
+    --border-color: #334155;    /* Bordes oscuros (slate-700) */
+    
+    /* Brand Colors for Dark Mode (Slightly lighter for contrast) */
+    --brand-primary: #818cf8;   /* indigo-400 */
+    --brand-hover: #a5b4fc;     /* indigo-300 */
+    --brand-light: #3730a3;     /* indigo-800 */
+
+    /* Dark Mode Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+}

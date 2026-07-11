@@ -7,7 +7,7 @@ abstract class CoreSources
         return 
         [
             'title' => Lang::t('title.gallery'),
-            'page' => "/" . Lang::getLang() . "/gallery"
+            'page' => "/gallery"
         ];
     }
 
@@ -16,7 +16,7 @@ abstract class CoreSources
         return 
         [
             'title' => Lang::t('title.editor'),
-            'page' => "/" . Lang::getLang() . "/photo-editor"
+            'page' => "/photo-editor"
         ];
     }
 }

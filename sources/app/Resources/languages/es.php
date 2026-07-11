@@ -10,6 +10,22 @@ $lang =
         'forgot' => 'Recuperar contraseña'
     ],
 
+    'header' =>
+    [
+        'gallery' => 'Galeria',
+        'editor' => 'Editor de fotos',
+        'logout' => 'Desconectarse',
+        'profile' => 'Perfil',
+        'private' => 'Mi galeria',
+        'favorite' => 'Mis favoritos',
+        'login' => 'Iniciar sessión',
+        'signin' => 'Registrarse',
+        'en' => 'Inglés',
+        'es' => 'Español',
+        'ca' => 'Catalán',
+        'guest' => 'Invitado'
+    ],
+
     'page' =>
     [
         'error' =>

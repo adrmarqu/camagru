@@ -9,9 +9,9 @@ class View
         // Open buffer
         ob_start();
         // import page
-        $page = PAGES_PATH . $pageName . '.php';
-        if (file_exists($page))
-            require $page;
+        $screen = PAGES_PATH . $pageName . '.php';
+        if (file_exists($screen))
+            require $screen;
         else
             throw new AppException(500, Lang::t('500.not_found'));
         // Close buffer

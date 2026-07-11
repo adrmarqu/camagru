@@ -18,6 +18,8 @@ return
     'profile'           => ['controller' => 'UserController', 'method' => 'profile'],
     
     'private-gallery'   => ['controller' => 'UserController', 'method' => 'privateGallery'],
+
+    'favorites'   => ['controller' => 'UserController', 'method' => 'favorites'],
     
     // Token
     'verify'            => ['controller' => 'TokenController', 'method' => 'verify'],

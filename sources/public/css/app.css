@@ -1,0 +1,30 @@
+:root
+{
+    /* Fonts */
+    --font-primary: sans-serif;
+    --font-secondary: sans-serif;
+
+    /* Semantic colors */
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+
+    /* Button colors */
+
+}
+.dark
+{
+    /* Background color */
+}
+
+body
+{
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-secondary);
+}
+
+h1, h2, h3, h4
+{
+    font-family: var(--font-primary);
+}
