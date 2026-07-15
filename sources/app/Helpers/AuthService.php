@@ -1,41 +1,135 @@
 <?php
 
-class AuthService
+/* This class checks the texts formats of the POST from the forms and the tokens */
+abstract class AuthService
 {
-    public function login(string $login, string $password): array
+    public static function login(string $login, string $password): array
     {
-        //Validator::
+        $errors = [];
+
+        // usermail
+        if (($error = Validator::usermail($login)) !== null)
+            $errors['usermail'] = $error;
+        // pass
+        if (($error = Validator::pass($password)) !== null)
+            $errors['password'] = $error;
+
+        return $errors;
     }
 
-    public function signin(string $user, string $email, string $password, string $confirm, bool $terms): array
+    public static function signin(string $user, string $email, string $password, string $confirm, bool $terms): array
     {
+        $errors = [];
+
+        // user
+        if (($error = Validator::user($user)) !== null)
+            $errors['user'] = $error;
+        // email
+        if (($error = Validator::email($email)) !== null)
+            $errors['email'] = $error;
+        // pass
+        if (($error = Validator::pass($password)) !== null)
+            $errors['password'] = $error;
+        // confirm
+        if (($error = Validator::confirm($password, $confirm)) !== null)
+            $errors['confirm'] = $error;
+        // terms
+        if ($terms === false)
+            $errors['terms'] = Lang::t('error.terms');
+
+        return $errors;
     }
 
-    public function forgotPass(string $email): string
+    public static function forgotPass(string $usermail): array
     {
+        $error = Validator::usermail($usermail);
+        return $error ? ['usermail' => $error] : [];
     }
 
-    public function resetPass(string $pass, string $rep): array
+    /* Update user */
+    public static function user(string $newUser): array
     {
+        $error = Validator::user($newUser);
+        return $error ? ['user' => $error] : [];
     }
 
-    public function user(string $user): string
+    /* Update email */
+    public static function email(string $newEmail): array
     {
-
+        $error = Validator::usermail($newEmail);
+        return $error ? ['email' => $error] : [];
     }
 
-    public function email(string $email): string
+    /* Update password */
+    public static function password(string $current, string $password, string $confirm): array
     {
-        
+        $errors = [];
+
+        // Current pass
+        if (($error = Validator::pass($current)) !== null)
+            $errors['current'] = $error;
+        // New pass
+        if (($error = Validator::pass($password)) !== null)
+            $errors['password'] = $error;
+        // Confirm new pass
+        if (($error = Validator::confirm($password, $confirm)) !== null)
+            $errors['confirm'] = $error;
+
+        return $errors;
     }
 
-    public function password(string $password, string $confirm): array
+    public static function resetPass(string $password, string $confirm): array
     {
-        
+        $errors = [];
+
+        // pass
+        if (($error = Validator::pass($password)) !== null)
+            $errors['password'] = $error;
+        // confirm
+        if (($error = Validator::confirm($password, $confirm)) !== null)
+            $errors['confirm'] = $error;
+
+        return $errors;
     }
 
-    public function loginWithCookie(string $token): void
+    /* Remember me */
+    public static function loginWithCookie(string $token): void
     {
-        
+        // Get data of the user with the token
+        $model = new TokenModel();
+        $data = $model->remember($token);
+        /* Check error */
+        if (!$data)
+        {
+            self::clearCookie();
+            return ;
+        }
+        // Check if token has expired
+        if (time() > strtotime($data['expires_at']))
+        {
+            $model->deleteToken($token);
+            self::clearCookie();
+            return ;
+        }
+
+        /* Set session */
+        self::setSession($data);
+    }
+
+    /* Clean rememeber cookie */
+    private static function clearCookie(): void
+    {
+        setcookie('remember_me', '', time() - 3600, '/', '', true, true);
+    }
+
+    /* Set session user data (remember & login) */
+    public static function setSession(array $user): void
+    {
+        $_SESSION['user'] =
+        [
+            'id' => $user['id'],
+            'username' => $user['username'],
+            'email' => $user['email']
+        ];
     }
 }

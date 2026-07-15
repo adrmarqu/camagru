@@ -1,5 +1,5 @@
 <?php 
-if (!$header['logged'])
+if ($header['logged'])
 {
     require LAYOUT_PATH . '/navUser/pc.php';
     require LAYOUT_PATH . '/navUser/mobile.php';

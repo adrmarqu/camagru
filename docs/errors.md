@@ -17,5 +17,6 @@ Ej: No tiene coma, o quizas no esta bien cerrado (no hay corchete)
     email: 'email@gmail.com'
 }
 
+- 405: Metodo no permitido (Hacer un delete en un form por ejemplo)
 - 409: Conflicto (El usuario ya existe, o el email ya existe)
 - 422: Datos no validos (el email esta mal escrito, el username tiene un caracter especial...)

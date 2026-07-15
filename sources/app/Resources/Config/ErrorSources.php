@@ -2,7 +2,7 @@
 
 abstract class ErrorSources
 {
-    public static function error(AppException $e)
+    public static function error(AppException $e): array
     {
         $code = $e->getCode();
         

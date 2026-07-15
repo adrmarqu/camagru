@@ -45,4 +45,8 @@ open:
 	 open -a "Firefox" http://camagru.42barcelona 2>/dev/null || \
 	 open http://camagru.42barcelona
 
-.PHONY: all up down restart status logs clean fclean re chrome fire open
+db:
+	@echo "Abriendo phpMyAdmin..."
+	@open -a "Google Chrome" http://localhost:8080 2>/dev/null
+
+.PHONY: all up down restart status logs clean fclean re chrome fire open open_db

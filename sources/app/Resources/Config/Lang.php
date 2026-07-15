@@ -5,7 +5,7 @@ abstract class Lang
     private static $lang = 'en';
     private static $langData = [];
 
-    public static function setLang(string $lang): void
+    public static function setLang(string $lang = 'en'): void
     {
         $path = LANG_PATH . "/$lang.php";
         self::$lang = $lang;
