@@ -2,10 +2,9 @@
 <title><?= $title ?? 'Camagru' ?></title>
 <link rel="icon" href="/assets/logo.webp" type="image/webp">
 
-<?php foreach ($global['css'] ?? [] as $file): ?>
-    <link rel="stylesheet" href="<?= URL_CSS . $file ?>?v1">
-<?php endforeach; ?>
+<link rel="stylesheet" href="<?= URL_CSS . '/app.css' ?>?v1">
+<link rel="stylesheet" href="<?= URL_CSS . '/header.css' ?>?v1">
 
-<?php foreach ($css_bonus ?? [] as $file): ?>
+<?php foreach ($css ?? [] as $file): ?>
     <link rel="stylesheet" href="<?= URL_CSS . $file ?>?v1">
 <?php endforeach; ?>

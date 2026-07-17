@@ -1,7 +1,9 @@
 <?php
 
-abstract class Validator
+final class Validator
 {
+    private function __construct() {}
+
     public static function usermail(string $usermail): ?string
     {
         /* Delete spaces */

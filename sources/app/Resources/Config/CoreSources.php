@@ -1,7 +1,9 @@
 <?php
 
-abstract class CoreSources
+final class CoreSources
 {
+    private function __construct() {}
+    
     public static function gallery(): array
     {
         return 

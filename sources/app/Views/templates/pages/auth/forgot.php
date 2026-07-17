@@ -1,7 +1,7 @@
 <section>
     <h1><?= $formTitle ?></h1>
     <div class="error-container">
-        <span id="error-global"></span>
+        <span id="error-global"><?= $globalErr ?></span>
     </div>
     <form id="form" action="<?= $pages['forgot'] ?>" method="POST">
         <input type="hidden" name="form_type" value="forgot">

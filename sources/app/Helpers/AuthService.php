@@ -1,8 +1,10 @@
 <?php
 
 /* This class checks the texts formats of the POST from the forms and the tokens */
-abstract class AuthService
+final class AuthService
 {
+    private function __construct() {}
+
     public static function login(string $login, string $password): array
     {
         $errors = [];

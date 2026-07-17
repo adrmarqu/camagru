@@ -18,18 +18,35 @@ class AuthController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $errors = AuthService::signin(
-                $_POST['user'] ?? '',
-                $_POST['email'] ?? '',
-                $_POST['password'] ?? '',
-                $_POST['confirm'] ?? '',
-                isset($_POST['terms'])
-            );
+            $user = $_POST['user'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $confirm = $_POST['confirm'] ?? '';
+            $terms = isset($_POST['terms']);
+
+            $errors = AuthService::signin($user, $email, $password, $confirm, $terms);
+
             if (empty($errors))
             {
-                /* $model = new AuthModel(); */
-                /* Error */
-                Navigator::redirect('login');
+                $model = new AuthModel();
+                $result = $model->signin($user, $email, $password);
+                if ($result['success'])
+                {
+                    $t = new TokenModel();
+                    $res = $t->generateTokenAccount($result['id'] ?? 0);
+                    if ($res['success'])
+                    {
+                        $_SESSION['send_email'] =
+                        [
+                            'action' => 'account',
+                            'email' => $email,
+                            'token' => $res['token'] ?? null;
+                        ];
+                        Navigator::redirect("send-email");
+                    }
+                    else $errors = $res;
+                }
+                else $errors = $result;
             }
         }
         $this->render('/auth/signin', AuthSources::signin($errors));

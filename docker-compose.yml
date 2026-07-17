@@ -55,9 +55,14 @@ services:
     image: phpmyadmin:latest
     container_name: camagru_phpmyadmin
     restart: always
+    env_file:
+      - .env
+    # Auto login
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8080:80"
     depends_on:

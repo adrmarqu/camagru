@@ -27,17 +27,13 @@ define('URL_ASSETS', '/assets');
 define('URL_CSS', '/css');
 define('URL_JS', '/js');
 
-// Environment
-$envPath = dirname(ROOT_PATH) . '/.env';
-if (file_exists($envPath))
+// Environment (las variables se inyectan por Docker via env_file)
+$envVars = ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_ROOT_PASSWORD', 'APP_URL'];
+foreach ($envVars as $var)
 {
-    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line)
-    {
-        if (strpos(trim($line), '#') === 0) continue;
-        list($name, $value) = explode('=', $line, 2);
-        $_ENV[trim($name)] = trim($value);
-    }
+    $value = getenv($var);
+    if ($value !== false)
+        $_ENV[$var] = $value;
 }
 
 // Autoloader

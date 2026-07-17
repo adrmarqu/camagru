@@ -22,8 +22,25 @@ try
     $router = new Router($paths);
     $router->dispatch();
 }
+/* App exception */
 catch (AppException $e) 
 {
     $error = new ErrorController();
     $error->display($e);
+}
+/* Database exception */
+catch (PDOException $e)
+{
+    $exception = new AppException(500, $e->getMessage());
+
+    $error = new ErrorController();
+    $error->display($exception);
+}
+/* Unexpected exception */
+catch (Exception $e)
+{
+    $exception = new AppException(500, $e->getMessage());
+
+    $error = new ErrorController();
+    $error->display($exception);
 }

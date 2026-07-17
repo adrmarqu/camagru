@@ -1,12 +1,14 @@
 <?php
 
-abstract class TokenSources
+final class TokenSources
 {
+    private function __construct() {}
+
     public static function verify(): array
     {
         return 
         [
-            'title' => Lang::t('title.verify'),
+            'title' => 'Camagru | ' . Lang::t('title.verify'),
             'page' => "verify"
         ];
     }
@@ -15,8 +17,26 @@ abstract class TokenSources
     {
         return 
         [
-            'title' => Lang::t('title.reset'),
+            'title' => 'Camagru | ' . Lang::t('title.reset'),
             'page' => "reset-password"
+        ];
+    }
+
+    public static function send(): array
+    {
+        return
+        [
+            'title' => 'Camagru | ' . Lang::t('title.send'),
+            'page' => "send-email",
+            'formTitle' => Lang::t('title.send'),
+            'email' => Lang::t('page.form.email_block'),
+            'globalErr' => '',
+            'send' => Lang::t('btn.email'),
+
+            'scripts' =>
+            [
+                '/form.js'
+            ]
         ];
     }
 }

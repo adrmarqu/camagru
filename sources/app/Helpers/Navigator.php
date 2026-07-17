@@ -1,8 +1,10 @@
 <?php
 
-abstract class Navigator
+final class Navigator
 {
-    public static function redirect(string $page, $lang = null)
+    private function __construct() {}
+    
+    public static function redirect(string $page, $lang = null): void
     {
         $lang = $lang ?? Lang::getLang();
 

@@ -5,9 +5,20 @@ $lang =
     // Head title
     'title' =>
     [
+        // main
+        'gallery' => 'Galeria',
+        'editor' => 'Editor de fotos',
+        // auth
         'login' => 'Iniciar sessión',
         'signin' => 'Registrar cuenta',
-        'forgot' => 'Recuperar contraseña'
+        'forgot' => 'Recuperar contraseña',
+        // user
+        'profile' => 'Mi perfil',
+        'private' => 'Mi galeria',
+        'favorites' => 'Mis favoritos',
+        // token
+        'send' => 'Enviar email',
+        'verify' => 'Verificación'
     ],
 
     'header' =>
@@ -38,6 +49,7 @@ $lang =
             'usermail' => 'Introduce tu nombre de usuario o tu correo',
             'user' => 'Introduce tu nombre de usuario',
             'email' => 'Introduce tu correo',
+            'email_block' => 'Correo introducido',
             'password' => 'Introduce tu contraseña',
             'confirm' => 'Vuelve a introducir tu contraseña',
             'terms' => 'Aceptar terminos y condiciones',
@@ -63,7 +75,8 @@ $lang =
     'btn' =>
     [
         'home' => 'Volver al inicio',
-        'send' => 'Enviar'
+        'send' => 'Enviar',
+        'email' => 'Enviar correo'
     ],
 
     'error' =>
@@ -85,6 +98,15 @@ $lang =
             'password_72' => 'La contraseña no puede tener más de 72 carácteres.'
         ],
 
+        'bbdd' =>
+        [
+            'exist' =>
+            [
+                'user' => 'Ese usuario ya está en uso',
+                'email' => 'Ese correo ya está en uso'
+            ]
+        ],
+
         'user' => 'El usuario debe empezar por una letra, además solo puede contener letras, números y guiones.',
         'email' => 'El correo electrónico no es válido.',
         'password' => 'La contraseña ha de tener al menos una minúscula, una mayúscula y un número.',
@@ -93,6 +115,13 @@ $lang =
 
         'terms' => 'Para crear una cuenta necesitas aceptar los terminos y condiciones',
 
+    ],
+
+    'go' =>
+    [
+        'gallery' => 'Volver a la Galeria',
+        'login' => 'Iniciar sesión',
+        'profile' => 'Volver a tu perfil',
     ],
 
     // Bad request
@@ -111,7 +140,8 @@ $lang =
     '403' =>
     [
         'title' => 'Acceso denegado',
-        'message' => 'No tienes permisos para acceder a esta página.'
+        'message' => 'No tienes permisos para acceder a esta página.',
+        'no_token' => 'Necesitas un token para acceder a esta página.'
     ],
     // Not found
     '404' =>
@@ -143,8 +173,9 @@ $lang =
         'title' => 'Error interno del servidor',
         'message' => 'Ha ocurrido un error inesperado. Inténtalo de nuevo más tarde.',
         'not_found' => 'El archivo de la página no existe.',
-        'no_class' => 'La clase no existe: ',
-        'no_method' => 'El metodo de la clase no existe: '
+        'no_class' => 'Clase inexistente: ',
+        'no_method' => 'Método de clase inexistente: ',
+        'no_access' => 'Acceso inexistente: '
     ]
 ];
 

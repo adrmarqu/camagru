@@ -47,28 +47,80 @@ class Router
             throw new AppException(404);
 
         $config = $this->routes[$page];
+
+        $this->checkAccess($config['access'] ?? null);
+
         $controllerName = $config['controller'];
         $methodName = $config['method'];
 
         if (!class_exists($controllerName))
-        {
             throw new AppException(500, Lang::t('500.no_class') . $controllerName);
-        }
 
         $controller = new $controllerName();
         
         if (!method_exists($controller, $methodName))
-        {
-            throw new AppException(500, Lang::t('500.no_method') . "$controllerName->$methodName()");
-        }
+            throw new AppException(500, Lang::t('500.no_method') . "$controllerName::$methodName");
 
         $reflection = new ReflectionMethod($controller, $methodName);
         $parameters = $reflection->getParameters();
 
-        if (!empty($parameters)) {
-            $controller->$methodName($query);
-        } else {
-            $controller->$methodName();
+        if (!empty($parameters)) $controller->$methodName($query);
+        else $controller->$methodName();
+    }
+
+    private function checkAccess(string $access): void
+    {
+        if ($access === null)
+            throw new AppException(500);
+
+        if ($access === 'public') return ;
+
+        switch ($access)
+        {
+            case 'guest':
+                
+                if (isset($_SESSION['user']))
+                    Navigator::redirect('gallery');
+                
+                break ;
+            case 'user':
+                
+                if (!isset($_SESSION['user']))
+                    throw new AppException(401, null, '/login');
+                
+                break ;
+            case 'token-reset':
+                
+                
+                if (isset($_SESSION['reset_token']))
+                    return ;
+
+                if (isset($_SESSION['user']))
+                    throw new AppException(403, Lang::t('403.no_token'));
+                else
+                    throw new AppException(403, Lang::t('403.no_token'), '/login');
+                
+                break ;
+            case 'token-send':
+                
+                $sendData = $_SESSION['send_email'] ?? [];
+
+                $action = $sendData['action'] ?? null;
+                $email  = $sendData['email']  ?? null;
+                $token  = $sendData['token']  ?? null;
+
+                if (!$action || !$email || !$token)
+                    throw new AppException(403, Lang::t('403.no_token'));
+
+                if ($action === 'account' && isset($_SESSION['user']))
+                    throw new AppException(403);
+
+                if ($action === 'email' && !isset($_SESSION['user']))
+                    throw new AppException(401, null, '/login');
+
+                break ;
+            default:
+                throw new AppException(500, Lang::t('500.no_access') . $access);
         }
     }
 }

@@ -10,7 +10,7 @@ Paginas: /language/page?parameter
 
 - /login (username | email && password)
 - /signin
-- /forgot-password (pagina para enviar correo para nueva pass)
+- /forgot-password (Página para enviar correo para nueva pass)
 
 ## Usuario registrado
 
@@ -23,3 +23,4 @@ Paginas: /language/page?parameter
 
 - /verify (Verificar cuenta, correo)
 - /reset-password (Resetear password forgot-password)
+- /send-email (Página para enviar correos para activar cuenta y confirmar nuevo email)

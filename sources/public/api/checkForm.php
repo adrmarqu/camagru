@@ -31,6 +31,9 @@ switch ($formType)
     case 'forgot':
         $errors = AuthService::forgotPass($_POST['usermail'] ?? '');
         break;
+    case 'send':
+        $errors = AuthService::sendEmail($_POST['email'] ?? '');
+        break;
     case 'reset':
         $errors = AuthService::resetPass($_POST['password'] ?? '', $_POST['confirm'] ?? '');
         break;
@@ -50,9 +53,8 @@ switch ($formType)
 if (!empty($errors))
 {
     http_response_code(422);
-    if (!isset($errors['global'])) {
+    if (!isset($errors['global']))
         $errors['global'] = Lang::t('422.message');
-    }
     echo json_encode(['success' => false, 'errors' => $errors]);
     exit;
 }

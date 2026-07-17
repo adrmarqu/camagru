@@ -20,7 +20,9 @@ const submitForm = (e) =>
         if (!response.ok)
         {
             if (response.headers.get('content-type')?.includes('application/json'))
+            {
                 return response.json();
+            }
             throw new Error(`Server error: ${response.status} ${response.statusText}`);
         }
         return response.json();

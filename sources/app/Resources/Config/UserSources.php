@@ -1,12 +1,14 @@
 <?php
 
-abstract class UserSources
+final class UserSources
 {
+    private function __construct() {}
+
     public static function profile(): array
     {
         return 
         [
-            'title' => Lang::t('title.profile'),
+            'title' => 'Camagru | ' . Lang::t('title.profile'),
             'page' => "profile"
         ];
     }
@@ -15,7 +17,7 @@ abstract class UserSources
     {
         return 
         [
-            'title' => Lang::t('title.private_gallery'),
+            'title' => 'Camagru | ' . Lang::t('title.private_gallery'),
             'page' => "private-gallery"
         ];
     }
@@ -24,7 +26,7 @@ abstract class UserSources
     {
         return 
         [
-            'title' => Lang::t('title.favorite'),
+            'title' => 'Camagru | ' . Lang::t('title.favorite'),
             'page' => "favorites"
         ];
     }

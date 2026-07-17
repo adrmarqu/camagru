@@ -1,23 +1,15 @@
 <?php
 
-abstract class GlobalSources
+final class GlobalSources
 {
+    private function __construct() {}
+   
     public static function globalData(): array
     {
         $path = "/" . Lang::getLang() . "/";
         return
         [
             'lang' => Lang::getLang(),
-            'css' =>
-            [
-                '/app.css',
-                '/header.css',
-                '/error.css'
-            ],
-            'scripts' =>
-            [
-                '/header.js'
-            ],
             'pages' =>
             [
                 'gallery' => $path . 'gallery',
@@ -27,6 +19,7 @@ abstract class GlobalSources
                 'forgot' => $path . 'forgot-password',
                 'verify' => $path . 'verify',
                 'reset' => $path . 'reset-password',
+                'send' => $path . 'send-email',
                 'profile' => $path . 'profile',
                 'private' => $path . 'private-gallery',
                 'favorite' => $path . 'favorites',

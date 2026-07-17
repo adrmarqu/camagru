@@ -30,7 +30,9 @@ CREATE TABLE tokens
     new_email   VARCHAR(100),
     expires_at  TIMESTAMP           NOT NULL,
     user_id     INT UNSIGNED        NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_type (user_id, type)
 );
 
 CREATE INDEX idx_tokens_expires_at ON tokens(expires_at);
