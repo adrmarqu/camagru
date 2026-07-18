@@ -9,7 +9,7 @@ final class AuthSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.login'),
-            'page' => "login",
+            'page' => 'login',
             'formTitle' => Lang::t('title.login'),
             'usermail' => Lang::t('page.form.usermail'),
             'userHold' => Lang::t('page.form.placeholder.usermail'),
@@ -37,7 +37,7 @@ final class AuthSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.signin'),
-            'page' => "signin",
+            'page' => 'signin',
             'formTitle' => Lang::t('title.signin'),
             'user' => Lang::t('page.form.user'),
             'userHold' => Lang::t('page.form.placeholder.user'),
@@ -68,7 +68,7 @@ final class AuthSources
         return
         [
             'title' => 'Camagru | ' . Lang::t('title.forgot'),
-            'page' => "forgot-password",
+            'page' => 'forgot-password',
             'formTitle' => Lang::t('title.forgot'),
             'usermail' => Lang::t('page.form.usermail'),
             'userHold' => Lang::t('page.form.placeholder.usermail'),

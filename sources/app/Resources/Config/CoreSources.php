@@ -9,7 +9,7 @@ final class CoreSources
         return 
         [
             'title' => Lang::t('title.gallery'),
-            'page' => "/gallery"
+            'page' => '/gallery'
         ];
     }
 
@@ -18,7 +18,7 @@ final class CoreSources
         return 
         [
             'title' => Lang::t('title.editor'),
-            'page' => "/photo-editor"
+            'page' => '/photo-editor'
         ];
     }
 }

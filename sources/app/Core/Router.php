@@ -89,6 +89,7 @@ class Router
                     throw new AppException(401, null, '/login');
                 
                 break ;
+            /* Reset-password page */
             case 'token-reset':
                 
                 
@@ -101,9 +102,13 @@ class Router
                     throw new AppException(403, Lang::t('403.no_token'), '/login');
                 
                 break ;
+            /* Send-email page */
             case 'token-send':
                 
-                $sendData = $_SESSION['send_email'] ?? [];
+                $sendData = $_SESSION['send_email'] ?? null;
+
+                if (!$sendData)
+                    throw new AppException(403, Lang::t('403.no_token'));
 
                 $action = $sendData['action'] ?? null;
                 $email  = $sendData['email']  ?? null;

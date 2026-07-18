@@ -1,5 +1,7 @@
 <?php
 
+$year = date("Y");
+
 $lang =
 [
     // Head title
@@ -77,6 +79,34 @@ $lang =
         'home' => 'Volver al inicio',
         'send' => 'Enviar',
         'email' => 'Enviar correo'
+    ],
+
+    'send_body' => 'Email enviado',
+
+    'email' =>
+    [
+        'account' =>
+        [
+            'subject' => '¡Te damos la bienvenida a Camagru! Activa tu cuenta',
+            'title' => 'Activar cuenta',
+            'link' => 'Activar mi cuenta',
+            'body' => 'Gracias por registrarte en Camagru. Para empezar a usar tu cuenta y disfrutar de todas las funciones, por favor actívala pulsando el botón de abajo. Ten en cuenta que el enlace caducará en 30 minutos. Para solicitar un nuevo enlace, vuelve a /send-email y envia un nuevo correo. También puedes iniciar sesión con tu cuenta para recibir un nuevo correo.'
+        ],
+        'email' =>
+        [
+            'subject' => 'Confirma tu nuevo email',
+            'title' => 'Confirmar email',
+            'link' => 'Confirmar nuevo email',
+            'body' => 'Camagru ha recibido una solicitud para cambiar tu dirección de correo. Si has sido tú, haz clic en el botón de abajo para confirmar el cambio. Si no has solicitado este cambio, puedes ignorar este mensaje de forma segura. Ten en cuenta que el enlace caducará en 10 minutos. Para volver a enviar un nuevo enlace, vuelve a la página de /send-email, o vuelve a cambiar tu correo desde tu perfil.'
+        ],
+        'password' =>
+        [
+            'subject' => 'Restablece tu contraseña',
+            'title' => 'Recuperar contraseña',
+            'link' => 'Restablecer contraseña',
+            'body' => 'No te preocupes, nos pasa a todos. Haz clic en el botón de abajo para elegir una nueva contraseña de forma segura. Ten en cuenta que, por motivos de seguridad, este enlace caducará en 5 minutos. Para generar un nuevo enlace, simplemente vuelve a la página de /forgot-password y envia otro correo.'
+        ],
+        'footer' => "Este es un correo automático, por favor no respondas a este mensaje. Si tienes problemas o no has solicitado este correo, ponte en contacto con soporte. © $year Camagru. Todos los derechos reservados."
     ],
 
     'error' =>

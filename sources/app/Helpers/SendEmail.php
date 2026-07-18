@@ -7,12 +7,12 @@ final class SendEmail
     public static function account(string $to, string $token): bool
     {
         $link = self::buildLink($token);
-        $subject = 'Camagru - ' . Lang::t('email.subject.activation');
+        $subject = 'Camagru - ' . Lang::t('email.account.subject');
         $body = self::buildBody(
-            Lang::t('email.title.activation'),
-            Lang::t('email.body.activation'),
+            Lang::t('email.account.title'),
+            Lang::t('email.account.body'),
             $link,
-            Lang::t('email.btn.activation')
+            Lang::t('email.account.link')
         );
 
         return self::send($to, $subject, $body);
@@ -96,9 +96,6 @@ final class SendEmail
         </html>';
     }
 
-    /**
-     * Send the email using PHP mail()
-     */
     private static function send(string $to, string $subject, string $body): bool
     {
         $headers  = "MIME-Version: 1.0\r\n";

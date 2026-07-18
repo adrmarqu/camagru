@@ -12,44 +12,8 @@ class TokenController extends BaseController
         $this->render('/token/reset', TokenSources::reset());
     }
 
-    public function send()
+    public function send(): void
     {
-        // No hay $_SESSION['send_email'] entrada por url o desactualizado
-        // 
-
-
-        if (!isset($_SESSION['send_email']['action']))
-        {
-
-        }
-            throw new AppException();
-        $action = $_SESSION['send_email']['action'];
-        
-    }
-
-    public function sendAccount()
-    {
-        if (isset($_SESSION['user']))
-        $s = $_SESSION['send_email'] ?? null;
-
-        if (empty($s) || empty($s['action']) || empty($s['email']) || empty($s['token']))
-        {
-
-        }
-
-        $this->render('/token/send', AuthSources::send());
-    }
-
-    public function sendNewEmail()
-    {
-        if (isset($_SESSION['user']))
-        $s = $_SESSION['send_email'] ?? null;
-
-        if (empty($s) || empty($s['action']) || empty($s['email']) || empty($s['token']))
-        {
-
-        }
-
-        $this->render('/token/send', AuthSources::send());
+        $this->render('/token/send', TokenSources::send());
     }
 }

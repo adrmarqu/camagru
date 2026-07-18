@@ -47,6 +47,7 @@ class AuthController extends BaseController
                         $_SESSION['send_email'] =
                         [
                             'action' => 'account',
+                            'user_id' => $id,
                             'email' => $email,
                             'token' => $token
                         ];

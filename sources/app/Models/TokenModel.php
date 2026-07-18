@@ -31,8 +31,8 @@ class TokenModel extends BaseModel
         $tokenExpired = false;
 
         /* Get token */
-        $sql = "SELECT id, token, expires_at FROM tokens WHERE user_id = :id";
-        $params = ['id' => $id];
+        $sql = "SELECT id, token, expires_at FROM tokens WHERE user_id = :id AND type = :type";
+        $params = ['id' => $id, 'type' => 'account'];
         $data = $this->query($sql, $params)->fetch();
 
         /* Check if its expired */

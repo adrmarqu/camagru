@@ -9,7 +9,7 @@ final class TokenSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.verify'),
-            'page' => "verify"
+            'page' => 'verify'
         ];
     }
 
@@ -18,7 +18,7 @@ final class TokenSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.reset'),
-            'page' => "reset-password"
+            'page' => 'reset-password'
         ];
     }
 
@@ -27,15 +27,14 @@ final class TokenSources
         return
         [
             'title' => 'Camagru | ' . Lang::t('title.send'),
-            'page' => "send-email",
-            'formTitle' => Lang::t('title.send'),
-            'email' => Lang::t('page.form.email_block'),
-            'globalErr' => '',
+            'page' => 'send-email',
+            'sendTitle' => Lang::t('title.send'),
+            'email' => $_SESSION['send_email']['email'],
             'send' => Lang::t('btn.email'),
-
+            'sendBody' => Lang::t('send_body'),
             'scripts' =>
             [
-                '/form.js'
+                '/send.js'
             ]
         ];
     }

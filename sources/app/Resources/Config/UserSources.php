@@ -9,7 +9,7 @@ final class UserSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.profile'),
-            'page' => "profile"
+            'page' => 'profile'
         ];
     }
 
@@ -18,7 +18,7 @@ final class UserSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.private_gallery'),
-            'page' => "private-gallery"
+            'page' => 'private-gallery'
         ];
     }
 
@@ -27,7 +27,7 @@ final class UserSources
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.favorite'),
-            'page' => "favorites"
+            'page' => 'favorites'
         ];
     }
 }
