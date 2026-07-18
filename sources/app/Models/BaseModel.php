@@ -62,4 +62,18 @@ abstract class BaseModel
     {
         return (int) $this->pdo->lastInsertId();
     }
+
+    protected function userExists($username)
+    {
+        $sql = "SELECT 1 FROM users WHERE username = :username";
+        $params = ['username' => $username];
+        return $this->select($sql, $params) !== false;
+    }
+
+    protected function emailExists($email)
+    {
+        $sql = "SELECT 1 FROM users WHERE email = :email";
+        $params = ['email' => $email];
+        return $this->select($sql, $params) !== false;
+    }
 }

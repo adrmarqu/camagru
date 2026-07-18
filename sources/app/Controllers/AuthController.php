@@ -28,25 +28,37 @@ class AuthController extends BaseController
 
             if (empty($errors))
             {
-                $model = new AuthModel();
-                $result = $model->signin($user, $email, $password);
-                if ($result['success'])
+                $db = Database::getConn();
+                try
                 {
-                    $t = new TokenModel();
-                    $res = $t->generateTokenAccount($result['id'] ?? 0);
-                    if ($res['success'])
+                    $db->beginTransaction();
+
+                    /* Create user */
+                    $model = new AuthModel();
+                    $id = $model->signin($user, $email, $password);
+
+                    /* Create token */
+                    $model = new TokenModel();
+                    $token = $model->generateTokenAccount($id);
+                    
+                    if (SendEmail::account($email, $token))
                     {
+                        $db->commit();
                         $_SESSION['send_email'] =
                         [
                             'action' => 'account',
                             'email' => $email,
-                            'token' => $res['token'] ?? null;
+                            'token' => $token
                         ];
                         Navigator::redirect("send-email");
                     }
-                    else $errors = $res;
+                    throw new DBException(['global' => Lang::t('error.send')]);
+                } 
+                catch (DBException $e)
+                {
+                    $db->rollBack();
+                    $errors = $e->getErrors();
                 }
-                else $errors = $result;
             }
         }
         $this->render('/auth/signin', AuthSources::signin($errors));

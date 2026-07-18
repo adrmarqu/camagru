@@ -17,7 +17,7 @@ final class Validator
                 : self::user($usermail);
         /* Get generic error message */
         if ($isValidFormat !== null)
-            return Lang::t('error.usermail');
+            return Lang::t('error.form.usermail');
         return null;
     }
 
@@ -34,7 +34,7 @@ final class Validator
             return Lang::t('error.length.user');
         /* Check format */
         if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_-]+$/', $user))
-            return Lang::t('error.user');
+            return Lang::t('error.form.user');
         return null;
     }
 
@@ -50,7 +50,7 @@ final class Validator
             return Lang::t('error.length.email');
         /* Check format */
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-            return Lang::t('error.email');
+            return Lang::t('error.form.email');
         return null;
     }
 
@@ -71,7 +71,7 @@ final class Validator
         if (!preg_match('/[a-z]/', $pass)
             || !preg_match('/[A-Z]/', $pass)
             || !preg_match('/[0-9]/', $pass))
-            return Lang::t('error.password');
+            return Lang::t('error.form.password');
         return null;
     }
 
@@ -82,22 +82,7 @@ final class Validator
             return Lang::t('error.empty.confirm');
         /* Check equal */
         if ($pass !== $confirm)
-            return Lang::t('error.confirm');
+            return Lang::t('error.form.confirm');
         return null;
     }
-
-    /* public static function (): string
-    {
-        
-    }
-
-    public static function (): string
-    {
-        
-    }
-
-    public static function (): string
-    {
-        
-    } */
 }

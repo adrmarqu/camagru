@@ -7,41 +7,33 @@ class AuthModel extends BaseModel
         
     }
     
-    public function signin(string $user, string $email, string $pass): array
+    public function signin(string $user, string $email, string $pass): int
     {
-        // Check if user already exists 
-        $sql = "SELECT 1 FROM users WHERE username = :username";
-        $params = ['username' => $user];
-        $userExists = $this->select($sql, $params) !== false;
-        // Check if email already exists s
-        $sql = "SELECT 1 FROM users WHERE email = :email";
-        $params = ['email' => $email];
-        $emailExists = $this->select($sql, $params) !== false;
+        /* Check if account data already exists */
+        $userExists = $this->userExists($user);
+        $emailExists = $this->emailExists($email);
 
         if ($userExists && $emailExists)
         {
-            return
+            throw new DBException(
             [
-                'success' => false,
-                'user' => Lang::t('error.bbdd.exist.user'),
+                'user' => Lang::t('error.bbdd.exist.user'), 
                 'email' => Lang::t('error.bbdd.exist.email')
-            ];
+            ]);
         }
         else if ($userExists)
         {
-            return
+            throw new DBException(
             [
-                'success' => false,
-                'user' => Lang::t('error.bbdd.exist.user'),
-            ];
+                'user' => Lang::t('error.bbdd.exist.user'), 
+            ]);
         }
         else if ($userExists)
         {
-            return
+            throw new DBException(
             [
-                'success' => false,
                 'email' => Lang::t('error.bbdd.exist.email')
-            ];
+            ]);
         }
 
         // Insert data
@@ -53,11 +45,8 @@ class AuthModel extends BaseModel
             'pass' => password_hash($pass, PASSWORD_DEFAULT)
         ];
         $this->query($sql, $params);
-        return
-        [
-            'success' => true,
-            'id' => $this->lastId()
-        ];
+
+        return $this->lastId();
     }
 
     public function forgot()

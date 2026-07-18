@@ -40,7 +40,7 @@ class TokenController extends BaseController
         $this->render('/token/send', AuthSources::send());
     }
 
-    public function sendAccount()
+    public function sendNewEmail()
     {
         if (isset($_SESSION['user']))
         $s = $_SESSION['send_email'] ?? null;

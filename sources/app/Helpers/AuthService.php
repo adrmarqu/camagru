@@ -37,7 +37,7 @@ final class AuthService
             $errors['confirm'] = $error;
         // terms
         if ($terms === false)
-            $errors['terms'] = Lang::t('error.terms');
+            $errors['terms'] = Lang::t('error.form.terms');
 
         return $errors;
     }

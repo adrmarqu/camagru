@@ -100,6 +100,7 @@ $lang =
 
         'bbdd' =>
         [
+            'generic' => "Error en la base de datos",
             'exist' =>
             [
                 'user' => 'Ese usuario ya está en uso',
@@ -107,14 +108,18 @@ $lang =
             ]
         ],
 
-        'user' => 'El usuario debe empezar por una letra, además solo puede contener letras, números y guiones.',
-        'email' => 'El correo electrónico no es válido.',
-        'password' => 'La contraseña ha de tener al menos una minúscula, una mayúscula y un número.',
+        'form' =>
+        [
+            'user' => 'El usuario debe empezar por una letra, además solo puede contener letras, números y guiones.',
+            'email' => 'El correo electrónico no es válido.',
 
-        'confirm' => 'La contraseña es diferente',
+            'password' => 'La contraseña ha de tener al menos una minúscula, una mayúscula y un número.',
+            'confirm' => 'La contraseña es diferente',
 
-        'terms' => 'Para crear una cuenta necesitas aceptar los terminos y condiciones',
+            'terms' => 'Para crear una cuenta necesitas aceptar los terminos y condiciones',
+        ],
 
+        'send' => "Error al enviar el correo"
     ],
 
     'go' =>
