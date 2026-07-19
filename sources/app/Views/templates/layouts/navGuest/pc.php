@@ -1,5 +1,5 @@
 <div class="pc">
-<a id="logo" href="<?= $pages['gallery'] ?>">
+<a id="logo" href="<?= $galleryUrl ?>">
     <svg 
         xmlns="http://www.w3.org/2000/svg"
         viewBox="6.5 8.5 29 23"
@@ -31,7 +31,7 @@
 </a>
 
 <nav>
-    <a class="nav-item" href="<?= $pages['login'] ?>"><?= $header['login'] ?></a>
-    <a class="nav-item" href="<?= $pages['signin'] ?>"><?= $header['signin'] ?></a>
+    <a class="nav-item" href="<?= $loginUrl ?>"><?= $loginNav ?></a>
+    <a class="nav-item" href="<?= $signinUrl ?>"><?= $signinNav ?></a>
 </nav>
 </div>

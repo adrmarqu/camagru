@@ -2,12 +2,15 @@
 
 abstract class BaseController
 {
-    protected function render(string $page, array $data = []): void
+    protected function render(string $pageUrl, array $data = []): void
     {
-        // Merge global and page data
-        $sources = array_merge(GlobalSources::all(), $data);
+        $global = GlobalSources::globalData();
+        $header = GlobalSources::header();
+        //$footer = GlobalSources::foter();
+
+        $sources = array_merge($global, $header, $data);
 
         $view = new View();
-        $view->render($page, $sources);
+        $view->render($pageUrl, $sources);
     }
 }

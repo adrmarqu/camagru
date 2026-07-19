@@ -1,36 +1,59 @@
 <?php
 
 session_start();
+ini_set('display_errors', '0');
 
 require_once __DIR__ . '/../../app/bootstrap.php';
 
 Lang::setLang(Lang::getLang());
 
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['send_email']))
 {
-    // Error
+    http_response_code(400);
+    echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('400.message')]]);
+    exit;
 }
 
 $s = $_SESSION['send_email'];
 
-$action = $s['action'];
+$action = $s['action'] ?? null;
+$userid = $s['user_id'] ?? null;
+$email = $s['email'] ?? null;
 
-switch ($action)
+$model = new TokenModel();
+
+$db = Database::getConn();
+$db->beginTransaction();
+
+if ($action === 'account')
 {
-    case 'account':
+    $newToken = $model->generateTokenAccount($userid);
 
-        // Generar token
-        // Enviar email
+    if (empty($newToken))
+    {
+        $db->rollBack();
+        http_response_code(500);
+        echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('500.message')]]);
+        exit;
+    }
 
-        break;
-    case 'email':
+    if (SendEmail::account($email, $newToken))
+    {
+        $db->commit();
+        $_SESSION['send_email']['token'] = $newToken;
+        echo json_encode(['success' => true]);
+        exit;
+    }
 
-        // Generar token
-        // Enviar email
-        
-        break;
-
+    $db->rollBack();
+    http_response_code(500);
+    echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('500.message')]]);
+    exit;
 }
 
-$email = $s['email'];
-$action = $s['user_id'];
+$db->rollBack();
+http_response_code(400);
+echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('400.message')]]);
+exit;

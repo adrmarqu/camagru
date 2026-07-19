@@ -3,7 +3,7 @@
     <div class="error-container">
         <span id="error-global"><?= $globalErr ?></span>
     </div>
-    <form id="form" action="<?= $pages['signin'] ?>" method="POST">
+    <form id="form" action="<?= $signinUrl ?>" method="POST">
         <input type="hidden" name="form_type" value="signin">
         <div>
             <label for="user"><?= $user ?></label>

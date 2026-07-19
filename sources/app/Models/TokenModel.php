@@ -28,6 +28,8 @@ class TokenModel extends BaseModel
 
     public function generateTokenAccount(int $id): string
     {
+        if (!$id) return '';
+        
         $tokenExpired = false;
 
         /* Get token */

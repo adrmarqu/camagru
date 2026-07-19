@@ -1,5 +1,5 @@
 <div class="pc">
-    <a id="logo" href="<?= $pages['gallery'] ?>">
+    <a id="logo" href="<?= $galleryUrl ?>">
         <svg 
             xmlns="http://www.w3.org/2000/svg"
             viewBox="6.5 8.5 29 23"
@@ -31,20 +31,20 @@
     </a>
     
     <nav id="nav-pc">
-        <a class="nav-item" href="<?= $pages['gallery'] ?>"><?= $header['gallery'] ?></a>
-        <a class="nav-item" href="<?= $pages['editor'] ?>"><?= $header['editor'] ?></a>
-        <button class="nav-item"><?= $global['username'] ?></button>
+        <a class="nav-item" href="<?= $galleryUrl ?>"><?= $galleryNav ?></a>
+        <a class="nav-item" href="<?= $editorUrl ?>"><?= $editorNav ?></a>
+        <button class="nav-item"><?= $username ?></button>
         <div id="drop-user" class="dropdown">
-            <a class="nav-item" href="<?= $pages['profile'] ?>"><?= $header['profile'] ?></a>
-            <a class="nav-item" href="<?= $pages['private'] ?>"><?= $header['private'] ?></a>
-            <a class="nav-item" href="<?= $pages['favorite'] ?>"><?= $header['favorite'] ?></a>
-            <button class="nav-item"><?= $header['language'] ?></button>
+            <a class="nav-item" href="<?= $profileUrl ?>"><?= $profileNav ?></a>
+            <a class="nav-item" href="<?= $privateUrl ?>"><?= $privateNav ?></a>
+            <a class="nav-item" href="<?= $favoriteUrl ?>"><?= $favoriteNav ?></a>
+            <button class="nav-item"><?= $language ?></button>
             <div id="drop-lang" class="dropdown">
-                <a class="nav-item" href="/en/<?= $page ?>"><?= $header['en'] ?></a>
-                <a class="nav-item" href="/es/<?= $page ?>"><?= $header['es'] ?></a>
-                <a class="nav-item" href="/ca/<?= $page ?>"><?= $header['ca'] ?></a>
+                <a class="nav-item" href="/en/<?= $pageName ?>"><?= $en ?></a>
+                <a class="nav-item" href="/es/<?= $pageName ?>"><?= $es ?></a>
+                <a class="nav-item" href="/ca/<?= $pageName ?>"><?= $ca ?></a>
             </div>
         </div>
-        <button class="btn-logout"><?= $header['logout'] ?></button>
+        <button class="btn-logout"><?= $logoutNav ?></button>
     </nav>
 </div>

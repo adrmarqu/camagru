@@ -2,7 +2,7 @@ const btn = document.getElementById("btn-send");
 const error = document.getElementById("error-global");
 
 const originalText = btn.textContent;
-const waitingTime = 60;
+const waitingTime = 5;
 
 function startTimer(seconds)
 {
@@ -44,7 +44,7 @@ const sendEmail = async () =>
         if (!response.ok)
             throw new Error(data.message || 'Error');
 
-        startTimer(60);
+        startTimer(waitingTime);
     }
     catch (err)
     {

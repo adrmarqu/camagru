@@ -3,7 +3,7 @@
     <div class="error-container">
         <span id="error-global"><?= $globalErr ?></span>
     </div>
-    <form id="form" action="<?= $pages['forgot'] ?>" method="POST">
+    <form id="form" action="<?= $forgotUrl ?>" method="POST">
         <input type="hidden" name="form_type" value="forgot">
         <div>
             <label for="usermail"><?= $usermail ?></label>

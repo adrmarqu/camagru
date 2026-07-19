@@ -102,6 +102,6 @@ final class SendEmail
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
         $headers .= "From: Camagru <noreply@camagru.com>\r\n";
 
-        return mail($to, $subject, $body, $headers);
+        return @mail($to, $subject, $body, $headers);
     }
 }

@@ -5,8 +5,8 @@
         <span></span>
     </button>
     <div id="drop" class="dropdown">
-        <a class="nav-item" href="<?= $pages['login'] ?>"><?= $header['login'] ?></a>
+        <a class="nav-item" href="<?= $loginUrl ?>"><?= $loginNav ?></a>
         <hr style="width: 100%;">
-        <a class="nav-item" href="<?= $pages['signin'] ?>"><?= $header['signin'] ?></a>
+        <a class="nav-item" href="<?= $signinUrl ?>"><?= $signinNav ?></a>
     </div>
 </nav>

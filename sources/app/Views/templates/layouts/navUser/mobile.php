@@ -5,20 +5,20 @@
         <span></span>
     </button>
     <div id="drop" class="dropdown">
-        <a class="nav-item" href="<?= $pages['gallery'] ?>"><?= $header['gallery'] ?></a>
-        <a class="nav-item" href="<?= $pages['editor'] ?>"><?= $header['editor'] ?></a>
-        <button class="nav-item"><?= $global['username'] ?></button>
+        <a class="nav-item" href="<?= $galleryUrl ?>"><?= $galleryNav ?></a>
+        <a class="nav-item" href="<?= $editorUrl ?>"><?= $editorNav ?></a>
+        <button class="nav-item"><?= $username ?></button>
         <div>
-            <a class="nav-item" href="<?= $pages['profile'] ?>"><?= $header['profile'] ?></a>
-            <a class="nav-item" href="<?= $pages['private'] ?>"><?= $header['private'] ?></a>
-            <a class="nav-item" href="<?= $pages['favorite'] ?>"><?= $header['favorite'] ?></a>
+            <a class="nav-item" href="<?= $profileUrl ?>"><?= $profileNav ?></a>
+            <a class="nav-item" href="<?= $privateUrl ?>"><?= $privateNav ?></a>
+            <a class="nav-item" href="<?= $favoriteUrl ?>"><?= $favoriteNav ?></a>
         </div>
-        <button class="nav-item"><?= $header['language'] ?></button>
+        <button class="nav-item"><?= $language ?></button>
         <div>
-            <a class="nav-item" href="/en/<?= $page ?>"><?= $header['en'] ?></a>
-            <a class="nav-item" href="/es/<?= $page ?>"><?= $header['es'] ?></a>
-            <a class="nav-item" href="/ca/<?= $page ?>"><?= $header['ca'] ?></a>
+            <a class="nav-item" href="/en/<?= $pageName ?>"><?= $en ?></a>
+            <a class="nav-item" href="/es/<?= $pageName ?>"><?= $es ?></a>
+            <a class="nav-item" href="/ca/<?= $pageName ?>"><?= $ca ?></a>
         </div>
     </div>
-    <button class="btn-logout"><?= $header['logout'] ?></button>
+    <button class="btn-logout"><?= $logout ?></button>
 </nav>

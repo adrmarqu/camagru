@@ -10,20 +10,19 @@ final class GlobalSources
         return
         [
             'lang' => Lang::getLang(),
-            'pages' =>
-            [
-                'gallery' => $path . 'gallery',
-                'editor' => $path . 'photo-editor',
-                'login' => $path . 'login',
-                'signin' => $path . 'signin',
-                'forgot' => $path . 'forgot-password',
-                'verify' => $path . 'verify',
-                'reset' => $path . 'reset-password',
-                'send' => $path . 'send-email',
-                'profile' => $path . 'profile',
-                'private' => $path . 'private-gallery',
-                'favorite' => $path . 'favorites',
-            ],
+            /* Pages url */
+            'galleryUrl' => $path . 'gallery',
+            'editorUrl' => $path . 'photo-editor',
+            'loginUrl' => $path . 'login',
+            'signinUrl' => $path . 'signin',
+            'forgotUrl' => $path . 'forgot-password',
+            'verifyUrl' => $path . 'verify',
+            'resetUrl' => $path . 'reset-password',
+            'sendUrl' => $path . 'send-email',
+            'profileUrl' => $path . 'profile',
+            'privateUrl' => $path . 'private-gallery',
+            'favoriteUrl' => $path . 'favorites',
+            /* User data */
             'username' => $_SESSION['user']['username'] ?? Lang::t('header.guest')
         ];
     }
@@ -34,14 +33,16 @@ final class GlobalSources
         return
         [
             'logged' => isset($_SESSION['user']),
-            'gallery' => Lang::t('header.gallery'),
-            'editor' => Lang::t('header.editor'),
-            'profile' => Lang::t('header.profile'),
-            'private' => Lang::t('header.private'),
-            'favorite' => Lang::t('header.favorite'),
-            'login' => Lang::t('header.login'),
-            'signin' => Lang::t('header.signin'),
-            'logout' => Lang::t('header.logout'),
+            /* Nav elements */
+            'galleryNav' => Lang::t('header.gallery'),
+            'editorNav' => Lang::t('header.editor'),
+            'profileNav' => Lang::t('header.profile'),
+            'privateNav' => Lang::t('header.private'),
+            'favoriteNav' => Lang::t('header.favorite'),
+            'loginNav' => Lang::t('header.login'),
+            'signinNav' => Lang::t('header.signin'),
+            'logoutNav' => Lang::t('header.logout'),
+            /* Lang */
             'en' => Lang::t('header.en'),
             'es' => Lang::t('header.es'),
             'ca' => Lang::t('header.ca'),
@@ -54,17 +55,6 @@ final class GlobalSources
         return
         [
             '' => '',
-        ];
-    }
-
-    /* Global vars */
-    public static function all(): array
-    {
-        return
-        [
-            'global' => self::globalData(),
-            'header' => self::header()
-            /* 'footer' => self::footer() */
         ];
     }
 }
