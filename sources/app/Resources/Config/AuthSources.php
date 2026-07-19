@@ -11,24 +11,29 @@ final class AuthSources
             'title' => 'Camagru | ' . Lang::t('title.login'),
             'pageName' => 'login',
             'formTitle' => Lang::t('title.login'),
+            /* Form label */
             'usermail' => Lang::t('page.form.usermail'),
-            'userHold' => Lang::t('page.form.placeholder.usermail'),
-            'usermailErr' => '',
             'pass' => Lang::t('page.form.password'),
-            'passHold' => Lang::t('page.form.placeholder.password'),
-            'passErr' => '',
             'remember' => Lang::t('page.form.remember'),
+            /* Form placeholder */
+            'userHold' => Lang::t('page.form.placeholder.usermail'),
+            'passHold' => Lang::t('page.form.placeholder.password'),
+            /* Form error */
+            'usermailErr' => '',
+            'passErr' => '',
+            'globalErr' => $e['global'] ?? '',
+            /* Form values */
+            'usermailVal' => '',
+            /* Create account */
             'noAccount' => Lang::t('page.form.no_account'),
             'account' => Lang::t('page.form.create'),
-            'send' => Lang::t('btn.send'),
+            /* Forgot password */
             'forgot' => Lang::t('page.form.forgot'),
             'reset' => Lang::t('page.form.reset'),
-            'globalErr' => $e['global'] ?? '',
-
-            'scripts' =>
-            [
-                '/form.js'
-            ]
+            /* Form buttons */
+            'send' => Lang::t('btn.send'),
+            /* Files */
+            'scripts' => [ '/form.js' ]
         ];
     }
 
@@ -39,27 +44,33 @@ final class AuthSources
             'title' => 'Camagru | ' . Lang::t('title.signin'),
             'pageName' => 'signin',
             'formTitle' => Lang::t('title.signin'),
+            /* Form label */
             'user' => Lang::t('page.form.user'),
-            'userHold' => Lang::t('page.form.placeholder.user'),
-            'userErr' => $e['user'] ?? '',
             'email' => Lang::t('page.form.email'),
-            'emailHold' => Lang::t('page.form.placeholder.email'),
-            'emailErr' => $e['email'] ?? '',
             'pass' => Lang::t('page.form.password'),
-            'passHold' => Lang::t('page.form.placeholder.password'),
-            'passErr' => $e['pass'] ?? '',
             'confirm' => Lang::t('page.form.confirm'),
-            'confHold' => Lang::t('page.form.placeholder.confirm'),
-            'confirmErr' => $e['conf'] ?? '',
             'terms' => Lang::t('page.form.terms'),
+            /* Form placeholder */
+            'userHold' => Lang::t('page.form.placeholder.user'),
+            'emailHold' => Lang::t('page.form.placeholder.email'),
+            'passHold' => Lang::t('page.form.placeholder.password'),
+            'confHold' => Lang::t('page.form.placeholder.confirm'),
+            /* Form errors */
+            'userErr' => $e['user'] ?? '',
+            'emailErr' => $e['email'] ?? '',
+            'passErr' => $e['pass'] ?? '',
+            'confirmErr' => $e['conf'] ?? '',
             'termsErr' => $e['terms'] ?? '',
-            'send' => Lang::t('btn.send'),
             'globalErr' => $e['global'] ?? '',
-
-            'scripts' =>
-            [
-                '/form.js'
-            ]
+            /* Form values */
+            'userVal' => $_POST['user'] ?? '',
+            'emailVal' => $_POST['email'] ?? '',
+            'checked' => isset($_POST['terms']) ? 'checked' : '',
+            /* Form buttons */
+            'send' => Lang::t('btn.send'),
+            /* Files */
+            'css' => [ '/form.css' ],
+            'scripts' => [ '/form.js' ]
         ];
     }
 
@@ -70,16 +81,17 @@ final class AuthSources
             'title' => 'Camagru | ' . Lang::t('title.forgot'),
             'pageName' => 'forgot-password',
             'formTitle' => Lang::t('title.forgot'),
+            /* Form label */
             'usermail' => Lang::t('page.form.usermail'),
+            /* Form placeholder */
             'userHold' => Lang::t('page.form.placeholder.usermail'),
+            /* Form errors */
             'usermailErr' => '',
-            'send' => Lang::t('btn.send'),
             'globalErr' => $e['global'] ?? '',
-
-            'scripts' =>
-            [
-                '/form.js'
-            ]
+            /* Form buttons */
+            'send' => Lang::t('btn.send'),
+            /* Files */
+            'scripts' => [ '/form.js' ]
         ];
     }
 }

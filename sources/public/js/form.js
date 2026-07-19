@@ -5,7 +5,20 @@ const submitForm = (e) =>
 {
     e.preventDefault();
 
-    /* Clean all span */
+    /* Check for inputs with errors */
+    const errorInputs = form.querySelectorAll('.input-error');
+    if (errorInputs.length > 0)
+    {
+        errorInputs.forEach(input =>
+        {
+            input.classList.remove('input-shake');
+            void input.offsetWidth;
+            input.classList.add('input-shake');
+        });
+        return;
+    }
+
+    /* Clean all errors */
     document.querySelectorAll('[id^="error-"]').forEach(span => span.textContent = "");
 
     const formData = new FormData(form);
@@ -39,14 +52,32 @@ const submitForm = (e) =>
                 const span = document.getElementById(`error-${key}`);
                 if (span)
                     span.textContent = msg;
+
+                const input = document.getElementById(key);
+                if (input)
+                    input.classList.add('input-error');
             }
         }
     })
     .catch(error =>
     {
-        /* Internal error */
         global.textContent = error.message;
     });
 };
 
 form.addEventListener("submit", submitForm);
+
+/* Remove error style when user starts typing */
+form.querySelectorAll('input').forEach(input =>
+{
+    const event = input.type === 'checkbox' ? 'change' : 'input';
+
+    input.addEventListener(event, function()
+    {
+        this.classList.remove('input-error');
+
+        const errorSpan = document.getElementById(`error-${this.id}`);
+        if (errorSpan)
+            errorSpan.textContent = '';
+    });
+});
