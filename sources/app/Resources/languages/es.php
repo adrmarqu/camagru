@@ -20,7 +20,9 @@ $lang =
         'favorites' => 'Mis favoritos',
         // token
         'send' => 'Enviar email',
-        'verify' => 'Verificación'
+        'verify_account' => 'Verificar cuenta',
+        'verify_email' => 'Verificar email',
+        'reset' => 'Restaurar contraseña'
     ],
 
     'header' =>
@@ -83,19 +85,25 @@ $lang =
 
     'send_body' => 'Email enviado',
 
+    'verify' =>
+    [
+        'account' => '¡Felicidades! <br><br> Tu cuenta ha sido activada y ya puedes iniciar sesión en Camagru',
+        'email' => '¡Felicidades! <br><br> Tu nuevo correo electrónico ha sido actualizado con exito.'
+    ],
+
     'email' =>
     [
         'account' =>
         [
             'subject' => '¡Te damos la bienvenida a Camagru! Activa tu cuenta',
-            'title' => 'Activar cuenta',
+            'title' => 'Activación de cuenta',
             'link' => 'Activar mi cuenta',
             'body' => 'Gracias por registrarte en Camagru. Para empezar a usar tu cuenta y disfrutar de todas las funciones, por favor actívala pulsando el botón de abajo. Ten en cuenta que el enlace caducará en 30 minutos. Para solicitar un nuevo enlace, vuelve a /send-email y envia un nuevo correo. También puedes iniciar sesión con tu cuenta para recibir un nuevo correo.'
         ],
         'email' =>
         [
             'subject' => 'Confirma tu nuevo email',
-            'title' => 'Confirmar email',
+            'title' => 'Confirmación de email',
             'link' => 'Confirmar nuevo email',
             'body' => 'Camagru ha recibido una solicitud para cambiar tu dirección de correo. Si has sido tú, haz clic en el botón de abajo para confirmar el cambio. Si no has solicitado este cambio, puedes ignorar este mensaje de forma segura. Ten en cuenta que el enlace caducará en 10 minutos. Para volver a enviar un nuevo enlace, vuelve a la página de /send-email, o vuelve a cambiar tu correo desde tu perfil.'
         ],
@@ -169,7 +177,8 @@ $lang =
     '401' =>
     [
         'title' => 'No autorizado',
-        'message' => 'Debes iniciar sesión para acceder a este contenido.'
+        'message' => 'Debes iniciar sesión para acceder a este contenido.',
+        'pass' => 'Contraseña incorrecta.'
     ],
     // Authenticated, but you need admin
     '403' =>
@@ -182,7 +191,9 @@ $lang =
     '404' =>
     [
         'title' => 'Página no encontrada',
-        'message' => 'La página que buscas no existe o ha sido movida'
+        'message' => 'La página que buscas no existe o ha sido movida',
+        'no_token' => 'El token no existe o ha expirado',
+        'user' => 'No se ha podido encontrar al usuario en la base de datos.'
     ],
     // When you do POST, and POST doesn't exist in that route
     '405' =>
@@ -194,7 +205,13 @@ $lang =
     '409' =>
     [
         'title' => 'Conflicto',
-        'message' => 'Hubo un conflicto al procesar la solicitud (ej. el recurso ya existe).'
+        'message' => 'Hubo un conflicto al procesar la solicitud (ej. el recurso ya existe en la base de datos).'
+    ],
+    // Conflict
+    '410' =>
+    [
+        'title' => 'Ya no disponible',
+        'message' => 'El recurso solicitado ya no está disponible y ha sido eliminado permanentemente (ej. el enlace ha expirado).'
     ],
     // Unprocessable Entity
     '422' =>

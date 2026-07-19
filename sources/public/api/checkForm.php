@@ -23,28 +23,28 @@ $errors = [];
 switch ($formType)
 {
     case 'login':
-        $errors = AuthService::login($_POST['usermail'] ?? '', $_POST['password'] ?? '');
+        $errors = AuthHelper::login($_POST['usermail'] ?? '', $_POST['password'] ?? '');
         break;
     case 'signin':
-        $errors = AuthService::signin($_POST['user'] ?? '', $_POST['email'] ?? '', $_POST['password'] ?? '', $_POST['confirm'] ?? '', isset($_POST['terms']));
+        $errors = AuthHelper::signin($_POST['user'] ?? '', $_POST['email'] ?? '', $_POST['password'] ?? '', $_POST['confirm'] ?? '', isset($_POST['terms']));
         break;
     case 'forgot':
-        $errors = AuthService::forgotPass($_POST['usermail'] ?? '');
+        $errors = AuthHelper::forgotPass($_POST['usermail'] ?? '');
         break;
     case 'send':
-        $errors = AuthService::sendEmail($_POST['email'] ?? '');
+        $errors = AuthHelper::sendEmail($_POST['email'] ?? '');
         break;
     case 'reset':
-        $errors = AuthService::resetPass($_POST['password'] ?? '', $_POST['confirm'] ?? '');
+        $errors = AuthHelper::resetPass($_POST['password'] ?? '', $_POST['confirm'] ?? '');
         break;
     case 'user':
-        $errors = AuthService::user($_POST['user'] ?? '');
+        $errors = AuthHelper::user($_POST['user'] ?? '');
         break;
     case 'password':
-        $errors = AuthService::password($_POST['password'] ?? '', $_POST['new_password'] ?? '', ['new_password_confirm'] ?? '');
+        $errors = AuthHelper::password($_POST['password'] ?? '', $_POST['new_password'] ?? '', ['new_password_confirm'] ?? '');
         break;
     case 'email':
-        $errors = AuthService::email($_POST['email'] ?? '');
+        $errors = AuthHelper::email($_POST['email'] ?? '');
         break;
     default:
         sendError(400);

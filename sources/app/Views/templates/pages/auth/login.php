@@ -23,8 +23,8 @@
             <button type="submit"><?= $send ?></button>
         </div>
     </form>
-    <div>
+    <footer>
         <p><?= $noAccount ?><a href="<?= $pages['signin'] ?>"><?= $account ?></a></p>
         <p><?= $forgot ?><a href="<?= $pages['forgot'] ?>"><?= $reset ?></a></p>
-    </div>
+    </footer>
 </section>

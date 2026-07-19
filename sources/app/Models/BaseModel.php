@@ -36,11 +36,22 @@ abstract class BaseModel
         $this->pdo = Database::getConn();
     }
 
-    /* Query */
     protected function query(string $sql, array $params = []): PDOStatement
     {
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
+
+        foreach ($params as $key => $value)
+        {
+            $type = match (gettype($value))
+            {
+                'integer' => PDO::PARAM_INT,
+                'boolean' => PDO::PARAM_BOOL,
+                'NULL'    => PDO::PARAM_NULL,
+                default   => PDO::PARAM_STR,
+            };
+            $stmt->bindValue($key, $value, $type);
+        }
+        $stmt->execute();
         return $stmt;
     }
 
@@ -63,14 +74,14 @@ abstract class BaseModel
         return (int) $this->pdo->lastInsertId();
     }
 
-    protected function userExists($username)
+    protected function userExists($username): bool
     {
         $sql = "SELECT 1 FROM users WHERE username = :username";
         $params = ['username' => $username];
         return $this->select($sql, $params) !== false;
     }
 
-    protected function emailExists($email)
+    protected function emailExists($email): bool
     {
         $sql = "SELECT 1 FROM users WHERE email = :email";
         $params = ['email' => $email];

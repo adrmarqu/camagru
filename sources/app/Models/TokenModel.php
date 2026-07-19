@@ -58,6 +58,31 @@ class TokenModel extends BaseModel
         else if ($data && $data['token'])
             return $data['token'];
         else
-            throw new DBException(['global' => Lang::t('error.db.generic')]);
+            throw new AppException(0, null, null, ['global' => Lang::t('error.db.generic')]);
+    }
+
+    public function verify(string $token): array
+    {
+        $sql = "SELECT id, type, new_email, expires_at, user_id FROM tokens WHERE token = :token";
+        $params = ['token' => $token];
+        $result = $this->select($sql, $params);
+
+        /* No token */
+        if ($result === false || empty($result))
+            throw new AppException(404, Lang::t('404.no_token'));
+
+        /* Token expired */
+        if ($this->isExpired($result['expires_at']))
+            throw new AppException(410);
+
+        /* Delete used token */
+        $this->deleteTokenByID($result['id']);
+
+        return 
+        [
+            'type' => $result['type'],
+            'new_email' => $result['new_email'],
+            'user_id' => (int) $result['user_id']
+        ];
     }
 }

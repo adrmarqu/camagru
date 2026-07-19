@@ -12,7 +12,7 @@ require_once __DIR__ . '/../app/bootstrap.php';
 
 // Remember me
 if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
-    AuthService::loginWithCookie($_COOKIE['remember_me']);
+    AuthHelper::loginWithCookie($_COOKIE['remember_me']);
 
 // Main
 try
@@ -31,6 +31,16 @@ catch (AppException $e)
 /* Database exception */
 catch (PDOException $e)
 {
+    /* Check if there are a transaction */
+    try
+    {
+        $db = Database::getConn();
+
+        if ($db && $db->inTransaction()) 
+            $db->rollback();
+    } 
+    catch (Throwable $dbError) {}
+
     $exception = new AppException(500, $e->getMessage());
 
     $error = new ErrorController();

@@ -15,7 +15,7 @@ class AuthModel extends BaseModel
 
         if ($userExists && $emailExists)
         {
-            throw new DBException(
+            throw new AppException(409, null, null,
             [
                 'user' => Lang::t('error.bbdd.exist.user'), 
                 'email' => Lang::t('error.bbdd.exist.email')
@@ -23,14 +23,14 @@ class AuthModel extends BaseModel
         }
         else if ($userExists)
         {
-            throw new DBException(
+            throw new AppException(409, null, null,
             [
                 'user' => Lang::t('error.bbdd.exist.user'), 
             ]);
         }
         else if ($userExists)
         {
-            throw new DBException(
+            throw new AppException(409, null, null,
             [
                 'email' => Lang::t('error.bbdd.exist.email')
             ]);

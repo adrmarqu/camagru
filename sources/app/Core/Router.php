@@ -32,27 +32,28 @@ class Router
             Navigator::redirect("gallery", $currentLang);
 
         $page = $uri;
-        $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY) ?? '';
-        parse_str($query, $queryParams);
 
         $_SESSION['lang'] = $currentLang;
         Lang::setLang($currentLang);
 
-        $this->route($page, $queryParams);
+        $this->route($page, $_GET);
     }
 
     private function route($page, $query)
     {
+        /* Check if the page exists */
         if (!isset($this->routes[$page]))
             throw new AppException(404);
 
         $config = $this->routes[$page];
 
+        /* Check page access */
         $this->checkAccess($config['access'] ?? null);
 
         $controllerName = $config['controller'];
         $methodName = $config['method'];
 
+        /* Check if the class and method exists */
         if (!class_exists($controllerName))
             throw new AppException(500, Lang::t('500.no_class') . $controllerName);
 
@@ -64,6 +65,7 @@ class Router
         $reflection = new ReflectionMethod($controller, $methodName);
         $parameters = $reflection->getParameters();
 
+        /*  */
         if (!empty($parameters)) $controller->$methodName($query);
         else $controller->$methodName();
     }

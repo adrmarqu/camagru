@@ -1,7 +1,7 @@
 <?php
 
 /* This class checks the texts formats of the POST from the forms and the tokens */
-final class AuthService
+final class AuthHelper
 {
     private function __construct() {}
 

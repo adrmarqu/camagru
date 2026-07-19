@@ -4,12 +4,29 @@ final class TokenSources
 {
     private function __construct() {}
 
-    public static function verify(): array
+    public static function account(): array
     {
         return 
         [
-            'title' => 'Camagru | ' . Lang::t('title.verify'),
-            'page' => 'verify'
+            'title' => 'Camagru | ' . Lang::t('title.verify_account'),
+            'page' => 'verify',
+            'titlePage' => Lang::t('email.account.title'),
+            'body' => Lang::t('verify.account'),
+            'action' => 'account',
+            'btnCont' => Lang::t('go.login')
+        ];
+    }
+
+    public static function email(): array
+    {
+        return 
+        [
+            'title' => 'Camagru | ' . Lang::t('title.verify_email'),
+            'page' => 'verify',
+            'titlePage' => Lang::t('email.email.title'),
+            'body' => Lang::t('verify.email'),
+            'action' => 'email',
+            'btnCont' => Lang::t('go.profile')
         ];
     }
 

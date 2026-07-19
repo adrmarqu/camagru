@@ -24,7 +24,7 @@ class AuthController extends BaseController
             $confirm = $_POST['confirm'] ?? '';
             $terms = isset($_POST['terms']);
 
-            $errors = AuthService::signin($user, $email, $password, $confirm, $terms);
+            $errors = AuthHelper::signin($user, $email, $password, $confirm, $terms);
 
             if (empty($errors))
             {
@@ -53,12 +53,13 @@ class AuthController extends BaseController
                         ];
                         Navigator::redirect("send-email");
                     }
-                    throw new DBException(['global' => Lang::t('error.send')]);
+                    throw new AppException(0, null, null, ['global' => Lang::t('error.send')]);
                 } 
-                catch (DBException $e)
+                catch (AppException $e)
                 {
                     $db->rollBack();
                     $errors = $e->getErrors();
+                    $errors['global'] = $e->getMessage() ?? '';
                 }
             }
         }

@@ -23,6 +23,8 @@ return
     
     // Token
     'verify'            => ['controller' => 'TokenController', 'method' => 'verify', 'access' => 'public'],
+
+    'result'            => ['controller' => 'TokenController', 'method' => 'result', 'access' => 'public'],
     
     'reset-password'    => ['controller' => 'TokenController', 'method' => 'reset', 'access' => 'token-reset'],
 
