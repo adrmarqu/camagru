@@ -13,8 +13,8 @@ final class AuthHelper
         if (($error = Validator::usermail($login)) !== null)
             $errors['usermail'] = $error;
         // pass
-        if (($error = Validator::pass($password)) !== null)
-            $errors['password'] = $error;
+        if (Validator::pass($password) !== null)
+            $errors['password'] = Lang::t('error.form.log_pass');
 
         return $errors;
     }
@@ -97,31 +97,45 @@ final class AuthHelper
     /* Remember me */
     public static function loginWithCookie(string $token): void
     {
-        // Get data of the user with the token
+        /* Get token */
         $model = new TokenModel();
-        $data = $model->remember($token);
-        /* Check error */
+        $data = $model->getToken($token);
+
+        /* No token */
         if (!$data)
         {
             self::clearCookie();
             return ;
         }
-        // Check if token has expired
+
+        /* Check if token has expired */
         if (time() > strtotime($data['expires_at']))
         {
-            $model->deleteToken($token);
+            $model->deleteTokenById($data['id']);
             self::clearCookie();
             return ;
         }
 
+        /* New token */
+        $newToken = bin2hex(random_bytes(32));
+        $model->updateRememberToken($data['id'], $newToken);
+
+        /* Set cookie */
+        self::setCookie($newToken);
         /* Set session */
         self::setSession($data);
     }
 
-    /* Clean rememeber cookie */
+    /* Clean remember cookie */
     private static function clearCookie(): void
     {
         setcookie('remember_me', '', time() - 3600, '/', '', true, true);
+    }
+
+    /* Create remember cookie */
+    public static function setCookie(string $token): void
+    {
+        setcookie('remember_me', $token, time() + (86400 * 30), '/', '', true, true);
     }
 
     /* Set session user data (remember & login) */

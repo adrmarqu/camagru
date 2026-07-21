@@ -26,6 +26,19 @@ class TokenModel extends BaseModel
         $this->query($sql, $params);
     }
 
+    private function tokenExists(string $type, int $userid): bool
+    {
+        $sql = "SELECT 1 FROM tokens WHERE type = :type AND user_id = :id";
+        $params = ['type' => $type, 'id' => $userid];
+        return $this->select($sql, $params) !== false;
+    }
+
+    public function getToken(string $token): array
+    {
+        $sql = "SELECT id, expires_at FROM tokens WHERE token = :token";
+        return $this->select($sql, ['token' => $token]);
+    }
+
     public function generateTokenAccount(int $id): string
     {
         if (!$id) return '';
@@ -61,6 +74,24 @@ class TokenModel extends BaseModel
             throw new AppException(0, null, null, ['global' => Lang::t('error.db.generic')]);
     }
 
+    public function generateTokenCookie(int $userid): void
+    {
+        if ($this->tokenExists('remember', $userid))
+            return ;
+
+        $sql = "INSERT INTO tokens (token, type, expires_at, user_id) VALUES (:token, :type, NOW() + INTERVAL 30 DAY, :id)";
+        $params =
+        [
+            'token' => bin2hex(random_bytes(32)),
+            'type' => 'remember',
+            'id' => $userid
+        ];
+        $stmt = $this->query($sql, $params);
+
+        if ($stmt->rowCount() === 0)
+            throw new AppException(500);
+    }
+
     public function verify(string $token): array
     {
         $sql = "SELECT id, type, new_email, expires_at, user_id FROM tokens WHERE token = :token";
@@ -84,5 +115,20 @@ class TokenModel extends BaseModel
             'new_email' => $result['new_email'],
             'user_id' => (int) $result['user_id']
         ];
+    }
+
+    public function updateRememberToken(int $id, string $token): void
+    {
+        $sql = "UPDATE tokens SET token = :token, expires_at = :expires WHERE id = :id";
+        $params =
+        [
+            'id' => $id,
+            'token' => $token,
+            'expires' => date('Y-m-d H:i:s', strtotime('+30 days'))
+        ];
+        $stmt = $this->query($sql, $params);
+
+        if ($stmt->rowCount() === 0)
+            throw new AppException(404, Lang::t('404.no_token'));
     }
 }

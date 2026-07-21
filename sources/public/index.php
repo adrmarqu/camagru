@@ -11,8 +11,12 @@ session_start();
 require_once __DIR__ . '/../app/bootstrap.php';
 
 // Remember me
-if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
-    AuthHelper::loginWithCookie($_COOKIE['remember_me']);
+try
+{
+    if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
+        AuthHelper::loginWithCookie($_COOKIE['remember_me']);
+}
+catch (Throwable $e) {}
 
 // Main
 try

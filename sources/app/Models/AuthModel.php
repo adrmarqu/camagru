@@ -2,9 +2,33 @@
 
 class AuthModel extends BaseModel
 {
-    public function login()
+    public function login(string $login, string $password): array
     {
-        
+        $sql = "SELECT id, username, email, password_hash, is_active FROM users WHERE username = :usermail OR email = :usermail";
+        $params = ['usermail' => $login];
+        $user = $this->select($sql, $params);
+
+        /* User does not exists */
+        if ($user === false || empty($user))
+        {
+            throw new AppException(404, null, null, 
+            [
+                'usermail' => Lang::t('error.bbdd.exist.usermail')
+            ]);
+        }
+
+        /* User password is wrong */
+        if (!password_verify($password, $user['password_hash']))
+        {
+            if ($user === false || empty($user))
+            {
+                throw new AppException(404, null, null, 
+                [
+                    'usermail' => Lang::t('error.bbdd.exist.usermail')
+                ]);
+            }
+        }
+        return $user;
     }
     
     public function signin(string $user, string $email, string $pass): int

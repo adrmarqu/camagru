@@ -151,6 +151,7 @@ $lang =
             'user' => 'El usuario debe empezar por una letra, además solo puede contener letras, números y guiones.',
             'email' => 'El correo electrónico no es válido.',
 
+            'log_pass' => 'La contraseña es incorrecta',
             'password' => 'La contraseña ha de tener al menos una minúscula, una mayúscula y un número.',
             'confirm' => 'La contraseña es diferente',
 
