@@ -42,7 +42,7 @@ const sendEmail = async () =>
         const data = await response.json();
 
         if (!response.ok)
-            throw new Error(data.message || 'Error');
+            throw new Error(data.errors?.global || 'Error');
 
         startTimer(waitingTime);
     }

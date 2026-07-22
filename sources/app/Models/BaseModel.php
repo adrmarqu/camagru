@@ -33,10 +33,17 @@ abstract class BaseModel
 
     public function __construct()
     {
-        $this->pdo = Database::getConn();
+        $this->pdo = Database::getConnection();
     }
 
-    protected function query(string $sql, array $params = []): PDOStatement
+    /* INSERT, UPDATE, DELETE */
+    protected function query(string $sql, array $params = []): int
+    {
+        $stmt = $this->execute($sql, $params);
+        return $stmt->rowCount();
+    }
+
+    private function execute(string $sql, array $params = []): PDOStatement
     {
         $stmt = $this->pdo->prepare($sql);
 
@@ -49,22 +56,23 @@ abstract class BaseModel
                 'NULL'    => PDO::PARAM_NULL,
                 default   => PDO::PARAM_STR,
             };
-            $stmt->bindValue($key, $value, $type);
+            $param = is_int($key) ? $key + 1 : (str_starts_with((string)$key, ':') ? $key : ":$key");
+            $stmt->bindValue($param, $value, $type);
         }
         $stmt->execute();
         return $stmt;
     }
 
-    /* Select one result */
+    /* SELECT one result */
     protected function select(string $sql, array $params = []): array|false
     {
-        return $this->query($sql, $params)->fetch();
+        return $this->execute($sql, $params)->fetch();
     }
 
-    /* Select all results */
+    /* SELECT multiple results */
     protected function selectAll(string $sql, array $params = []): array|false
     {
-        $results = $this->query($sql, $params)->fetchAll();
+        $results = $this->execute($sql, $params)->fetchAll();
         return empty($results) ? false : $results;
     }
 
@@ -72,19 +80,5 @@ abstract class BaseModel
     protected function lastId(): int
     {
         return (int) $this->pdo->lastInsertId();
-    }
-
-    protected function userExists($username): bool
-    {
-        $sql = "SELECT 1 FROM users WHERE username = :username";
-        $params = ['username' => $username];
-        return $this->select($sql, $params) !== false;
-    }
-
-    protected function emailExists($email): bool
-    {
-        $sql = "SELECT 1 FROM users WHERE email = :email";
-        $params = ['email' => $email];
-        return $this->select($sql, $params) !== false;
     }
 }

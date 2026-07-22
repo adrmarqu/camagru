@@ -136,29 +136,29 @@ $lang =
             'password_72' => 'La contraseña no puede tener más de 72 carácteres.'
         ],
 
-        'bbdd' =>
+        'exists' =>
         [
-            'generic' => "Error en la base de datos",
-            'exist' =>
-            [
-                'user' => 'Ese usuario ya está en uso',
-                'email' => 'Ese correo ya está en uso'
-            ]
+            'user' => 'Ese usuario ya está en uso',
+            'email' => 'Ese correo ya está en uso'
         ],
 
         'form' =>
         [
+            /* Login */
+            'log_user' => 'El usuario o correo es incorrecto.',
+            'log_pass' => 'La contraseña es incorrecta',
+            /* Signin */
             'user' => 'El usuario debe empezar por una letra, además solo puede contener letras, números y guiones.',
             'email' => 'El correo electrónico no es válido.',
-
-            'log_pass' => 'La contraseña es incorrecta',
             'password' => 'La contraseña ha de tener al menos una minúscula, una mayúscula y un número.',
             'confirm' => 'La contraseña es diferente',
-
             'terms' => 'Para crear una cuenta necesitas aceptar los terminos y condiciones',
+            /* Forgot */
+            /* Profile */
         ],
 
-        'send' => "Error al enviar el correo"
+        'send' => 'Error al enviar el correo',
+        'remember' => 'Error al crear la cookie "remember_me".'
     ],
 
     'go' =>
@@ -194,7 +194,9 @@ $lang =
         'title' => 'Página no encontrada',
         'message' => 'La página que buscas no existe o ha sido movida',
         'no_token' => 'El token no existe o ha expirado',
-        'user' => 'No se ha podido encontrar al usuario en la base de datos.'
+        'user' => 'El usuario no existe.',
+        'email' => 'El email no existe.',
+        'usermail' => 'El usuario o el email no existe.'
     ],
     // When you do POST, and POST doesn't exist in that route
     '405' =>
@@ -228,7 +230,9 @@ $lang =
         'not_found' => 'El archivo de la página no existe.',
         'no_class' => 'Clase inexistente: ',
         'no_method' => 'Método de clase inexistente: ',
-        'no_access' => 'Acceso inexistente: '
+        'no_access' => 'Acceso inexistente: ',
+        'signin' => 'No se ha podido crear el usuario. Por favor, inténtalo de nuevo más tarde.',
+        'token' => 'No se ha podido crear un token. Por favor, inténtalo de nuevo más tarde.'
     ]
 ];
 

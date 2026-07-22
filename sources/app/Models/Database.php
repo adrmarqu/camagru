@@ -6,7 +6,7 @@ final class Database
 
     private function __construct() {}
     
-    public static function getConn(): PDO
+    public static function getConnection(): PDO
     {
         if (self::$pdo === null)
         {

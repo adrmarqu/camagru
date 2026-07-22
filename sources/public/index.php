@@ -10,48 +10,37 @@ session_start();
 // Load configuration and autoloader
 require_once __DIR__ . '/../app/bootstrap.php';
 
-// Remember me
-try
-{
-    if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
-        AuthHelper::loginWithCookie($_COOKIE['remember_me']);
-}
-catch (Throwable $e) {}
-
 // Main
 try
 {
+    // Remember me
+    if (!isset($_SESSION['user']) && isset($_COOKIE['remember_me']))
+    {
+        $authentication = new CookieController();
+        $authentication->loginWithCookie($_COOKIE['remember_me']);
+    }
+
     $paths = require CONF_PATH . '/routes.php';
     
     $router = new Router($paths);
     $router->dispatch();
 }
-/* App exception */
+/* Form exception - Do not display error page */
+catch (FormException $e)
+{
+    $_SESSION['errors'] = $e->getErrors();
+    $_SESSION['errors']['global'] = $e->getHttpError();
+
+    Navigator::redirect(AppHelper::getCurrentPage());
+}
+/* App exception - Display error page */
 catch (AppException $e) 
 {
     $error = new ErrorController();
     $error->display($e);
 }
-/* Database exception */
-catch (PDOException $e)
-{
-    /* Check if there are a transaction */
-    try
-    {
-        $db = Database::getConn();
-
-        if ($db && $db->inTransaction()) 
-            $db->rollback();
-    } 
-    catch (Throwable $dbError) {}
-
-    $exception = new AppException(500, $e->getMessage());
-
-    $error = new ErrorController();
-    $error->display($exception);
-}
-/* Unexpected exception */
-catch (Exception $e)
+/* Others - Display error page */
+catch (Throwable $e)
 {
     $exception = new AppException(500, $e->getMessage());
 

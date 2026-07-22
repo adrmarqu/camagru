@@ -45,6 +45,8 @@
                 <a class="nav-item" href="/ca/<?= $pageName ?>"><?= $ca ?></a>
             </div>
         </div>
-        <button class="btn-logout"><?= $logoutNav ?></button>
+        <form action="/api/logout.php" method="POST">
+            <button type="submit" class="btn-logout"><?= $logoutNav ?></button>
+        </form>
     </nav>
 </div>

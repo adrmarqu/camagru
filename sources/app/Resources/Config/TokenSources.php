@@ -4,6 +4,7 @@ final class TokenSources
 {
     private function __construct() {}
 
+    /* Result account */
     public static function account(): array
     {
         return 
@@ -17,6 +18,7 @@ final class TokenSources
         ];
     }
 
+    /* Result email */
     public static function email(): array
     {
         return 

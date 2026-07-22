@@ -3,30 +3,30 @@
 return
 [
     // App core
-    'gallery'           => ['controller' => 'GalleryController', 'method' => 'gallery', 'access' => 'public'],
+    'gallery'           => ['controller' => 'HomeController', 'method' => 'run', 'access' => 'public'],
     
-    'photo-editor'      => ['controller' => 'EditorController', 'method' => 'editor', 'access' => 'user'],
+    'photo-editor'      => ['controller' => 'EditorController', 'method' => 'run', 'access' => 'user'],
     
     // Auth
-    'login'             => ['controller' => 'AuthController', 'method' => 'login', 'access' => 'guest'],
+    'login'             => ['controller' => 'LoginController', 'method' => 'run', 'access' => 'guest'],
     
-    'signin'          => ['controller' => 'AuthController', 'method' => 'signin', 'access' => 'guest'],
+    'signin'          => ['controller' => 'SigninController', 'method' => 'run', 'access' => 'guest'],
     
-    'forgot-password'   => ['controller' => 'AuthController', 'method' => 'forgot', 'access' => 'guest'],
+    'forgot-password'   => ['controller' => 'ForgotController', 'method' => 'run', 'access' => 'guest'],
     
     // User
-    'profile'           => ['controller' => 'UserController', 'method' => 'profile', 'access' => 'user'],
+    'profile'           => ['controller' => 'ProfileController', 'method' => 'run', 'access' => 'user'],
     
-    'private-gallery'   => ['controller' => 'UserController', 'method' => 'privateGallery', 'access' => 'user'],
+    'private-gallery'   => ['controller' => 'PrivateController', 'method' => 'run', 'access' => 'user'],
 
-    'favorites'   => ['controller' => 'UserController', 'method' => 'favorites', 'access' => 'user'],
+    'favorites'   => ['controller' => 'FavoriteController', 'method' => 'run', 'access' => 'user'],
     
     // Token
-    'verify'            => ['controller' => 'TokenController', 'method' => 'verify', 'access' => 'public'],
+    'verify'            => ['controller' => 'VerifyController', 'method' => 'run', 'access' => 'public'],
 
-    'result'            => ['controller' => 'TokenController', 'method' => 'result', 'access' => 'public'],
+    'result'            => ['controller' => 'VerifyController', 'method' => 'result', 'access' => 'public'],
     
     'reset-password'    => ['controller' => 'TokenController', 'method' => 'reset', 'access' => 'token-reset'],
 
-    'send-email'   => ['controller' => 'TokenController', 'method' => 'send', 'access' => 'token-send']
+    'send-email'   => ['controller' => 'VerifyController', 'method' => 'send', 'access' => 'token-send']
 ];

@@ -39,7 +39,23 @@ foreach ($envVars as $var)
 // Autoloader
 spl_autoload_register(function ($className)
 {
-    $directories = ['Controllers', 'Models', 'Core', 'Views', 'Helpers', 'Resources/Config'];
+    $directories =
+    [
+        'Controllers',
+        'Controllers/Gallery',
+        'Controllers/Auth',
+        'Controllers/Editor',
+        'Controllers/Token',
+        'Controllers/User',
+        'Controllers/Error',
+        'Models',
+        'Core',
+        'Views',
+        'Helpers',
+        'Resources/Config',
+        'Exceptions'
+    ];
+    
     foreach ($directories as $dir)
     {
         $file = APP_PATH . "/$dir/$className.php";

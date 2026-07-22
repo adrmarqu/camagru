@@ -2,7 +2,8 @@
 
 class TokenModel extends BaseModel
 {
-    private function isExpired(string $expire): bool
+    /* Returns if a token has expired or not */
+    public function isExpired(string $expire): bool
     {
         if (empty($expire)) throw new AppException(500);
 
@@ -12,123 +13,74 @@ class TokenModel extends BaseModel
         return $now > $expiredDate;
     }
 
-    private function deleteTokenByID(int $id): void
+    /* Get token by userid and token type */
+    private function getToken(int $userid, string $type): array|false
+    {
+        $sql = "SELECT id, token, expires_at FROM tokens WHERE type = :type AND user_id = :id";
+        $params = ['id' => $userid, 'type' => $type];
+        return $this->select($sql, $params);
+    }
+
+    /* Get token by userid and token type */
+    public function getTokenByName(string $token): array|false
+    {
+        $sql = "SELECT * FROM tokens WHERE token = :token";
+        $params = ['token' => hash('sha256', $token)];
+        return $this->select($sql, $params);
+    }
+
+    /* Delete token by token id */
+    public function deleteTokenByID(int $id): void
     {
         $sql = "DELETE FROM tokens WHERE id = :id";
         $params = ['id' => $id];
-        $this->query($sql, $params);
-    }
-
-    private function deleteToken(int $userid, string $type): void
-    {
-        $sql = "DELETE FROM tokens WHERE type = :type AND user_id = :id";
-        $params = ['id' => $userid, 'type' => $type];
-        $this->query($sql, $params);
-    }
-
-    private function tokenExists(string $type, int $userid): bool
-    {
-        $sql = "SELECT 1 FROM tokens WHERE type = :type AND user_id = :id";
-        $params = ['type' => $type, 'id' => $userid];
-        return $this->select($sql, $params) !== false;
-    }
-
-    public function getToken(string $token): array
-    {
-        $sql = "SELECT id, expires_at FROM tokens WHERE token = :token";
-        return $this->select($sql, ['token' => $token]);
-    }
-
-    public function generateTokenAccount(int $id): string
-    {
-        if (!$id) return '';
-        
-        $tokenExpired = false;
-
-        /* Get token */
-        $sql = "SELECT id, token, expires_at FROM tokens WHERE user_id = :id AND type = :type";
-        $params = ['id' => $id, 'type' => 'account'];
-        $data = $this->query($sql, $params)->fetch();
-
-        /* Check if its expired */
-        if ($data && $this->isExpired($data['expires_at']))
-            $tokenExpired = true;
-
-        /* New token */
-        if (!$data || $tokenExpired === true)
-        {
-            if ($tokenExpired === true) $this->deleteTokenByID($data['id']);
-
-            $token = bin2hex(random_bytes(32));
-
-            $sql = "INSERT INTO tokens (token, expires_at, user_id) VALUES (:token, NOW() + INTERVAL 5 MINUTE, :id)";
-            $params = ['id' => $id, 'token' => $token];
-            $this->query($sql, $params);
-
-            return $token;
-        }
-        /* Use old token */
-        else if ($data && $data['token'])
-            return $data['token'];
-        else
-            throw new AppException(0, null, null, ['global' => Lang::t('error.db.generic')]);
-    }
-
-    public function generateTokenCookie(int $userid): void
-    {
-        if ($this->tokenExists('remember', $userid))
-            return ;
-
-        $sql = "INSERT INTO tokens (token, type, expires_at, user_id) VALUES (:token, :type, NOW() + INTERVAL 30 DAY, :id)";
-        $params =
-        [
-            'token' => bin2hex(random_bytes(32)),
-            'type' => 'remember',
-            'id' => $userid
-        ];
-        $stmt = $this->query($sql, $params);
-
-        if ($stmt->rowCount() === 0)
+        if ($this->query($sql, $params) === 0)
             throw new AppException(500);
     }
 
-    public function verify(string $token): array
+    /* Delete token by user id and type */
+    public function deleteToken(int $userid, string $type): int
     {
-        $sql = "SELECT id, type, new_email, expires_at, user_id FROM tokens WHERE token = :token";
-        $params = ['token' => $token];
-        $result = $this->select($sql, $params);
-
-        /* No token */
-        if ($result === false || empty($result))
-            throw new AppException(404, Lang::t('404.no_token'));
-
-        /* Token expired */
-        if ($this->isExpired($result['expires_at']))
-            throw new AppException(410);
-
-        /* Delete used token */
-        $this->deleteTokenByID($result['id']);
-
-        return 
-        [
-            'type' => $result['type'],
-            'new_email' => $result['new_email'],
-            'user_id' => (int) $result['user_id']
-        ];
+        $sql = "DELETE FROM tokens WHERE user_id = :id AND type = :type";
+        $params = ['id' => $userid, 'type' => $type];
+        return $this->query($sql, $params);
     }
 
-    public function updateRememberToken(int $id, string $token): void
+    /* Generate a token and insert it in db, return the token */
+    public function generateToken(int $userid, string $type, int $seconds, bool $deleted = false): string
     {
-        $sql = "UPDATE tokens SET token = :token, expires_at = :expires WHERE id = :id";
+        /* Only if you did not deleted the token */
+        if ($deleted === false)
+        {
+            /* Get token */
+            $data = $this->getToken($userid, $type);
+
+            /* If you hava a valid token return it, else cou create a new token */
+            if ($data && !$this->isExpired($data['expires_at']))
+                return $data['token'];
+
+            /* If you have a expired token, delete it */
+            if ($data)
+                $this->deleteTokenById($data['id']);
+        }
+        /* Generate token */
+        $rawToken = bin2hex(random_bytes(32));
+
+        /* Get time */
+        $expiresAt = date('Y-m-d H:i:s', time() + $seconds);
+
+        /* Insert token in db */
+        $sql = "INSERT INTO tokens (token, expires_at, user_id, type) VALUES (:token, :expires, :id, :type)";
         $params =
         [
-            'id' => $id,
-            'token' => $token,
-            'expires' => date('Y-m-d H:i:s', strtotime('+30 days'))
+            'token' => hash('sha256', $rawToken),
+            'expires' => $expiresAt,
+            'id' => $userid,
+            'type' => $type 
         ];
-        $stmt = $this->query($sql, $params);
+        if ($this->query($sql, $params) === 0)
+            throw new AppException(500);
 
-        if ($stmt->rowCount() === 0)
-            throw new AppException(404, Lang::t('404.no_token'));
+        return $rawToken;
     }
 }

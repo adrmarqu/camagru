@@ -5,19 +5,19 @@ class AppException extends Exception
     private const DEFAULT_LINK = "/gallery";
     private string $link;
     private string $btnLabel;
-    private array $errors;
 
-    public function __construct(int $code = 0, ?string $message = null, ?string $link = null, array $errors = [])
+    public function __construct(int $code = 0, ?string $message = null, ?string $link = null)
     {
         $message = $message ?? Lang::t("$code.message");
         
         parent::__construct($message, $code);
         
+        /* Btn link */
         $page = $link ?? self::DEFAULT_LINK;
-
         $this->link = "/" . Lang::getLang() . $page;
+
+        /* Btn text */
         $this->btnLabel = substr($page, 1);
-        $this->errors = $errors;
     }
 
     public function getLink(): string
@@ -28,10 +28,5 @@ class AppException extends Exception
     public function getBtnName(): string
     {
         return Lang::t("go.$this->btnLabel");
-    }
-
-    public function getErrors(): array
-    {
-        return $this->errors;
     }
 }

@@ -23,31 +23,17 @@ $errors = [];
 switch ($formType)
 {
     case 'login':
-        $errors = AuthHelper::login($_POST['usermail'] ?? '', $_POST['password'] ?? '');
+        $login = new LoginController();
+        $errors = $login->checkFormat($_POST['usermail'] ?? '', $_POST['password'] ?? '');
         break;
     case 'signin':
-        $errors = AuthHelper::signin($_POST['user'] ?? '', $_POST['email'] ?? '', $_POST['password'] ?? '', $_POST['confirm'] ?? '', isset($_POST['terms']));
-        break;
-    case 'forgot':
-        $errors = AuthHelper::forgotPass($_POST['usermail'] ?? '');
-        break;
-    case 'send':
-        $errors = AuthHelper::sendEmail($_POST['email'] ?? '');
-        break;
-    case 'reset':
-        $errors = AuthHelper::resetPass($_POST['password'] ?? '', $_POST['confirm'] ?? '');
-        break;
-    case 'user':
-        $errors = AuthHelper::user($_POST['user'] ?? '');
-        break;
-    case 'password':
-        $errors = AuthHelper::password($_POST['password'] ?? '', $_POST['new_password'] ?? '', ['new_password_confirm'] ?? '');
-        break;
-    case 'email':
-        $errors = AuthHelper::email($_POST['email'] ?? '');
+        $signin = new SigninController();
+        $errors = $signin->checkFormat($_POST['user'] ?? '', $_POST['email'] ?? '', $_POST['password'] ?? '', $_POST['confirm'] ?? '', isset($_POST['terms']));
         break;
     default:
-        sendError(400);
+        http_response_code(400);
+        echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('400.message')]]);
+        exit;
 }
 
 if (!empty($errors))

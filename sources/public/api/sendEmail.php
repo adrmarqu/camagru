@@ -24,7 +24,7 @@ $email = $s['email'] ?? null;
 
 $model = new TokenModel();
 
-$db = Database::getConn();
+$db = Database::getConnection();
 $db->beginTransaction();
 
 if ($action === 'account')

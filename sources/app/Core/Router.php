@@ -11,7 +11,7 @@ class Router
         $this->routes = $routes;
     }
 
-    public function dispatch()
+    public function dispatch(): void
     {
         $urlPath = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         $parts = explode('/', $urlPath, 2);
@@ -31,15 +31,14 @@ class Router
         if (empty($uri))
             Navigator::redirect("gallery", $currentLang);
 
-        $page = $uri;
-
+        $_SESSION['page'] = $uri;
         $_SESSION['lang'] = $currentLang;
         Lang::setLang($currentLang);
 
-        $this->route($page, $_GET);
+        $this->route($uri, $_GET);
     }
 
-    private function route($page, $query)
+    private function route(string $page, array $query): void
     {
         /* Check if the page exists */
         if (!isset($this->routes[$page]))
@@ -70,7 +69,7 @@ class Router
         else $controller->$methodName();
     }
 
-    private function checkAccess(string $access): void
+    private function checkAccess(?string $access): void
     {
         if ($access === null)
             throw new AppException(500);

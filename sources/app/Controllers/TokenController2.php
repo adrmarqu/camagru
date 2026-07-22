@@ -10,9 +10,9 @@ class TokenController extends BaseController
         if (empty($tokenGet))
             throw new AppException(400);
 
-        $db = Database::getConn();
+        $db = Database::getConnection();
         try
-        {
+        { 
             $db->beginTransaction();
 
             /* Manage token */
@@ -93,7 +93,8 @@ class TokenController extends BaseController
                 catch (AppException $e)
                 {
                     $errors = $e->getErrors();
-                    $errors['global'] = $e->getMessage() ?? '';
+                    if (empty($errors['global']))
+                        $errors['global'] = $e->getMessage() ?? '';
                 }
             }
         }

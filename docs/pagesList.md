@@ -5,6 +5,7 @@ Paginas: /language/page?parameter
 ## Publica - Todo tipo de usuario
 
 - /gallery
+- /result (with get)
 
 ## Usuario no registrado
 
@@ -21,6 +22,6 @@ Paginas: /language/page?parameter
 
 ## Especiales - Solo entras si tienes un token valido como parrametro
 
-- /verify (Verificar cuenta, correo)
+- /verify (Verificar token del email)
 - /reset-password (Resetear password forgot-password)
 - /send-email (Página para enviar correos para activar cuenta y confirmar nuevo email)

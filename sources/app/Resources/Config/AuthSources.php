@@ -6,6 +6,7 @@ final class AuthSources
 
     public static function login(): array
     {
+        $e = $_SESSION['errors'] ?? [];
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.login'),
@@ -37,8 +38,9 @@ final class AuthSources
         ];
     }
 
-    public static function signin(array $e): array
+    public static function signin(): array
     {
+        $e = $_SESSION['errors'] ?? [];
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.signin'),
@@ -76,6 +78,7 @@ final class AuthSources
 
     public static function forgot(): array
     {
+        $e = $_SESSION['errors'] ?? [];
         return
         [
             'title' => 'Camagru | ' . Lang::t('title.forgot'),
