@@ -93,14 +93,13 @@ class Router
             /* Reset-password page */
             case 'token-reset':
                 
-                
-                if (isset($_SESSION['reset_token']))
+                if (isset($_SESSION['reset_user_id']))
                     return ;
 
                 if (isset($_SESSION['user']))
                     throw new AppException(403, Lang::t('403.no_token'));
                 else
-                    throw new AppException(403, Lang::t('403.no_token'), '/login');
+                    throw new AppException(401, Lang::t('403.no_token'), '/login');
                 
                 break ;
             /* Send-email page */

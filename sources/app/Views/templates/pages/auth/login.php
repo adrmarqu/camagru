@@ -7,12 +7,12 @@
         <input type="hidden" name="form_type" value="login">
         <div>
             <label for="usermail"><?= $usermail ?></label>
-            <input type="text" name="usermail" id="usermail" autocomplete="username" placeholder="<?= $userHold ?>">
+            <input type="text" name="usermail" id="usermail" autocomplete="username" placeholder="<?= $userHold ?>" value="<?= ViewHelper::print($usermailVal)?>" class="<?= !empty($userErr) ? 'input-error' : '' ?>">
             <span id="error-usermail"><?= $usermailErr ?></span>
         </div>
         <div>
             <label for="password"><?= $pass ?></label>
-            <input type="password" name="password" id="password" autocomplete="current-password" placeholder="<?= $passHold ?>">
+            <input type="password" name="password" id="password" autocomplete="current-password" placeholder="<?= $passHold ?>" class="<?= !empty($userErr) ? 'input-error' : '' ?>">
             <span id="error-password"><?= $passErr ?></span>
         </div>
         <div>
@@ -24,7 +24,7 @@
         </div>
     </form>
     <footer>
-        <p><?= $noAccount ?><a href="<?= $pages['signin'] ?>"><?= $account ?></a></p>
-        <p><?= $forgot ?><a href="<?= $pages['forgot'] ?>"><?= $reset ?></a></p>
+        <p><?= $noAccount ?><a href="<?= $signinUrl ?>"><?= $account ?></a></p>
+        <p><?= $forgot ?><a href="<?= $forgotUrl ?>"><?= $reset ?></a></p>
     </footer>
 </section>

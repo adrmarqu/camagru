@@ -26,7 +26,7 @@ return
 
     'result'            => ['controller' => 'VerifyController', 'method' => 'result', 'access' => 'public'],
     
-    'reset-password'    => ['controller' => 'TokenController', 'method' => 'reset', 'access' => 'token-reset'],
+    'reset-password'    => ['controller' => 'ResetController', 'method' => 'run', 'access' => 'token-reset'],
 
     'send-email'   => ['controller' => 'VerifyController', 'method' => 'send', 'access' => 'token-send']
 ];

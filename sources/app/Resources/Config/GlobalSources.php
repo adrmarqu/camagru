@@ -23,7 +23,7 @@ final class GlobalSources
             'privateUrl' => $path . 'private-gallery',
             'favoriteUrl' => $path . 'favorites',
             /* User data */
-            'username' => $_SESSION['user']['username'] ?? Lang::t('header.guest')
+            'username' => $_SESSION['user']['name'] ?? Lang::t('header.guest')
         ];
     }
 

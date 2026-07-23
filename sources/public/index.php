@@ -31,7 +31,9 @@ catch (FormException $e)
     $_SESSION['errors'] = $e->getErrors();
     $_SESSION['errors']['global'] = $e->getHttpError();
 
-    Navigator::redirect(AppHelper::getCurrentPage());
+    $_SESSION['post'] = $_POST ?? [];
+
+    Navigator::redirect($_SESSION['page'] ?? 'gallery');
 }
 /* App exception - Display error page */
 catch (AppException $e) 

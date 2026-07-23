@@ -7,10 +7,10 @@ final class LoginController extends AuthController
         $errors = [];
 
         // usermail
-        if (($error = Validator::usermail($usermail)) !== null)
-            $errors['user'] = Lang::t('error.form.log_user');
+        if (Validator::usermail($usermail) !== null)
+            $errors['usermail'] = Lang::t('error.form.log_user');
         // pass
-        if (($error = Validator::pass($password)) !== null)
+        if (Validator::pass($password) !== null)
             $errors['password'] = Lang::t('error.form.log_pass');
 
         return $errors;
@@ -31,14 +31,32 @@ final class LoginController extends AuthController
             $user = $model->getUser($usermail);
             // Check if user no exists
             if ($user === false || empty($user))
-                throw new FormException(null, Lang::t('error.form.log_user'));
+            {
+                throw new FormException(['usermail' => Lang::t('error.form.log_user')]);
+            }
             // Check password
             if (!password_verify($password, $user['password_hash']))
-                throw new FormException(null, Lang::t('error.form.log_pass'));
+            {
+                throw new FormException([
+                    'password' => Lang::t('error.form.log_pass')
+                ]);
+            }
             // Check active account
             if ($user['is_active'] === false)
             {
-                $this->sendAccountEmail($user['id'], $user['email']);
+                try
+                {
+                    $db->beginTransaction();
+                    
+                    $this->sendEmail($user['id'], $user['email']);
+                    
+                    $db->commit();
+                }
+                catch (Throwable $e)
+                {
+                    $db->rollBack();
+                    throw $e;
+                }
                 Navigator::redirect("send-email");
             }
             $cookie = new CookieController();
@@ -49,6 +67,7 @@ final class LoginController extends AuthController
                 catch (Throwable $e) { error_log(Lang::t('error.remember')); }
             }
             $cookie->setUserSession($user);
+            Navigator::redirect('gallery');
         }
         $this->render(self::LOGIN_HTML_URL, AuthSources::login());
     }

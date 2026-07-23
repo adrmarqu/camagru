@@ -3,7 +3,7 @@
 class UserModel extends BaseModel
 {
     /* Check if a user already exists in the db */
-    public function userExists($username): bool
+    public function userExists(string $username): bool
     {
         $sql = "SELECT 1 FROM users WHERE username = :username";
         $params = ['username' => $username];
@@ -11,7 +11,7 @@ class UserModel extends BaseModel
     }
 
     /* Check if a email already exists in the db */
-    public function emailExists($email): bool
+    public function emailExists(string $email): bool
     {
         $sql = "SELECT 1 FROM users WHERE email = :email";
         $params = ['email' => $email];
@@ -62,6 +62,7 @@ class UserModel extends BaseModel
         return $this->select($sql, ['token' => $hashedToken]);
     }
 
+    /* From verify */
     public function activateAccount(int $userId): void
     {
         $sql = "UPDATE users SET is_active = :active WHERE id = :id";
@@ -70,6 +71,7 @@ class UserModel extends BaseModel
             throw new AppException(404, Lang::t('404.user'));
     }
 
+    /* From verify */
     public function changeNewEmail(int $userId, string $newEmail): void
     {
         if ($this->emailExists($newEmail))
@@ -92,10 +94,10 @@ class UserModel extends BaseModel
             $user = $this->select($sql, ['id' => $userId]);
 
             if ($user === false || empty($user))
-                throw new AppException(404, Lang::t('404.user'));
+                throw new FormException(null, Lang::t('404.user'));
 
             if (!password_verify($currentPass, $user['password_hash']))
-                throw new AppException(401, Lang::t('401.pass'));
+                throw new FormException(null, Lang::t('401.pass'));
         }
 
         $sql = "UPDATE users SET password_hash = :hash WHERE id = :id";
@@ -105,6 +107,6 @@ class UserModel extends BaseModel
             'hash' => password_hash($newPass, PASSWORD_DEFAULT)
         ];
         if ($this->query($sql, $params) === 0)
-            throw new AppException(404, Lang::t('404.new_pass'));
+            throw new FormException(null, Lang::t('404.new_pass'));
     }
 }

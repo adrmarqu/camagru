@@ -30,6 +30,14 @@ switch ($formType)
         $signin = new SigninController();
         $errors = $signin->checkFormat($_POST['user'] ?? '', $_POST['email'] ?? '', $_POST['password'] ?? '', $_POST['confirm'] ?? '', isset($_POST['terms']));
         break;
+    case 'forgot':
+        $forgot = new ForgotController();
+        $errors = $forgot->checkFormat($_POST['usermail'] ?? '');
+        break;
+    case 'reset':
+        $reset = new ResetController();
+        $errors = $reset->checkFormat($_POST['password'] ?? '', $_POST['confirm'] ?? '');
+        break;
     default:
         http_response_code(400);
         echo json_encode(['success' => false, 'errors' => ['global' => Lang::t('400.message')]]);
@@ -39,8 +47,8 @@ switch ($formType)
 if (!empty($errors))
 {
     http_response_code(422);
-    if (!isset($errors['global']))
-        $errors['global'] = Lang::t('422.message');
+    /* if (!isset($errors['global']))
+        $errors['global'] = Lang::t('422.message'); */
     echo json_encode(['success' => false, 'errors' => $errors]);
     exit;
 }

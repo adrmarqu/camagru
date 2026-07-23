@@ -29,7 +29,7 @@ $db->beginTransaction();
 
 if ($action === 'account')
 {
-    $newToken = $model->generateTokenAccount($userid);
+    $newToken = $model->generateToken($userid, 'account', (10 * 60));
 
     if (empty($newToken))
     {

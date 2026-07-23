@@ -34,10 +34,28 @@ final class TokenSources
 
     public static function reset(): array
     {
+        $e = $_SESSION['errors'] ?? '';
+        unset($_SESSION['errors']);
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.reset'),
-            'page' => 'reset-password'
+            'pageName' => 'reset-password',
+            'formTitle' => Lang::t('title.reset'),
+            /* Form label */
+            'pass' => Lang::t('page.form.password'),
+            'confirm' => Lang::t('page.form.confirm'),
+            /* Form placeholder */
+            'passHold' => Lang::t('page.form.placeholder.password'),
+            'confHold' => Lang::t('page.form.placeholder.confirm'),
+            /* Form errors */
+            'passErr' => $e['password'] ?? '',
+            'confirmErr' => $e['confirm'] ?? '',
+            'globalErr' => $e['global'] ?? '',
+            /* Form buttons */
+            'send' => Lang::t('btn.send'),
+            /* Files */
+            'css' => [ '/form.css' ],
+            'scripts' => [ '/form.js' ]
         ];
     }
 

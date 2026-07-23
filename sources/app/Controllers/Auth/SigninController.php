@@ -37,9 +37,9 @@ final class SigninController extends AuthController
         $errors = [];
 
         if ($this->model->userExists($user))
-            $errors['user'] = Lang::t('error.bbdd.exist.user');
+            $errors['user'] = Lang::t('error.exists.user');
         if ($this->model->emailExists($email))
-            $errors['email'] = Lang::t('error.bbdd.exist.email');
+            $errors['email'] = Lang::t('error.exists.email');
 
         if (!empty($errors)) throw new FormException($errors);
     }
@@ -69,7 +69,7 @@ final class SigninController extends AuthController
                 // Insert data 
                 $id = $this->model->insertUser($user, $email, $password);
                 /* Send email */
-                $this->sendAccountEmail($id, $email);
+                $this->sendEmail($id, $email);
 
                 $db->commit();                
             }

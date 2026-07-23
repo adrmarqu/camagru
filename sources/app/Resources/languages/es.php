@@ -60,6 +60,8 @@ $lang =
             'remember' => 'Recuerdame',
             'no_account' => '¿Aún no tienes cuenta? ',
             'create' => 'Registrate aquí',
+            'account' => '¿Ya tienes una cuenta? ',
+            'login' => 'Inicia sesión',
             'forgot' => '¿Has olvidado tu contraseña? ',
             'reset' => 'Reiniciala aqui',
 
@@ -122,7 +124,7 @@ $lang =
         'empty' =>
         [
             'user' => 'El usuario está vacio',
-            'usermail' => 'El usuario o correo está vacio',
+            'usermail' => 'El usuario o el correo están vacios',
             'email' => 'El correo está vacio',
             'password' => 'La contraseña está vacia',
             'confirm' => 'La confirmación de la contraseña está vacia'

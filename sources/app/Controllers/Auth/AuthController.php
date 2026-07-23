@@ -7,11 +7,9 @@ abstract class AuthController extends BaseController
     protected const SIGNIN_HTML_URL = "/auth/signin";
     protected const FORGOT_HTML_URL = "/auth/forgot";
 
-    protected function sendAccountEmail(int $id, string $email): void
+    /* Account: 10min, Password: 5min, Email: 15min */
+    protected function sendEmail(int $id, string $email, string $type = 'account', int $tokenTime = (10 * 60)): void
     {
-        $type = 'account';
-        $tokenTime = 5 * 60; // 5 minutes
-
         // Create token
         $model = new TokenModel();
         $token = $model->generateToken($id, $type, $tokenTime);

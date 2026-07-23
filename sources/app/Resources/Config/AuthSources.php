@@ -4,9 +4,24 @@ final class AuthSources
 {
     private function __construct() {}
 
+    private static function getErrors(): array
+    {
+        $errors = $_SESSION['errors'] ?? [];
+        unset($_SESSION['errors']);
+        return $errors;
+    }
+
+    private static function getPost(): array
+    {
+        $post = $_SESSION['post'] ?? [];
+        unset($_SESSION['post']);
+        return $post;
+    }    
+
     public static function login(): array
     {
-        $e = $_SESSION['errors'] ?? [];
+        $e = self::getErrors();
+        $p = self::getPost();
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.login'),
@@ -20,11 +35,11 @@ final class AuthSources
             'userHold' => Lang::t('page.form.placeholder.usermail'),
             'passHold' => Lang::t('page.form.placeholder.password'),
             /* Form error */
-            'usermailErr' => '',
-            'passErr' => '',
+            'usermailErr' => $e['usermail'] ?? '',
+            'passErr' => $e['password'] ?? '',
             'globalErr' => $e['global'] ?? '',
             /* Form values */
-            'usermailVal' => '',
+            'usermailVal' => $p['usermail'] ?? '',
             /* Create account */
             'noAccount' => Lang::t('page.form.no_account'),
             'account' => Lang::t('page.form.create'),
@@ -34,13 +49,15 @@ final class AuthSources
             /* Form buttons */
             'send' => Lang::t('btn.send'),
             /* Files */
+            'css' => [ '/form.css' ],
             'scripts' => [ '/form.js' ]
         ];
     }
 
     public static function signin(): array
     {
-        $e = $_SESSION['errors'] ?? [];
+        $e = self::getErrors();
+        $p = self::getPost();
         return 
         [
             'title' => 'Camagru | ' . Lang::t('title.signin'),
@@ -60,16 +77,19 @@ final class AuthSources
             /* Form errors */
             'userErr' => $e['user'] ?? '',
             'emailErr' => $e['email'] ?? '',
-            'passErr' => $e['pass'] ?? '',
-            'confirmErr' => $e['conf'] ?? '',
+            'passErr' => $e['password'] ?? '',
+            'confirmErr' => $e['confirm'] ?? '',
             'termsErr' => $e['terms'] ?? '',
             'globalErr' => $e['global'] ?? '',
             /* Form values */
-            'userVal' => $_POST['user'] ?? '',
-            'emailVal' => $_POST['email'] ?? '',
-            'checked' => isset($_POST['terms']) ? 'checked' : '',
+            'userVal' => $p['user'] ?? '',
+            'emailVal' => $p['email'] ?? '',
+            'checked' => isset($p['terms']) ? 'checked' : '',
             /* Form buttons */
             'send' => Lang::t('btn.send'),
+            /* Footer */
+            'yesAccount' => Lang::t('page.form.account'),
+            'account' => Lang::t('page.form.login'),
             /* Files */
             'css' => [ '/form.css' ],
             'scripts' => [ '/form.js' ]
@@ -78,7 +98,8 @@ final class AuthSources
 
     public static function forgot(): array
     {
-        $e = $_SESSION['errors'] ?? [];
+        $e = self::getErrors();
+        $p = self::getPost();
         return
         [
             'title' => 'Camagru | ' . Lang::t('title.forgot'),
@@ -89,11 +110,14 @@ final class AuthSources
             /* Form placeholder */
             'userHold' => Lang::t('page.form.placeholder.usermail'),
             /* Form errors */
-            'usermailErr' => '',
+            'usermailErr' => $e['usermail'] ?? '',
             'globalErr' => $e['global'] ?? '',
+            /* Form values */
+            'usermailVal' => $p['usermail'] ?? '',
             /* Form buttons */
             'send' => Lang::t('btn.send'),
             /* Files */
+            'css' => [ '/form.css' ],
             'scripts' => [ '/form.js' ]
         ];
     }

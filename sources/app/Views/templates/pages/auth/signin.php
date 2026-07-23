@@ -34,4 +34,7 @@
             <button type="submit"><?= $send ?></button>
         </div>
     </form>
+    <footer>
+        <p><?= $yesAccount ?><a href="<?= $loginUrl ?>"><?= $account ?></a></p>
+    </footer>
 </section>
