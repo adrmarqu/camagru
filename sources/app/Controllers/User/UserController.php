@@ -1,6 +1,9 @@
 <?php
 
-final class UserController extends BaseController
+abstract class UserController extends BaseController
 {
-    
+    public function run()
+    {
+        $this->render("/user/profile", UserSources::profile());
+    }
 }
