@@ -31,6 +31,12 @@
 </a>
 
 <nav>
+    <button class="nav-item"><?= $language ?></button>
+    <div id="drop-lang" class="dropdown">
+        <a class="nav-item" href="/en/<?= $pageName ?>"><?= $en ?></a>
+        <a class="nav-item" href="/es/<?= $pageName ?>"><?= $es ?></a>
+        <a class="nav-item" href="/ca/<?= $pageName ?>"><?= $ca ?></a>
+    </div>
     <a class="nav-item" href="<?= $loginUrl ?>"><?= $loginNav ?></a>
     <a class="nav-item" href="<?= $signinUrl ?>"><?= $signinNav ?></a>
 </nav>

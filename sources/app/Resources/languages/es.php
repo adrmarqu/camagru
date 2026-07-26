@@ -71,6 +71,7 @@ $lang =
                 'email' => 'Correo electrónico',
                 'usermail' => 'Usuario o Correo electrónico',
                 'password' => 'Contraseña',
+                'current' => 'Contraseña actual',
                 'new_password' => 'Contraseña nueva',
                 'confirm' => 'Confirmar contraseña',
                 'new_confirm' => 'Confirmar contraseña nueva'
@@ -82,7 +83,12 @@ $lang =
     [
         'home' => 'Volver al inicio',
         'send' => 'Enviar',
-        'email' => 'Enviar correo'
+        'email' => 'Enviar correo',
+        'edit' => 'Editar',
+        'cancel' => 'Cancelar',
+        'save' => 'Guardar',
+        'account' => 'Eliminar',
+        'avatar' => 'Cambiar avatar'
     ],
 
     'send_body' => 'Email enviado',
@@ -117,6 +123,43 @@ $lang =
             'body' => 'No te preocupes, nos pasa a todos. Haz clic en el botón de abajo para elegir una nueva contraseña de forma segura. Ten en cuenta que, por motivos de seguridad, este enlace caducará en 5 minutos. Para generar un nuevo enlace, simplemente vuelve a la página de /forgot-password y envia otro correo.'
         ],
         'footer' => "Este es un correo automático, por favor no respondas a este mensaje. Si tienes problemas o no has solicitado este correo, ponte en contacto con soporte. © $year Camagru. Todos los derechos reservados."
+    ],
+
+    'profile' =>
+    [
+        'title' =>
+        [
+            'stats' => 'Estadisticas',
+            'info' => 'Información del usuario',
+            'sec' => 'Seguridad de la cuenta',
+            'pref' => 'Preferencias de la cuenta',
+            'del' => 'Peligro',
+            'sure' => '¿Estás seguro de que quieres eliminar la cuenta?'
+        ],
+
+        'photos' => 'Número de fotos subidas: ',
+        'likes' => 'Número de likes recibidos: ',
+        'com' => 'Número de comentarios recibidos: ',
+
+        'label' =>
+        [
+            'user' => 'Nombre de usuario: ',
+            'email' => 'Correo electrónico: ',
+            'pass' => 'Contraseña: '
+        ],
+
+        'form' =>
+        [
+            'user' => 'Introduce tu nuevo nombre de usuario',
+            'email' => 'Introduce tu nuevo correo',
+            'pass' => 'Introduce tu contraseña actual',
+            'new' => 'Introduce tu nueva contraseña',
+            'conf' => 'Repite tu nueva contraseña',
+            'noti' => 'Recibir notificaciones al recibir comentarios'
+        ],
+
+        'delete' => 'Eliminar tu cuenta',
+        'confirm' => 'Está acción es ireversible, una vez eliminada la cuenta no la podrás volver a recuperar. Además todas tus imagenes subidas serán eliminadas de Camagru. Pulsa el botón cancelar para volver atrás para volver al perfil.'
     ],
 
     'error' =>

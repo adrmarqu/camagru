@@ -3,6 +3,7 @@
 <link rel="icon" href="/assets/logo.webp" type="image/webp">
 
 <link rel="stylesheet" href="<?= URL_CSS . '/app.css' ?>?v=<?= filemtime(PUBLIC_PATH . '/css/app.css') ?>">
+<link rel="stylesheet" href="<?= URL_CSS . '/styles.css' ?>?v=<?= filemtime(PUBLIC_PATH . '/css/styles.css') ?>">
 <link rel="stylesheet" href="<?= URL_CSS . '/header.css' ?>?v=<?= filemtime(PUBLIC_PATH . '/css/header.css') ?>">
 
 <?php foreach ($css ?? [] as $file): ?>

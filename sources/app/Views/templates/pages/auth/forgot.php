@@ -7,7 +7,7 @@
         <input type="hidden" name="form_type" value="forgot">
         <div>
             <label for="usermail"><?= $usermail ?></label>
-            <input type="text" name="usermail" id="usermail" autocomplete="username" placeholder="<?= $userHold ?>" value="<?= ViewHelper::print($usermailVal)?>" class="<?= !empty($userErr) ? 'input-error' : '' ?>">
+            <input type="text" name="usermail" id="usermail" autocomplete="username" placeholder="<?= $userHold ?>" value="<?= ViewHelper::print($usermailVal) ?>" class="<?= !empty($userErr) ? 'input-error' : '' ?>">
             <span id="error-usermail"><?= $usermailErr ?></span>
         </div>
         <div>
