@@ -10,35 +10,6 @@ session_start();
 // Load configuration and autoloader
 require_once __DIR__ . '/../app/bootstrap.php';
 
-try
-{
-    // Remember
-    Auth::loginWithCookie();
-    // Get paths
-    // Router
-}
-/* Display errors in the form, including db errors */
-catch (FormException $e)
-{
-
-}
-/* Display the error in a container */
-catch (DBException $e)
-{
-
-}
-/* Display a error page */
-catch (HttpException $e)
-{
-
-}
-/* Others -> Display a 500 error page */
-catch (Throwable $e)
-{
-
-}
-
-
 // Main
 try
 {
