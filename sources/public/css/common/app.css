@@ -1,0 +1,130 @@
+/* Font with wight(400, 500, 600, 700) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* LIGHT MODE (DEFAULT) */
+:root
+{
+    /* Typography */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Weights */
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* Font sizes */
+    --text-xs: 0.75rem;   /* 12px - Dates, span errors */
+    --text-sm: 0.875rem;  /* 14px - Header, Footer, small buttons */
+    --text-base: 1rem;    /* 16px - General text, inputs */
+    --text-lg: 1.125rem;  /* 18px - h3 */
+    --text-xl: 1.5rem;    /* 24px - h2 */
+    --text-2xl: 2.25rem;  /* 36px - h1 */
+
+    /* Spacing */
+    --space-xs: 0.25rem;  /* 4px */
+    --space-sm: 0.5rem;   /* 8px */
+    --space-md: 1rem;     /* 16px */
+    --space-lg: 1.5rem;   /* 24px */
+    --space-xl: 2.5rem;   /* 40px */
+
+    /* Border Radius */
+    --radius-sm: 0.375rem; /* 6px */
+    --radius-md: 0.5rem;   /* 8px */
+    --radius-lg: 0.75rem;  /* 12px */
+    --radius-xl: 1rem;     /* 16px */
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    /* Backgrounds */
+    --bg-main: #f8fafc;
+    --bg-surface: #ffffff; /* Header, footer and cards */
+    --bg-surface-hover: #f1f5f9;
+    --border-color: #e2e8f0;
+
+    /* Texts */
+    --text-title: #0f172a;
+    --text-subtitle: #334155;
+    --text-body: #475569;
+    --text-muted: #94a3b8;
+
+    /* Links */
+    --link-color: #2563eb;
+    --link-hover: #1d4ed8;
+
+    /* Header links */
+    --header-nav-link: #475569;
+    --header-nav-active: #2563eb;
+
+    /* Buttons */
+    --btn-primary: #4f46e5;
+    --btn-primary-hover: #4338ca;
+
+    --btn-secondary: #e2e8f0;
+    --btn-secondary-hover: #cbd5e1;
+    --btn-secondary-text: #0f172a;
+
+    --btn-danger: #ef4444;
+    --btn-danger-hover: #dc2626;
+
+    --btn-warning: #f59e0b;
+    --btn-warning-hover: #d97706;
+
+    --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* DARK MODE (DEFAULT) */
+body.dark-theme
+{
+    /* Backgrounds */
+    --bg-main: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-hover: #334155;
+    --border-color: #334155;
+
+    /* Texts */
+    --text-title: #f8fafc;
+    --text-subtitle: #cbd5e1;
+    --text-body: #94a3b8;
+    --text-muted: #64748b;
+
+    /* Links */
+    --link-color: #38bdf8;
+    --link-hover: #7dd3fc;
+
+    /* Header links */
+    --header-nav-link: #cbd5e1;
+    --header-nav-active: #38bdf8;
+
+    /* Buttons */
+    --btn-primary: #6366f1;
+    --btn-primary-hover: #4f46e5;
+
+    --btn-secondary: #334155;
+    --btn-secondary-hover: #475569;
+    --btn-secondary-text: #f8fafc;
+}
+
+*, *::before, *::after
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    font-family: var(--font-main);
+    background-color: var(--bg-main);
+    color: var(--text-body);
+    transition: var(--theme-transition);
+    min-height: 100vh;
+}
+
+/* GLOBAL UTILITY CLASSES */
+.hidden { display: none !important; }
+/* Flex */

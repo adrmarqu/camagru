@@ -1,0 +1,137 @@
+#footer
+{
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: var(--space-xl) var(--space-xl) var(--space-lg) var(--space-xl);
+    margin-top: auto;
+    transition: var(--theme-transition);
+}
+
+.footer-container
+{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* Top Section: Links */
+.footer-top
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* App Navigation Links in Footer */
+.footer-nav
+{
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.footer-nav a
+{
+    color: var(--text-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover
+{
+    color: var(--btn-primary);
+}
+
+/* External Links */
+.footer-links
+{
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.footer-links a
+{
+    color: var(--text-muted);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover
+{
+    color: var(--btn-primary);
+}
+
+/* Bottom Section: Info & Credits */
+.footer-info
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.footer-info strong
+{
+    color: var(--text-title);
+}
+
+.footer-credit
+{
+    font-size: var(--text-xs);
+    opacity: 0.85;
+}
+
+/* RESPONSIVE DESIGN FOR MOBILE */
+@media (max-width: 768px)
+{
+    #footer
+    {
+        padding: var(--space-lg) var(--space-md);
+    }
+
+    .footer-container
+    {
+        gap: var(--space-md);
+    }
+
+    .footer-top
+    {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-sm);
+        padding-bottom: var(--space-sm);
+    }
+
+    .footer-nav
+    {
+        justify-content: center;
+        gap: var(--space-sm) var(--space-md);
+    }
+
+    .footer-links
+    {
+        justify-content: center;
+    }
+
+    .footer-info
+    {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-xs);
+    }
+}

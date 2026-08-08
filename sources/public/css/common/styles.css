@@ -1,0 +1,40 @@
+h1
+{
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--text-title);
+}
+
+h2
+{
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--text-title);
+}
+
+h3
+{
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--text-subtitle);
+}
+
+p
+{
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+}
+
+a
+{
+    color: var(--link-color);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+}
+
+.btn
+{
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+}

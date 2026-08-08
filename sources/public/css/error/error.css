@@ -1,0 +1,120 @@
+.error-container
+{
+    max-width: 680px;
+    width: 90%;
+    text-align: center;
+    padding: 3.5rem 3rem;
+    margin: calc(var(--space-xl) * 2) auto;
+
+    background-color: var(--bg-surface);
+    color: var(--text-body);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+
+    /* Smooth transitions for theme toggle & hover */
+    transition: var(--theme-transition), transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.error-container:hover
+{
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+}
+
+.error-code
+{
+    margin: 0 0 var(--space-xs) 0;
+    font-size: 7.5rem;
+    font-weight: var(--weight-bold);
+    background: linear-gradient(135deg, var(--btn-danger), #f87171);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.error-title
+{
+    margin-top: 0;
+    margin-bottom: var(--space-md);
+    font-size: 2rem;
+    font-weight: var(--weight-semibold);
+    color: var(--text-title);
+    letter-spacing: -0.01em;
+}
+
+.error-message
+{
+    margin-bottom: calc(var(--space-lg) * 1.25);
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.error-link
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.25rem;
+    text-decoration: none;
+    font-weight: var(--weight-semibold);
+    font-size: 1.05rem;
+    border-radius: var(--radius-md);
+
+    background-color: var(--btn-primary);
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.35);
+    transition: all 0.25s ease;
+}
+
+.error-link:hover
+{
+    background-color: var(--btn-primary-hover);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px 0 rgba(79, 70, 229, 0.45);
+}
+
+.error-link:active
+{
+    transform: translateY(0);
+    box-shadow: 0 2px 8px 0 rgba(79, 70, 229, 0.3);
+}
+
+/* RESPONSIVE DESIGN FOR MOBILE */
+@media (max-width: 640px)
+{
+    .error-container
+    {
+        width: 92%;
+        padding: 2.25rem 1.25rem;
+        margin: var(--space-xl) auto;
+        border-radius: var(--radius-lg);
+    }
+
+    .error-code
+    {
+        font-size: 5rem;
+    }
+
+    .error-title
+    {
+        font-size: 1.5rem;
+    }
+
+    .error-message
+    {
+        font-size: 1rem;
+        margin-bottom: var(--space-lg);
+    }
+
+    .error-link
+    {
+        width: 100%;
+        padding: 0.85rem 1.5rem;
+        font-size: 1rem;
+    }
+}
