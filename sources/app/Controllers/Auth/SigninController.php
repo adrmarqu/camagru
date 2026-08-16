@@ -10,10 +10,10 @@ class SigninController extends BaseController
 
     public function init(array $data): void
     {
-        $this->user = Utils::trim($data['user']);
-        $this->email = Utils::trim($data['email']);
-        $this->pass = $data['password'];
-        $this->conf = $data['confirm'];
+        $this->user = Utils::trim($data['user'] ?? '');
+        $this->email = Utils::trim($data['email'] ?? '');
+        $this->pass = $data['password'] ?? '';
+        $this->conf = $data['confirm'] ?? '';
         $this->terms = isset($data['terms']);
     }
 
@@ -31,25 +31,24 @@ class SigninController extends BaseController
         // Email
         if (Validate::empty($this->email))
             $errors['email'] = $void;
-        else if (!Validate::user($this->email))
+        else if (!Validate::email($this->email))
             $errors['email'] = Lang::t('form.error.email');
 
         // Password
         if (Validate::empty($this->pass))
             $errors['password'] = $void;
-        else if (!Validate::user($this->pass))
+        else if (!Validate::pass($this->pass))
             $errors['password'] = Lang::t('form.error.pass');
 
         // Confirm password
         if (Validate::empty($this->conf))
             $errors['confirm'] = $void;
-        else if (!Validate::user($this->conf))
+        else if (!Validate::confirm($this->pass, $this->conf))
             $errors['confirm'] = Lang::t('form.error.conf');
 
         // Terms
         if ($this->terms === false)
             $errors['terms'] = Lang::t('signin.no_terms');
-
         if (!empty($errors))
             throw new FormException(422, null, $errors);
     }
@@ -59,27 +58,32 @@ class SigninController extends BaseController
         $model = new UserModel();
         $errors = [];
 
-        // Get user
-        $user = $model->getUser($this->user, $this->email);
+        // Check if user exists
+        if ($model->userExists($this->user))
+            throw new FormException(409, null, $errors);
 
-        // Check if already exists
-        if ($user['username'] === $this->user)
-            $errors['user'] = Lang::t('db.exists.user');
-        if ($user['email'] === $this->email)
+        // Check if email exists
+        if ($model->emailExists($this->email))
             $errors['email'] = Lang::t('db.exists.email');
 
         if (!empty($errors))
-            throw new FormException(500, Lang::t('500.signin'), $errors);
+            throw new FormException(409, null, $errors);
 
         // Insert user
-        $model->insertUser($this->user, $this->email, $this->pass);
+        $id = $model->insertUser($this->user, $this->email, $this->pass);
 
-        // Send email
         $token = TokenHelper::generateToken();
-        $send = new SendController();
-        if ($send->account($token) === false)
-            throw new FormException(500, Lang::t('500.email'));
+        $_SESSION['send'] = 
+        [
+            'id' => $id,
+            'action' => 'account',
+            'email' => $this->email,
+            'token' => $token
+        ];
 
+        // Send email, if fail go to login
+        $ctrl = new SendController();
+        $ctrl->send($id, $this->email, $token);
     }
 
     public function __invoke()

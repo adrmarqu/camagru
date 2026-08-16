@@ -1,10 +1,16 @@
 <?php
 
-class SendController extends BaseController
+class ProfileController extends BaseController
 {
+    private string $pass;
+    private string $new;
+    private string $conf;
 
     public function init(array $data): void
     {
+        $this->pass = $data['password'] ?? '';
+        $this->new = $data['new'] ?? '';
+        $this->conf = $data['confirm'] ?? '';
     }
 
     public function validate(): void
@@ -25,6 +31,6 @@ class SendController extends BaseController
             'scripts' => [ '/form.js' ]
         ];
 
-        $this->render('/auth/', $data);
+        $this->render('/user/profile', $data);
     }
 }

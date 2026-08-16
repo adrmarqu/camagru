@@ -8,7 +8,7 @@ class LoginController extends BaseController
 
     public function init(array $data): void
     {
-        $this->user = Utils::trim($data['usermail']);
+        $this->user = Utils::trim($data['usermail'] ?? '');
         $this->pass = $data['password'] ?? '';
         $this->remember = isset($data['remember_me']);
     }
@@ -29,8 +29,8 @@ class LoginController extends BaseController
             throw new FormException(422, null, $errors);
 
         // Check format
-        if (!Validate::usermail($this->user) || !Validate::password($this->pass))
-            throw new FormException(401, Lang::t('401.data'));
+        if (!Validate::usermail($this->user) || !Validate::pass($this->pass))
+            throw new FormException(401, Lang::t('401.login'));
     }
 
     public function execute(): void
@@ -40,19 +40,28 @@ class LoginController extends BaseController
         // Get user
         $user = $model->getUser($this->user);
         if ($user === false || empty($user))
-            throw new FormException(401, Lang::t('401.data'));
+            throw new FormException(401, Lang::t('401.login'));
         
         // Check password
         if (!password_verify($this->pass, $user['password_hash']))
-            throw new FormException(401, Lang::t('401.data'));
+            throw new FormException(401, Lang::t('401.login'));
         
         // Check account state
-        if ($user['is_active'] === false)
+        if (!$user['is_active'])
         {
-            $_SESSION['send_email'] = $this->user;
-            $lang = Lang::getLang();
+            $token = TokenHelper::generateToken();
+            $_SESSION['send'] = 
+            [
+                'id' => $user['id'],
+                'action' => 'account',
+                'email' => $user['email'],
+                'token' => $token
+            ];
 
-            throw new FormException(403, null, [], null, "/$lang/send-email");
+            $ctrl = new SendController();
+            $ctrl->send($user['id'], $user['email'], $token);
+
+            throw new FormException(403, null, [], null, "send-email");
         }
 
         // Save data
