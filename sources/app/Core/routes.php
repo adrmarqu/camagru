@@ -64,7 +64,7 @@ return
     'result' => 
     [
         'controller' => 'ResultController', 
-        'access' => 'token'
+        'access' => 'token',
         'token' => 'result'
     ],
     

@@ -2,7 +2,7 @@
 
 final class Auth
 {
-    /* Check if user is loggued */
+    /* Check if user is logged */
     public static function check(): bool
     {
         return isset($_SESSION['user']);
@@ -15,9 +15,9 @@ final class Auth
     }
 
     /* Return user name */
-    public static function username(): ?string
+    public static function username(): string
     {
-        return $_SESSION['user']['name'] ?? null;
+        return $_SESSION['user']['name'] ?? Lang::t('header.guest') ?? 'Guest';
     }
 
     /* Return user id */
@@ -27,20 +27,31 @@ final class Auth
     }
 
     /* Set session data */
-    public static function login(int $id, string $user, string $email): void
+    public static function login(int $id, string $user, string $email, string $folder): void
     {
         session_regenerate_id(true);
         $_SESSION['user'] =
         [
             'id' => $id,
             'name' => $user,
-            'email' => $email
+            'email' => $email,
+            'folder' => $folder
         ];
     }
 
     /* Destroy session */
     public static function logout(): void
     {
+        if (isset($_SESSION['user']['id']))
+        {
+            try
+            {
+                $model = new TokenModel();
+                $model->delete($_SESSION['user']['id'], 'remember');
+            }
+            catch (Throwable $e) {}
+        }
+        self::cleanCookie();
         unset($_SESSION['user']);
         session_regenerate_id(true);
     }
@@ -51,29 +62,33 @@ final class Auth
         // Check if user already logged or if you dont have the cookie
         if (Auth::check() || !isset($_COOKIE['remember_me'])) return ;
 
-        $model = new TokenModel();
-
-        // Get user and token data
-        $data = $model->findWithUser($_COOKIE['remember_me']);
-        if ($data === false || empty($data))
-        { self::cleanCookie(); return ; }
-
-        // Check if token is expired
-        if (time() > strtotime($data['expires_at']))
+        try
         {
-            $model->deleteById($data['token_id']);
-            self::cleanCookie(); 
-            return ;
+            $model = new TokenModel();
+
+            // Get user and token data
+            $data = $model->findWithUser($_COOKIE['remember_me']);
+            if ($data === false || empty($data))
+            { self::cleanCookie(); return ; }
+
+            // Check if token is expired
+            if (time() > strtotime($data['expires_at']))
+            {
+                $model->deleteById($data['token_id']);
+                self::cleanCookie(); 
+                return ;
+            }
+
+            // Renovate token
+            $token = TokenHelper::generateToken();
+            if ($model->create($data['user_id'], $token, 'remember') === false)
+            { self::cleanCookie(); return ; }
+
+            // Save data
+            self::setCookie($token);
+            Auth::login($data['user_id'], $data['username'], $data['email'], $data['folder'] ?? '');
         }
-
-        // Renovate token
-        $token = TokenHelper::generateToken();
-        if ($model->create($data['user_id'], $token, 'remember') === false)
-        { self::cleanCookie(); return ; }
-
-        // Save data
-        self::setCookie($token);
-        Auth::login($data['user_id'], $data['username'], $data['email']);
+        catch (Throwable $e) {}
     }
 
     /* New cookie */
@@ -83,7 +98,7 @@ final class Auth
     }
 
     /* Delete cookie */
-    private static function cleanCookie(): void
+    public static function cleanCookie(): void
     {
         setcookie('remember_me', '', time() - 3600, '/', '', true, true);
     }

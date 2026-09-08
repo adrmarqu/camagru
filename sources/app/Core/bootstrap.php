@@ -37,6 +37,9 @@ spl_autoload_register(function ($className)
 {
     $directories =
     [
+        'Controllers/Main',
+        'Controllers/Auth',
+        'Controllers/Token',
         'Controllers',
         'Models',
         'Core',

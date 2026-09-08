@@ -49,18 +49,19 @@ class SigninController extends BaseController
         // Terms
         if ($this->terms === false)
             $errors['terms'] = Lang::t('signin.no_terms');
+        
         if (!empty($errors))
             throw new FormException(422, null, $errors);
     }
 
-    public function execute(): void
+    public function execute(): ?string
     {
         $model = new UserModel();
         $errors = [];
 
         // Check if user exists
         if ($model->userExists($this->user))
-            throw new FormException(409, null, $errors);
+            $errors['user'] = Lang::t('db.exists.user');
 
         // Check if email exists
         if ($model->emailExists($this->email))
@@ -84,6 +85,8 @@ class SigninController extends BaseController
         // Send email, if fail go to login
         $ctrl = new SendController();
         $ctrl->send($id, $this->email, $token);
+
+        return null;
     }
 
     public function __invoke()

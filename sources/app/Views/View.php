@@ -1,20 +1,17 @@
 <?php
 
-class View
+final class View
 {
-    public function render(string $pageUrl, array $data = []): void
+    private string $file;
+
+    public function render(string $tplPath, array $sources = []): void
     {
-        // Convert the array into local variables
-        extract($data);
-        // Open buffer
-        ob_start();
-        // import page
-        $screen = PAGES_PATH . $pageUrl . '.php';
-        if (file_exists($screen)) require $screen;
-        else throw new AppException(500, Lang::t('500.not_found'));
-        // Close buffer
-        $content = ob_get_clean();
-        // Main layout
-        require LAYOUT_PATH . "/main.php";
-    } 
+        $this->file = VIEW_PATH . $tplPath . '.php';
+        
+        if (!file_exists($this->file))
+            throw new HttpException(404, Lang::t('404.no_file'));
+        
+        extract($sources);
+        require LAYOUT_TPL . '/main.php';
+    }
 }

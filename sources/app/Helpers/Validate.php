@@ -12,8 +12,8 @@ final class Validate
     public static function usermail(string $user): bool
     {
         return (strpos($user, '@') !== false) 
-            ? self::user($user) 
-            : self::email($user);
+            ? self::email($user) 
+            : self::user($user);
     }
 
     public static function user(string $user): bool

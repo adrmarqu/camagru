@@ -33,7 +33,7 @@ class LoginController extends BaseController
             throw new FormException(401, Lang::t('401.login'));
     }
 
-    public function execute(): void
+    public function execute(): ?string
     {
         $model = new UserModel();
         
@@ -65,19 +65,22 @@ class LoginController extends BaseController
         }
 
         // Save data
-        Auth::login($user['id'], $user['username'], $user['email']);
+        Auth::login($user['id'], $user['username'], $user['email'], $user['folder']);
         
         // Set token remember
         if ($this->remember === true)
         {
             $token = TokenHelper::generateToken();
+            $model = new TokenModel();
             if ($model->create($user['id'], $token, 'remember') === false)
             {
-                self::cleanCookie();
-                return ;
+                Auth::cleanCookie();
+                return null;
             }
             Auth::setCookie($token);
         }
+
+        return null;
     }
 
     public function __invoke()

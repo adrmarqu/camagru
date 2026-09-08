@@ -22,7 +22,7 @@ class UserModel extends BaseModel
     public function getPass(int $userid): array | false
     {
         $sql = "SELECT password_hash FROM users WHERE id = :id LIMIT 1";
-        $this->select($sql, ['id' => $userid]);
+        return $this->select($sql, ['id' => $userid]);
     } 
 
     /* Check if a email exists */
@@ -58,8 +58,11 @@ class UserModel extends BaseModel
     /* Activate account */
     public function activate(int $id): bool
     {
-        $sql = "UPDATE users SET is_active = TRUE WHERE id = :id LIMIT 1";
-        return $this->query($sql, ['id' => $id]) === 1;
+        // Folder name where user upload photos
+        $folder = TokenHelper::generateToken(16);
+
+        $sql = "UPDATE users SET is_active = TRUE, folder = :folder WHERE id = :id LIMIT 1";
+        return $this->query($sql, ['id' => $id, 'folder' => $folder]) === 1;
     }
 
     /* Update password */
@@ -69,6 +72,76 @@ class UserModel extends BaseModel
         $params =
         [
             'pass' => Utils::hash($pass),
+            'id' => $id
+        ];
+        return $this->query($sql, $params) === 1;
+    }
+
+    /* Get user stats (photos, likes, comments) */
+    public function getUserStats(int $userid): array | false
+    {
+        $sql = "SELECT 
+            -- Total photos
+            (SELECT COUNT(*) FROM photos WHERE user_id = :id) 
+            AS total_photos,
+            -- Total likes
+            (SELECT COUNT(*)
+            FROM likes l
+            JOIN photos p ON l.photo_id = p.id
+            WHERE p.user_id = :id) 
+            AS total_likes,
+            -- Total comments
+            (SELECT COUNT(*)
+            FROM comments c
+            JOIN photos p ON c.photo_id = p.id
+            WHERE p.user_id = :id)
+            AS total_comments";
+
+        return $this->select($sql, ['id' => $userid]);
+    }
+
+    /* Notification active */
+    public function isEmailNotiActive(int $id): bool
+    {
+        $sql = "SELECT notification_active FROM users WHERE id = :id";
+        $res = $this->select($sql, ['id' => $id]);
+        return (bool) ($res['notification_active'] ?? false);
+    }
+
+    public function deleteAccount(int $id): bool
+    {
+        $sql = "DELETE FROM users WHERE id = :id LIMIT 1";
+        return $this->query($sql, ['id' => $id]) === 1;
+    }
+
+    public function updateName(int $id, string $username): bool
+    {
+        $sql = "UPDATE users SET username = :user WHERE id = :id LIMIT 1";
+        $params =
+        [
+            'user' => $username,
+            'id' => $id
+        ];
+        return $this->query($sql, $params) === 1;
+    }
+
+    public function updateEmail(int $id, string $email): bool
+    {
+        $sql = "UPDATE users SET email = :email WHERE id = :id LIMIT 1";
+        $params =
+        [
+            'email' => $email,
+            'id' => $id
+        ];
+        return $this->query($sql, $params) === 1;
+    }
+
+    public function updateNoti(int $id, bool $active): bool
+    {
+        $sql = "UPDATE users SET notification_active = :a WHERE id = :id LIMIT 1";
+        $params =
+        [
+            'a' => $active,
             'id' => $id
         ];
         return $this->query($sql, $params) === 1;

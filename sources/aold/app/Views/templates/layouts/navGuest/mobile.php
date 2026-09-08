@@ -14,5 +14,5 @@
             <a class="nav-item" href="/es/<?= $pageName ?>"><?= $es ?></a>
             <a class="nav-item" href="/ca/<?= $pageName ?>"><?= $ca ?></a>
         </div>
-    </div>
+    </div> 
 </nav>

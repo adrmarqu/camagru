@@ -8,6 +8,7 @@
     $editorUrl = ViewHelper::url('photo-editor');
     $loginUrl = ViewHelper::url('login');
     $signinUrl = ViewHelper::url('signin');
+    $forgotUrl = ViewHelper::url('forgot-password');
     $profileUrl = ViewHelper::url('profile');
     $favUrl = ViewHelper::url('favorites');
     $privateUrl = ViewHelper::url('private-gallery');

@@ -47,9 +47,7 @@ class VerifyController extends BaseController
         }
         catch (Throwable $e)
         {
-            $pdo->rollBack();
-
-            throw $e;
+            $pdo->rollBack(); throw $e;
         }
     }
 
@@ -78,12 +76,11 @@ class VerifyController extends BaseController
             $pdo->commit();
 
             unset($_SESSION['send']);
+            $_SESSION['user']['email'] = $email;
         }
         catch (Throwable $e)
         {
-            $pdo->rollBack();
-
-            throw $e;
+            $pdo->rollBack(); throw $e;
         }
     }
 
@@ -95,9 +92,11 @@ class VerifyController extends BaseController
         {
             case 'account':
                 $this->activateAccount($data['user_id'] ?? 0, $data['id']);
+                Navigator::redirect("result?type=account");
                 break;
             case 'email':
                 $this->changeEmail($data['user_id'] ?? 0, $data['new_email'] ?? '', $data['id']);
+                Navigator::redirect("result?type=email");
                 break;
             case 'password':
                 $_SESSION['reset_user_id'] = $data['user_id'];

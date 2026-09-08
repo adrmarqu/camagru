@@ -11,7 +11,7 @@
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        stroke-linejoin="round">
+        stroke-linejoin="round"> 
 
         <!-- Camera body -->
         <rect x="7" y="11" width="28" height="20" rx="4"/>
@@ -34,7 +34,7 @@
 
 <!-- Burger Mobile -->
 
-<button id="burger" class="mobile hidden">
+<button id="burger" class="mobile">
     <span></span>
     <span></span>
     <span></span>
@@ -48,7 +48,9 @@
 <?php if (Auth::check() === false): ?>
 
 <nav class="pc nav-pc">
-    <?php require $dropLangLink ?>
+    <div>
+        <?php $isMobile = false; require $dropLangLink ?>
+    </div>
     
     <a class="nav-item" href="<?= $loginUrl ?>"><?= $login ?></a>
     <a class="nav-item" href="<?= $signinUrl ?>"><?= $signin ?></a>
@@ -56,11 +58,11 @@
 
 <!-- Guest Mobile -->
 
-<div class="mobile dropdown drop">
+<div id="mobile-drop-guest" class="mobile dropdown drop">
     <a class="nav-item" href="<?= $loginUrl ?>"><?= $login ?></a><hr>
     <a class="nav-item" href="<?= $signinUrl ?>"><?= $signin ?></a><hr>
 
-    <?php require $dropLangLink ?>
+    <?php $isMobile = true; require $dropLangLink ?>
 </div>
 
 <?php else: ?>
@@ -71,37 +73,42 @@
     <a class="nav-item" href="<?= $galleryUrl ?>"><?= $gallery ?></a>
     <a class="nav-item" href="<?= $editorUrl ?>"><?= $editor ?></a>
     
-    <button class="nav-item"><?= Auth::username() ?></button>
-    <div id="drop-user" class="dropdown">
-        <a class="nav-item" href="<?= $profileUrl ?>"><?= $profile ?></a>
-        <a class="nav-item" href="<?= $favUrl ?>"><?= $fav ?></a>
-        <a class="nav-item" href="<?= $privateUrl ?>"><?= $private ?></a>
+    <div>
+        <button class="nav-item"><?= Auth::username() ?></button>
+        <div id="user-lang-drop" class="dropdown">
+            <a class="nav-item" href="<?= $profileUrl ?>"><?= $profile ?></a>
+            <a class="nav-item" href="<?= $favUrl ?>"><?= $fav ?></a>
+            <a class="nav-item" href="<?= $privateUrl ?>"><?= $private ?></a>
 
-        <?php require $dropLangLink ?>
+            <hr>
+            <div>
+                <?php $isMobile = false; require $dropLangLink ?>
+            </div>
+        </div>
     </div>
 </nav>
 
 <!-- User Mobile -->
 
-<div class="mobile dropdown drop">
+<div id="full-drop" class="mobile dropdown drop">
     <a class="nav-item" href="<?= $galleryUrl ?>"><?= $gallery ?></a>
     <a class="nav-item" href="<?= $editorUrl ?>"><?= $editor ?></a>
     
     <button class="nav-item"><?= Auth::username() ?></button>
-    <div>
+    <div id="user-drop" class="dropdown">
         <a class="nav-item" href="<?= $profileUrl ?>"><?= $profile ?></a>
         <a class="nav-item" href="<?= $favUrl ?>"><?= $fav ?></a>
         <a class="nav-item" href="<?= $privateUrl ?>"><?= $private ?></a>
     </div>
 
-    <?php require $dropLangLink ?>
+    <?php $isMobile = true; require $dropLangLink ?>
 </div>
 
 <!-- Logout -->
 
 <form
+    id="logout-form"
     action="/api/logout.php"
-    class="ajax-form"
     method="POST"
     data-redirect="<?= $galleryUrl ?>"
 >

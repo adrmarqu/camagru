@@ -32,9 +32,154 @@ a
     text-decoration: none;
 }
 
+hr
+{
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: var(--space-sm) 0 var(--space-md) 0;
+}
+
+/* ==========================================================================
+   GLOBAL CARD COMPONENT
+   ========================================================================== */
+.card,
+.profile-card
+{
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--theme-transition), box-shadow 0.2s ease;
+}
+
+.card:hover,
+.profile-card:hover
+{
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   GLOBAL BUTTONS
+   ========================================================================== */
 .btn
 {
     padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-md);
     font-weight: var(--weight-medium);
+}
+
+.btn-secondary
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.5rem var(--space-md);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--btn-secondary-text);
+    background-color: var(--btn-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-secondary:hover
+{
+    background-color: var(--btn-secondary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active
+{
+    transform: translateY(0);
+}
+
+.btn-cancel
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem var(--space-md);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-cancel:hover
+{
+    background-color: var(--bg-surface-hover);
+    color: var(--text-title);
+}
+
+.btn-danger
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.5rem var(--space-md);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: #ffffff;
+    background-color: var(--btn-danger);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-danger:hover
+{
+    background-color: var(--btn-danger-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.btn-danger:active
+{
+    transform: translateY(0);
+}
+
+.btn-warning
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.5rem var(--space-md);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: #ffffff;
+    background-color: var(--btn-warning);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-warning:hover
+{
+    background-color: var(--btn-warning-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.btn-warning:active
+{
+    transform: translateY(0);
 }

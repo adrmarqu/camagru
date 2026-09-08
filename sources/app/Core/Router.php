@@ -8,7 +8,7 @@ class Router
     private array $routes = [];
 
     private string $page;
-    private string $queryString = '';
+    private string $query = '';
 
     public function __construct(array $routes)
     {
@@ -22,13 +22,14 @@ class Router
 
         // Change to new url if its different
         if ($cleanUrl !== $requestUri)
-            Navigator::redirect($this->page . $this->queryString, 301);
+            Navigator::redirect($this->page . $this->query, 301);
 
         // Get route
-        if (!isset($this->routes[$page]))
+        if (!isset($this->routes[$this->page]))
             throw new HttpException(404);
 
         $config = $this->routes[$this->page];
+        $_SESSION['page'] = $this->page;
         
         // Middleware
         $security = new MiddleWare();
@@ -91,8 +92,8 @@ class Router
 
         Lang::setLang($lang);
         $this->page = $page;
-        $this->queryString = ($queryString !== '' ? '?' . $queryString : '');
+        $this->query = ($queryString !== '' ? '?' . $queryString : '');
 
-        return "/$lang/$page". $this->queryString;
+        return "/$lang/$page". $this->query;
     }
 }

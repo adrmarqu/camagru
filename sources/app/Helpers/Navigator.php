@@ -18,14 +18,17 @@ final class Navigator
         exit;
     }
 
-    public static function ajaxRedirection(string $page): void
+    public static function ajaxRedirection(string $page, int $code = 200): void
     {
         $lang = Lang::getLang();
+        $page = ltrim($page, '/');
+
+        http_response_code($code);
         header('Content-Type: application/json');
         echo json_encode(
         [
-            'success' => true,
-            'redirect' => "$lang/$page"
+            'success' => $code >= 200 && $code < 300,
+            'redirect' => "/$lang/$page"
         ]);
         exit;
     }

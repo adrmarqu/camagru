@@ -11,7 +11,7 @@ class SendController extends BaseController
     {
         // If email no exists do nothing
         $model = new UserModel();
-        if (!$model->emailExists($email))
+        if ($type !== 'email' && !$model->emailExists($email))
             return true;
 
         $pdo = Database::getConnection();
@@ -21,7 +21,7 @@ class SendController extends BaseController
 
             // Save token in db
             $model = new TokenModel();
-            if ($model->create($userid, $token, $type) === false)
+            if ($model->create($userid, $token, $type, $email) === false)
                 throw new FormException(500, Lang::t('500.token'));
 
             // Send email
@@ -44,7 +44,6 @@ class SendController extends BaseController
     }
 
     /* FORM PART */
-
     public function init(array $data): void
     {
         $this->userid = $_SESSION['send']['id'];
@@ -55,9 +54,10 @@ class SendController extends BaseController
 
     public function validate(): void { return ;}
 
-    public function execute(): void
+    public function execute(): ?string
     {
         $this->send($this->userid, $this->email, $this->token, $this->type);
+        return null;
     }
 
     public function __invoke()

@@ -9,6 +9,10 @@
     
     <hr>
     
+    <div class="error-container" role="alert" aria-live="polite">
+        <span id="error-global-info" class="error-message"></span>
+    </div>
+
     <!-- Modo normal -->
     <div id="info-view" class="info-display">
         <div class="info-group">
@@ -24,10 +28,6 @@
     <!-- Modo edición -->
     <form id="form-info" class="ajax-form hidden" action="/api/form.php" method="POST" novalidate>
         <input type="hidden" name="action" value="user">
-
-        <div class="error-container" role="alert" aria-live="polite">
-            <span id="error-global" class="error-message"></span>
-        </div>
 
         <div class="form-group">
             <label for="user"><?= Lang::t('profile.info.user') ?></label>

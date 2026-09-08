@@ -8,17 +8,17 @@ final class Lang
 
     private function __construct() {}
 
-    public static function setLang(string $lang = 'en'): void
+    public static function setLang(string $locale = 'en'): void
     {
-        $path = LANG_PATH . "/$lang.php";
-        self::$lang = $lang;
+        $path = LANG_PATH . "/$locale.php";
+        self::$lang = $locale;
 
         if (file_exists($path)) self::$langData = require $path;
         else self::$langData = require LANG_PATH . "/en.php";
 
         self::$isLoaded = true;
 
-        $_SESSION['lang'] = $lang;
+        $_SESSION['lang'] = $locale;
     }
 
     public static function t(string $key): string
@@ -30,11 +30,14 @@ final class Lang
 
         foreach ($keys as $part)
         {
-            if (isset($data[$part]))
+            if (is_array($data) && isset($data[$part]))
                 $data = $data[$part];
             else
                 return $key;
         }
+
+        if (is_array($data)) return $key;
+
         return (string) $data;
     }
 

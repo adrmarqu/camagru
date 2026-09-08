@@ -127,4 +127,57 @@ body
 
 /* GLOBAL UTILITY CLASSES */
 .hidden { display: none !important; }
-/* Flex */
+/* Flex Utilities */
+.d-flex, .flex { display: flex !important; }
+.d-inline-flex, .inline-flex { display: inline-flex !important; }
+
+/* Flex Direction */
+.flex-row { flex-direction: row !important; }
+.flex-row-reverse { flex-direction: row-reverse !important; }
+.flex-col, .flex-column { flex-direction: column !important; }
+.flex-col-reverse, .flex-column-reverse { flex-direction: column-reverse !important; }
+
+/* Flex Wrap */
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+/* Align Items */
+.items-start, .align-items-start { align-items: flex-start !important; }
+.items-center, .align-items-center { align-items: center !important; }
+.items-end, .align-items-end { align-items: flex-end !important; }
+.items-stretch, .align-items-stretch { align-items: stretch !important; }
+.items-baseline, .align-items-baseline { align-items: baseline !important; }
+
+/* Justify Content */
+.justify-start, .justify-content-start { justify-content: flex-start !important; }
+.justify-center, .justify-content-center { justify-content: center !important; }
+.justify-end, .justify-content-end { justify-content: flex-end !important; }
+.justify-between, .justify-content-between { justify-content: space-between !important; }
+.justify-around, .justify-content-around { justify-content: space-around !important; }
+.justify-evenly, .justify-content-evenly { justify-content: space-evenly !important; }
+
+/* Align Self */
+.self-start { align-self: flex-start !important; }
+.self-center { align-self: center !important; }
+.self-end { align-self: flex-end !important; }
+
+/* Flex Grow / Shrink */
+.flex-1 { flex: 1 1 0% !important; }
+.flex-auto { flex: 1 1 auto !important; }
+.flex-grow-1, .grow { flex-grow: 1 !important; }
+.flex-grow-0, .grow-0 { flex-grow: 0 !important; }
+.flex-shrink-0, .shrink-0 { flex-shrink: 0 !important; }
+
+/* Gaps */
+.gap-xs { gap: var(--space-xs) !important; }
+.gap-sm { gap: var(--space-sm) !important; }
+.gap-md { gap: var(--space-md) !important; }
+.gap-lg { gap: var(--space-lg) !important; }
+.gap-xl { gap: var(--space-xl) !important; }
+
+/* Flex Center Shortcut */
+.flex-center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}

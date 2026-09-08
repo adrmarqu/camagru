@@ -6,7 +6,7 @@ class ForgotController extends BaseController
 
     public function init(array $data): void
     {
-        $this->email = Utils::trim($data['email']);
+        $this->email = Utils::trim($data['email'] ?? '');
     }
 
     public function validate(): void
@@ -16,22 +16,22 @@ class ForgotController extends BaseController
 
         if (Validate::empty($this->email))
             $errors['email'] = $void;
-        else if (!Validate::user($this->email))
+        else if (!Validate::email($this->email))
             $errors['email'] = Lang::t('form.error.email');
 
         if (!empty($errors))
             throw new FormException(422, null, $errors);
     }
 
-    public function execute(): void
+    public function execute(): ?string
     {
         // Generate token
         $token = TokenHelper::generateToken();
 
         // Get id, if email no exists id = 0
         $model = new UserModel();
-        $id = $model->getUserId($this->email);
-        if (empty($id)) $id = 0;
+        $userData = $model->getUserId($this->email);
+        $id = !empty($userData['id']) ? (int)$userData['id'] : 0;
 
         // Send email
         $ctrl = new SendController();
@@ -45,6 +45,8 @@ class ForgotController extends BaseController
             'action' => 'password',
             'token' => $token
         ];
+
+        return null;
     }
 
     public function __invoke()

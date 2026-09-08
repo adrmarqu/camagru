@@ -9,21 +9,21 @@
     
     <hr>
     
+    <div class="error-container" role="alert" aria-live="polite">
+        <span id="error-global-security" class="error-message"></span>
+    </div>
+
     <!-- Modo normal -->
     <div id="security-view" class="info-display">
         <div class="info-group">
             <span class="info-label"><?= Lang::t('form.label.pass') ?></span>
-            <span class="info-value">********</span>
+            <span class="info-value">************************</span>
         </div>
     </div>
     
     <!-- Modo edición -->
     <form id="form-security" class="ajax-form hidden" action="/api/form.php" method="POST" novalidate>
         <input type="hidden" name="action" value="password">
-
-        <div class="error-container" role="alert" aria-live="polite">
-            <span id="error-global" class="error-message"></span>
-        </div>
 
         <!-- Contraseña actual -->
         <div class="form-group">
@@ -80,7 +80,7 @@
         </div>
 
         <div class="form-actions">
-            <button id="btn-cancel-security" type="button" class="btn-cancel">
+            <button id="btn-cancel-security" type="reset" class="btn-cancel">
                 <?= Lang::t('btn.cancel') ?>
             </button>
             <button type="submit" id="btn-submit-security" class="btn-primary">

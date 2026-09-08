@@ -9,7 +9,7 @@
 - /signin
 - /forgot-password
 
-## Loggued type
+## Logged type
 
 - /photo-editor
 - /profile

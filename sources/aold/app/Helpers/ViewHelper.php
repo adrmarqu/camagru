@@ -9,4 +9,9 @@ final class ViewHelper
     {
         echo htmlspecialchars($var ?? '', ENT_QUOTES, 'UTF-8');
     }
+
+    public staic function url(string $page = "gallery"): void
+    {
+        echo '/' . Lang::getLang() . '/' . $page;
+    }
 }

@@ -1,11 +1,21 @@
 <?php
 
-class HttpController
+class HttpController extends BaseController
 {
-    private HttpException $e;
-
-    public function __construct(HttpException $e)
+    public function __invoke(HttpException $e)
     {
-        $this->e = $e;
+        $code = $e->getCode();
+        $data =
+        [
+            'code' => $code,
+            'titleErr' => Lang::t("$code.title"),
+            'message' => $e->getMessage(),
+            'link' => $e->getLink(),
+            'linkLabel' => $e->getBtnName(),
+            'css' => [ '/error.css' ]
+        ];
+
+        http_response_code($e->getCode());
+        $this->render('/others/error', $data);
     }
 }
