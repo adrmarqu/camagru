@@ -41,6 +41,24 @@
     color: var(--header-nav-active);
 }
 
+/* Header Avatar Thumbnail */
+.header-avatar
+{
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1.5px solid var(--border-color);
+    background-color: var(--bg-main);
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-item:hover .header-avatar
+{
+    border-color: var(--btn-primary);
+}
+
 /* Logo (PC & Shared) */
 #logo
 {

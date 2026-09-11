@@ -1,8 +1,16 @@
 <?php
 
 $folder = $_SESSION['user']['folder'] ?? null;
-$avatarUrl = "/uploads/$folder/avatar/avatar.webp";
-if (!file_exists($avatarUrl)) $avatarUrl = '/assets/default.webp';
+$defaultFolder = '/assets/default.webp';
+
+if (empty($folder)) $avatarUrl = $defaultFolder;
+else
+{
+    $avatarFile = PUBLIC_PATH . "/uploads/$folder/avatar/avatar.webp";
+    if (file_exists($avatarFile)) 
+        $avatarUrl = "/uploads/$folder/avatar/avatar.webp";
+    else $avatarUrl = $defaultFolder;
+}
 
 ?>
 
@@ -27,6 +35,8 @@ if (!file_exists($avatarUrl)) $avatarUrl = '/assets/default.webp';
 
             </form>
         </div>
+        <span id="error-avatar" class="field-error" aria-live="polite"></span>
+        <span id="success-avatar" class="field-success" aria-live="polite"></span>
     </div>
 
     <!-- Stats -->

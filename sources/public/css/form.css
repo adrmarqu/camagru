@@ -139,6 +139,21 @@
     display: none;
 }
 
+/* Field Success Text */
+.field-success {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: #16a34a;
+    margin-top: var(--space-xs);
+    min-height: 1.25rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.field-success:empty {
+    display: none;
+}
+
 /* Password Toggle Wrapper */
 .password-wrapper {
     position: relative;

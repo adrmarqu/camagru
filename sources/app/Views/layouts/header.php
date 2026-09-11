@@ -74,7 +74,10 @@
     <a class="nav-item" href="<?= $editorUrl ?>"><?= $editor ?></a>
     
     <div>
-        <button class="nav-item"><?= Auth::username() ?></button>
+        <button class="nav-item">
+            <img class="header-avatar" src="<?= Auth::avatar() ?>" alt="Avatar" width="24" height="24">
+            <span><?= Auth::username() ?></span>
+        </button>
         <div id="user-lang-drop" class="dropdown">
             <a class="nav-item" href="<?= $profileUrl ?>"><?= $profile ?></a>
             <a class="nav-item" href="<?= $favUrl ?>"><?= $fav ?></a>
@@ -94,7 +97,10 @@
     <a class="nav-item" href="<?= $galleryUrl ?>"><?= $gallery ?></a>
     <a class="nav-item" href="<?= $editorUrl ?>"><?= $editor ?></a>
     
-    <button class="nav-item"><?= Auth::username() ?></button>
+    <button class="nav-item">
+        <img class="header-avatar" src="<?= Auth::avatar() ?>" alt="Avatar" width="24" height="24">
+        <span><?= Auth::username() ?></span>
+    </button>
     <div id="user-drop" class="dropdown">
         <a class="nav-item" href="<?= $profileUrl ?>"><?= $profile ?></a>
         <a class="nav-item" href="<?= $favUrl ?>"><?= $fav ?></a>

@@ -226,14 +226,16 @@ $lang =
         'email' => 'Se ha enviado un correo electrónico para confirmar el nuevo email.',
         'usermail' => 'Usuario actualizado con exito. Correo de confirmación enviado a tu nuevo correo.',
         'pass' => 'La contraseña se ha actualizado con exito.',
-        'noti' => 'Preferencias actualizadas con exito.'
+        'noti' => 'Preferencias actualizadas con exito.',
+        'avatar' => 'Avatar actualizado con éxito.'
     ],
     // Bad request
     '400' =>
     [
         'title' => 'Petición incorrecta',
         'message' => 'La solicitud no pudo ser procesada o es inválida.',
-        'corrupt_url' => 'Camagru no puede leer esa URL (URL corrupta)'
+        'corrupt_url' => 'Camagru no puede leer esa URL (URL corrupta)',
+        'not_image' => 'El archivo no es una imagen válida.'
     ],
     // Not authenticated
     '401' =>
@@ -302,7 +304,11 @@ $lang =
         'change_email' => 'No se ha podido actualizar el email.',
         'type' => 'Ese tipo de token no existe.',
         'update_pass' => 'No se ha podido actualizar la contraseña',
-        'delete' => 'No se ha podido eliminar la cuenta.'
+        'delete' => 'No se ha podido eliminar la cuenta.',
+        'no_folder' => 'No existe un directorio para guardar las imagenes.',
+        'folder' => 'Fallo al crear un directorio.',
+        'format' => 'Formato de imagen no soportado.',
+        'save_image' => 'Error al guardar la imagen.'
     ],
 
     'footer' =>

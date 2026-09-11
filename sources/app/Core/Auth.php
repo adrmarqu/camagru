@@ -26,6 +26,21 @@ final class Auth
         return $_SESSION['user']['id'] ?? null;
     }
 
+    /* Return user avatar url */
+    public static function avatar(): string
+    {
+        $folder = $_SESSION['user']['folder'] ?? null;
+        $default = '/assets/default.webp';
+        if (empty($folder)) return $default;
+
+        $avatarFile = PUBLIC_PATH . "/uploads/$folder/avatar/avatar.webp";
+        if (file_exists($avatarFile))
+        {
+            return "/uploads/$folder/avatar/avatar.webp?v=" . filemtime($avatarFile);
+        }
+        return $default;
+    }
+
     /* Set session data */
     public static function login(int $id, string $user, string $email, string $folder): void
     {

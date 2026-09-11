@@ -27,6 +27,12 @@ const spinnerDel = document.getElementById("spinner-del");
 const delPassword = document.getElementById("del-password");
 const errorGlobalDel = document.getElementById("error-global-del");
 const errorDelPassword = document.getElementById("error-del-password");
+/* Avatar */
+const avatar = document.getElementById("avatar-preview");
+const avatarInput = document.getElementById("avatar-input");
+const formAvatar = document.getElementById("form-avatar");
+const errorAvatar = document.getElementById("error-avatar");
+const successAvatar = document.getElementById("success-avatar");
 
 const toggleInfoEdition = () =>
 {
@@ -116,6 +122,41 @@ const deleteAccount = async (e) =>
     }
 };
 
+const changeAvatar = async () =>
+{
+    const file = avatarInput.files[0];
+    if (!file) return ;
+
+    if (errorAvatar) errorAvatar.textContent = "";
+    if (successAvatar) successAvatar.textContent = "";
+
+    const formData = new FormData(formAvatar);
+    try
+    {
+        const response = await fetch("/api/avatar.php", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.src)
+        {
+            avatar.src = data.src;
+            document.querySelectorAll(".header-avatar").forEach(img => img.src = data.src);
+            if (successAvatar) successAvatar.textContent = data.message || "Avatar actualizado con éxito.";
+        }
+        else
+        {
+            if (errorAvatar) errorAvatar.textContent = data.message ?? "Error";
+        }
+    }
+    catch (error)
+    {
+        if (errorAvatar) errorAvatar.textContent = error.message || error || "Error";
+    }
+};
+
 btnInfo.addEventListener("click", toggleInfoEdition);
 btnSec.addEventListener("click", toggleSecEdition);
 cancelInfo.addEventListener("click", toggleInfoEdition);
@@ -123,6 +164,7 @@ cancelSec.addEventListener("click", toggleSecEdition);
 btnDel.addEventListener("click", openDialog);
 cancelDel.addEventListener("click", closeDialog);
 formDel.addEventListener("submit", deleteAccount);
+avatarInput.addEventListener("change", changeAvatar);
 
 /* On info update success: update DOM and exit edit mode */
 if (formInfo)
