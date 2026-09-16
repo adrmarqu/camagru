@@ -70,6 +70,7 @@ class ImageController
         imagedestroy($image);
     }
 
+    /* From profile */
     public function changeAvatar(string $tmpRoute): string
     {
         $image = $this->convertImage($tmpRoute);
@@ -85,8 +86,9 @@ class ImageController
         return "/uploads/$folder/avatar/avatar.webp?v=" . time();
     }
 
+    /* From photo-editor */
     public function upload(): void
     {
-
+        
     }
 }

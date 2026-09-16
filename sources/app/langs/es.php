@@ -178,6 +178,20 @@ $lang =
         ]
     ],
 
+    'editor' =>
+    [
+        'size' => 'Tamaño',
+        'rotate' => 'Rotación',
+        'sticker' =>
+        [
+            'fog' => 'Niebla',
+            'fire' => 'Fuego',
+            'bright' => 'Brillitos',
+            'flowers' => 'Flores',
+            'glasses' => 'Gafas'   
+        ]
+    ],
+
     'btn' =>
     [
         'send' => 'Enviar',
@@ -188,7 +202,11 @@ $lang =
 
         'gallery' => 'Volver a la Galeria',
         'login' => 'Iniciar sesión',
-        'profile' => 'Volver a tu perfil'
+        'profile' => 'Volver a tu perfil',
+
+        'sticker' => 'Eliminar sticker',
+        'download' => 'Descargar',
+        'thumbnail' => 'Eliminar'
     ],
 
     'email' =>

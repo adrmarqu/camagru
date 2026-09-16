@@ -13,4 +13,11 @@ final class ViewHelper
     {
         return '/' . Lang::getLang() . '/' . $page;
     }
+
+    public static function name(?string $name): string
+    {
+        if (!$name) return '';
+        $name = pathinfo($name, PATHINFO_FILENAME);
+        return Lang::t("editor.sticker.$name");
+    }
 }
