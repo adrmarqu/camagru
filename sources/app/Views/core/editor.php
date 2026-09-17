@@ -26,7 +26,7 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
             <ul>
                 <?php if (!empty($stickers)): foreach($stickers as $st): ?>
                 <li>
-                    <img src="<?php echo $stickerFolder . basename($st); ?>" alt="Sticker" class="preview sticker" data-sticker="<?= ViewHelper::name(basename($st)) ?>">
+                    <img src="<?php echo $stickerFolder . basename($st) . '?v=' . filemtime($st); ?>" alt="Sticker" class="preview sticker" data-sticker="<?= ViewHelper::name(basename($st)) ?>">
                 </li>
                 <?php endforeach; endif; ?>
             </ul>
@@ -35,7 +35,7 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
             <h3 id="mod-title"></h3>
             <div>
                 <label for="size"><?= Lang::t('editor.size') ?></label>
-                <input id="mod-size" type="range" min="0.5" max="5" step="0.1" value="1">
+                <input id="mod-size" type="range" min="0.3" max="2.5" step="0.05" value="1">
             </div>
             <div>
                 <label for="rotate"><?= Lang::t('editor.rotate') ?></label>
@@ -45,21 +45,20 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
         </div>
     </section>
     <section>
-        <!-- Webcam -->
-        <div>
+        <!-- Webcam & Sticker Overlay Stage -->
+        <div class="camera-stage">
             <video id="webcam-video" autoplay playsinline muted></video>
-            <canvas id="stickers-canvas" class="stickers-canvas"></canvas>
+            <div id="sticker-selected"></div>
+            <canvas id="stickers-canvas" class="stickers-canvas" hidden></canvas>
             <canvas id="photo-canvas" hidden></canvas>
         </div>
-        <!-- Sticker selected -->
-        <div id="sticker-selected"></div>
         <!-- Buttons -->
         <div>
             <button id="btn-del-all">
                 <img src="/assets/trash.webp" alt="Trash" class="preview">
             </button>
-            <button>Captura</button>
-            <button>
+            <button id="btn-capture">Captura</button>
+            <button id="btn-upload">
                 <img src="/assets/upload.webp" alt="Upload" class="preview">
             </button>
         </div>

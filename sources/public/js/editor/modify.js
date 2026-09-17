@@ -9,6 +9,9 @@ export default class Modifier
 
     static clean()
     {
+        if (Modifier.#sticker)
+            Modifier.#sticker.select(false);
+
         Modifier.#sticker = null;
 
         title.textContent = "";
@@ -19,7 +22,13 @@ export default class Modifier
 
     static set(sticker)
     {
+        if (!sticker) return ;
+
+        if (Modifier.#sticker && Modifier.#sticker !== sticker)
+            Modifier.#sticker.select(false);
+
         Modifier.#sticker = sticker;
+        Modifier.#sticker.select(true);
 
         title.textContent = sticker.getName();
         size.value = sticker.getSize();
@@ -27,26 +36,32 @@ export default class Modifier
         del.disabled = false;
     }
 
-    static uploadSize()
+    static updateSize()
     {
         if (!Modifier.#sticker) return ;
-        if (size.value < 0.5 || size.value > 5) return ;
-        Modifier.#sticker.setSize(size.value);
+
+        const val = parseFloat(size.value);
+
+        if (val < 0.3 || val > 2.5) return ;
+        Modifier.#sticker.setSize(val);
     }
 
-    static uploadRotation()
+    static updateRotation()
     {
         if (!Modifier.#sticker) return ;
-        if (size.value < -180 || size.value > 180) return ;
-        Modifier.#sticker.setRotation(rotate.value);
+
+        const rot = Number(rotate.value);
+
+        if (rot < -180 || rot > 180) return ;
+        Modifier.#sticker.setRotation(rot);
     }
 
-    static uploadX()
+    static updateX()
     {
         if (!Modifier.#sticker) return ;
     }
 
-    static uploadY()
+    static updateY()
     {
         if (!Modifier.#sticker) return ;
     }
@@ -54,15 +69,21 @@ export default class Modifier
     static delete(list)
     {
         if (!Modifier.#sticker) return ;
-
+       
         const index = list.indexOf(Modifier.#sticker);
         if (index !== -1)
-            list.splice(Modifier.#sticker);
+            list.splice(index, 1);
 
         Modifier.#sticker.remove();
         Modifier.clean();
     }
+
+    static isModifierElement(element)
+    {
+        const container = del?.parentElement;
+        return !!(container && container.contains(element));
+    }
 }
 
-size.addEventListener("change", Modifier.uploadSize);
-rotate.addEventListener("change", Modifier.uploadRotation);
+size.addEventListener("input", Modifier.updateSize);
+rotate.addEventListener("input", Modifier.updateRotation);
