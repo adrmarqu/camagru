@@ -15,78 +15,98 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
 
 ?>
 
-<main>
-    <!-- Stickers -->
-    <section>
-        <div>
-            <!-- Stickers list -->
-            <header>
-                <span id="nS">0</span> / <span id="maxS">10</span>
-            </header>
-            <ul>
-                <?php if (!empty($stickers)): foreach($stickers as $st): ?>
+<div class="editor-container">
+    <div class="editor-main-col">
+        <!-- Left Panel: Stickers & Modifier -->
+        <section class="editor-panel card stickers-panel">
+            <div class="stickers-box">
+                <!-- Stickers list -->
+                <header class="panel-header">
+                    <h3><?= Lang::t('header.editor') ?? 'Stickers' ?></h3>
+                    <div class="sticker-counter">
+                        <span id="nS">0</span> / <span id="maxS">10</span>
+                    </div>
+                </header>
+                <ul class="stickers-grid">
+                    <?php if (!empty($stickers)): foreach($stickers as $st): ?>
+                    <li>
+                        <img src="<?php echo $stickerFolder . basename($st) . '?v=' . filemtime($st); ?>" alt="Sticker" class="preview sticker" data-sticker="<?= ViewHelper::name(basename($st)) ?>">
+                    </li>
+                    <?php endforeach; endif; ?>
+                </ul>
+            </div>
+
+            <hr>
+
+            <!-- Modifier Controls -->
+            <div class="modifier-box">
+                <h4 id="mod-title" class="modifier-title"></h4>
+                <div class="modifier-control">
+                    <div class="control-header">
+                        <label for="mod-size"><?= Lang::t('editor.size') ?></label>
+                    </div>
+                    <input id="mod-size" type="range" min="0.3" max="2.5" step="0.05" value="1">
+                </div>
+                <div class="modifier-control">
+                    <div class="control-header">
+                        <label for="mod-rot"><?= Lang::t('editor.rotate') ?></label>
+                    </div>
+                    <input id="mod-rot" type="range" min="-180" max="180" step="1" value="0">
+                </div>
+                <button id="mod-del" class="btn-danger btn-sm" disabled><?= Lang::t('btn.sticker') ?></button>
+            </div>
+        </section>
+
+        <!-- Center Panel: Camera Stage & Main Actions -->
+        <section class="editor-panel card camera-panel">
+            <!-- Webcam & Sticker Overlay Stage -->
+            <div class="camera-stage">
+                <video id="webcam-video" autoplay playsinline muted></video>
+                <div id="sticker-selected"></div>
+                <canvas id="stickers-canvas" class="stickers-canvas" hidden></canvas>
+                <canvas id="photo-canvas" hidden></canvas>
+            </div>
+
+            <!-- Status Message / Feedback -->
+            <div id="editor-msg" class="editor-msg hidden"></div>
+
+            <!-- Buttons -->
+            <div class="camera-actions">
+                <button id="btn-del-all" class="btn-action btn-trash" title="Limpiar todo" disabled>
+                    <img src="/assets/trash.webp" alt="Trash" class="action-icon">
+                </button>
+                <button id="btn-capture" class="btn-capture" disabled>
+                    <span><?= Lang::t('btn.capture') ?? 'Captura' ?></span>
+                </button>
+                <button id="btn-upload" class="btn-action btn-upload-icon" title="Subir foto" disabled>
+                    <img src="/assets/upload.webp" alt="Upload" class="action-icon">
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Right Panel: Thumbnails Side List -->
+    <aside class="editor-aside-col card thumbnails-panel">
+        <header class="panel-header">
+            <h3><?= Lang::t('header.private') ?? 'Fotos' ?></h3>
+        </header>
+        <section class="thumbnails-scroll">
+            <ul id="thumbnail-list" class="thumbnails-grid">
+                <?php if (!empty($thumbnails)): foreach($thumbnails as $tn): ?>
                 <li>
-                    <img src="<?php echo $stickerFolder . basename($st) . '?v=' . filemtime($st); ?>" alt="Sticker" class="preview sticker" data-sticker="<?= ViewHelper::name(basename($st)) ?>">
+                    <img src="<?php echo $previewFolder . basename($tn); ?>" alt="Thumbnail" class="preview">
                 </li>
                 <?php endforeach; endif; ?>
             </ul>
-        </div>
-        <div>
-            <h3 id="mod-title"></h3>
-            <div>
-                <label for="size"><?= Lang::t('editor.size') ?></label>
-                <input id="mod-size" type="range" min="0.3" max="2.5" step="0.05" value="1">
+        </section>
+        <dialog id="preview-dialog" class="editor-dialog">
+            <div class="dialog-content">
+                <img src="" alt="Preview" id="dialog-img">
             </div>
-            <div>
-                <label for="rotate"><?= Lang::t('editor.rotate') ?></label>
-                <input id="mod-rot" type="range" min="-180" max="180" step="1" value="0">
-            </div>
-            <button id="mod-del"><?= Lang::t('btn.sticker') ?></button>
-        </div>
-    </section>
-    <section>
-        <!-- Webcam & Sticker Overlay Stage -->
-        <div class="camera-stage">
-            <video id="webcam-video" autoplay playsinline muted></video>
-            <div id="sticker-selected"></div>
-            <canvas id="stickers-canvas" class="stickers-canvas" hidden></canvas>
-            <canvas id="photo-canvas" hidden></canvas>
-        </div>
-        <!-- Status Message / Feedback -->
-        <div id="editor-msg" class="editor-msg hidden"></div>
-
-        <!-- Buttons -->
-        <div>
-            <button id="btn-del-all">
-                <img src="/assets/trash.webp" alt="Trash" class="preview">
-            </button>
-            <button id="btn-capture">Captura</button>
-            <button id="btn-upload">
-                <img src="/assets/upload.webp" alt="Upload" class="preview">
-            </button>
-        </div>
-        
-    </section>
-</main>
-<aside>
-    <section>
-        <!-- Thumbnails -->
-        <ul id="thumbnail-list">
-            <?php if (!empty($thumbnails)): foreach($thumbnails as $tn): ?>
-            <li>
-                <img src="<?php echo $previewFolder . basename($tn); ?>" alt="Thumbnail" class="preview">
-            </li>
-            <?php endforeach; endif; ?>
-        </ul>
-    </section>
-    <dialog>
-        <!-- Preview -->
-        <div>
-            <img src="" alt="Preview">
-        </div>
-        <footer>
-            <button><?= Lang::t('btn.download') ?></button>
-            <button><?= Lang::t('btn.thumbnail') ?></button>
-        </footer>
-    </dialog>
-</aside>
+            <footer class="dialog-footer">
+                <button class="btn-secondary" id="dialog-download"><?= Lang::t('btn.download') ?></button>
+                <button class="btn-cancel" id="dialog-close"><?= Lang::t('btn.thumbnail') ?></button>
+            </footer>
+        </dialog>
+    </aside>
+</div>

@@ -208,7 +208,8 @@ $lang =
 
         'sticker' => 'Eliminar sticker',
         'download' => 'Descargar',
-        'thumbnail' => 'Eliminar'
+        'thumbnail' => 'Eliminar',
+        'capture' => 'Hacer foto'
     ],
 
     'email' =>

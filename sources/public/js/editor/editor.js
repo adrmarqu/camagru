@@ -22,6 +22,38 @@ const upload = document.getElementById("btn-upload");
 /* Canvas */
 const canvas = document.getElementById("photo-canvas");
 
+/* Translations */
+const currentLang = document.documentElement.lang || 'en';
+
+const i18n = {
+    es: {
+        noStickers: "Debes seleccionar al menos un sticker antes de guardar.",
+        tooLarge: "La imagen es demasiado grande para el servidor.",
+        invalidResponse: "Respuesta inválida del servidor.",
+        processError: "Error al procesar la imagen.",
+        saveSuccess: "¡Foto guardada con éxito!",
+        uploadError: "Error al subir la imagen."
+    },
+    ca: {
+        noStickers: "Has de seleccionar com a mínim un adhesiu abans de desar.",
+        tooLarge: "La imatge és massa gran per al servidor.",
+        invalidResponse: "Resposta no vàlida del servidor.",
+        processError: "Error en processar la imatge.",
+        saveSuccess: "Foto desada amb èxit!",
+        uploadError: "Error en pujar la imatge."
+    },
+    en: {
+        noStickers: "You must select at least one sticker before saving.",
+        tooLarge: "The image is too large for the server.",
+        invalidResponse: "Invalid server response.",
+        processError: "Error processing the image.",
+        saveSuccess: "Photo saved successfully!",
+        uploadError: "Error uploading the image."
+    }
+};
+
+const t = (key) => (i18n[currentLang] || i18n.en)[key] || key;
+
 /* Feedback message */
 const editorMsg = document.getElementById("editor-msg");
 let msgTimeout = null;
@@ -130,7 +162,7 @@ const sendPhotoBackend = async (image) =>
 
     if (stickers.length === 0)
     {
-        showMessage("Debes seleccionar al menos un sticker antes de guardar.", true);
+        showMessage(t('noStickers'), true);
         return ;
     }
 
@@ -170,21 +202,21 @@ const sendPhotoBackend = async (image) =>
         catch (_)
         {
             if (response.status === 413)
-                throw new Error("La imagen es demasiado grande para el servidor.");
-            throw new Error("Respuesta inválida del servidor.");
+                throw new Error(t('tooLarge'));
+            throw new Error(t('invalidResponse'));
         }
 
         if (!response.ok || !data.success)
-            throw new Error(data.message || "Error al procesar la imagen.");
+            throw new Error(data.message || t('processError'));
 
         Thumbnail.add(data.src);
         deleteStickers();
-        showMessage(data.message || "¡Foto guardada con éxito!", false);
+        showMessage(data.message || t('saveSuccess'), false);
     }
     catch (error)
     {
         console.error("Error upload:", error.message || error);
-        showMessage(error.message || "Error al subir la imagen.", true);
+        showMessage(error.message || t('uploadError'), true);
     }
     finally
     {
