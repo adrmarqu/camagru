@@ -3,6 +3,7 @@
 define('ROOT_PATH', dirname(dirname(__DIR__)));
 define('APP_PATH', ROOT_PATH . '/app');
 define('PUBLIC_PATH', ROOT_PATH . '/public');
+define('STICKER_PATH', PUBLIC_PATH . '/assets/stickers');
 
 // APP
 define('LANG_PATH', APP_PATH . '/langs');

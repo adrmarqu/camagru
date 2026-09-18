@@ -184,11 +184,13 @@ $lang =
         'rotate' => 'Rotación',
         'sticker' =>
         [
-            'fog' => 'Niebla',
+            'cat' => 'Orejas de gato',
             'fire' => 'Fuego',
-            'bright' => 'Brillitos',
             'flowers' => 'Flores',
-            'glasses' => 'Gafas'   
+            'fog' => 'Niebla',
+            'glasses' => 'Gafas de sol',
+            'hat' => 'Sombrero de copa',
+            'moustache' => 'Bigote'
         ]
     ],
 
@@ -245,7 +247,8 @@ $lang =
         'usermail' => 'Usuario actualizado con exito. Correo de confirmación enviado a tu nuevo correo.',
         'pass' => 'La contraseña se ha actualizado con exito.',
         'noti' => 'Preferencias actualizadas con exito.',
-        'avatar' => 'Avatar actualizado con éxito.'
+        'avatar' => 'Avatar actualizado con éxito.',
+        'image_uploaded' => 'Foto subida con exito.'
     ],
     // Bad request
     '400' =>
@@ -253,7 +256,8 @@ $lang =
         'title' => 'Petición incorrecta',
         'message' => 'La solicitud no pudo ser procesada o es inválida.',
         'corrupt_url' => 'Camagru no puede leer esa URL (URL corrupta)',
-        'not_image' => 'El archivo no es una imagen válida.'
+        'not_image' => 'El archivo no es una imagen válida.',
+        'data' => 'Faltan datos de la imagen o stickers.'
     ],
     // Not authenticated
     '401' =>

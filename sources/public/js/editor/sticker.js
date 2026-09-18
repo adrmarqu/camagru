@@ -123,6 +123,8 @@ export default class Sticker
             y: this.#y,
             size: this.#size,
             rotation: this.#rotation,
+            width: this.#image.offsetWidth || 120,
+            height: this.#image.offsetHeight || 120
         };
     }
 }

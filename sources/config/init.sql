@@ -52,10 +52,12 @@ CREATE INDEX idx_tokens_expires_at ON tokens(expires_at);
 CREATE TABLE photos
 (
     id          INT UNSIGNED        AUTO_INCREMENT PRIMARY KEY,
-    filename    VARCHAR(100)        UNIQUE NOT NULL,
+    filename    VARCHAR(100)        NOT NULL,
     created_at  TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id     INT UNSIGNED        NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_photo (user_id, filename)
 );
 
 /* Galería pública: ORDER BY created_at DESC */

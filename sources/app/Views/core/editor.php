@@ -52,6 +52,9 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
             <canvas id="stickers-canvas" class="stickers-canvas" hidden></canvas>
             <canvas id="photo-canvas" hidden></canvas>
         </div>
+        <!-- Status Message / Feedback -->
+        <div id="editor-msg" class="editor-msg hidden"></div>
+
         <!-- Buttons -->
         <div>
             <button id="btn-del-all">
@@ -68,7 +71,7 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
 <aside>
     <section>
         <!-- Thumbnails -->
-        <ul>
+        <ul id="thumbnail-list">
             <?php if (!empty($thumbnails)): foreach($thumbnails as $tn): ?>
             <li>
                 <img src="<?php echo $previewFolder . basename($tn); ?>" alt="Thumbnail" class="preview">

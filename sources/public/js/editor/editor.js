@@ -1,5 +1,6 @@
 import Modifier from './modify.js';
 import Sticker from './sticker.js';
+import Thumbnail from './thumbnail.js';
 import Webcam from './webcam.js';
 
 /* Counter */
@@ -17,6 +18,29 @@ const delSticker = document.getElementById("mod-del");
 const delAll = document.getElementById("btn-del-all");
 const capture = document.getElementById("btn-capture");
 const upload = document.getElementById("btn-upload");
+
+/* Canvas */
+const canvas = document.getElementById("photo-canvas");
+
+/* Feedback message */
+const editorMsg = document.getElementById("editor-msg");
+let msgTimeout = null;
+
+const showMessage = (text, isError = false) =>
+{
+    if (!editorMsg) return ;
+
+    if (msgTimeout) clearTimeout(msgTimeout);
+
+    editorMsg.textContent = text;
+    editorMsg.className = `editor-msg ${isError ? 'error' : 'success'}`;
+
+    msgTimeout = setTimeout(() =>
+    {
+        editorMsg.textContent = "";
+        editorMsg.className = "editor-msg hidden";
+    }, 4000);
+};
 
 let stickers = [];
 
@@ -65,6 +89,109 @@ const deleteStickers = () =>
     setButtons();
 }
 
+const takePhoto = () =>
+{
+    const image = Webcam.capture(canvas);
+    if (!image) return ;
+
+    sendPhotoBackend(image);
+};
+
+const uploadPhoto = () =>
+{
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/png, image/jpeg, image/jpg, image/webp, image/gif, image/avif, image/bmp";
+
+    input.addEventListener("change", () =>
+    {
+        const file = input.files?.[0];
+        if (!file) return ;
+
+        if (!file.type.startsWith("image/")) return ;
+
+        const reader = new FileReader();
+        reader.onload = (e) =>
+        {
+            const image = e.target?.result;
+            if (!image) return ;
+
+            sendPhotoBackend(image);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    input.click();
+};
+
+const sendPhotoBackend = async (image) =>
+{
+    if (!image) return ;
+
+    if (stickers.length === 0)
+    {
+        showMessage("Debes seleccionar al menos un sticker antes de guardar.", true);
+        return ;
+    }
+
+    capture.disabled = true;
+    upload.disabled = true;
+
+    try
+    {
+        const payload =
+        {
+            image: image,
+            stickers: stickers.map(st => st.toJson()),
+            stage:
+            {
+                width: stickerDest.clientWidth,
+                height: stickerDest.clientHeight
+            }
+        };
+
+        const response = await fetch("/api/upload.php",
+        {
+            method: 'POST',
+            headers:
+            {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        let data;
+        const text = await response.text();
+        try
+        {
+            data = JSON.parse(text);
+        }
+        catch (_)
+        {
+            if (response.status === 413)
+                throw new Error("La imagen es demasiado grande para el servidor.");
+            throw new Error("Respuesta inválida del servidor.");
+        }
+
+        if (!response.ok || !data.success)
+            throw new Error(data.message || "Error al procesar la imagen.");
+
+        Thumbnail.add(data.src);
+        deleteStickers();
+        showMessage(data.message || "¡Foto guardada con éxito!", false);
+    }
+    catch (error)
+    {
+        console.error("Error upload:", error.message || error);
+        showMessage(error.message || "Error al subir la imagen.", true);
+    }
+    finally
+    {
+        setButtons();
+    }
+};
+
 setButtons();
 
 stickerList.forEach(st => st.addEventListener("click", addSticker));
@@ -80,6 +207,8 @@ document.addEventListener("pointerdown", (e) => {
     Modifier.clean();
 });
 
+capture.addEventListener("click", takePhoto);
+upload.addEventListener("click", uploadPhoto);
 
 
 /* 
