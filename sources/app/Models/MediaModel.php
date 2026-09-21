@@ -9,10 +9,10 @@ class MediaModel extends BaseModel
         return $this->query($sql, $params) === 1;
     }
 
-    public function removeImage(int $id): bool
+    public function removeImage(int $userId, string $filename): bool
     {
-
+        $sql = "DELETE FROM photos WHERE user_id = :userid AND filename = :name";
+        $params = ['userid' => $userId, 'name' => $filename];
+        return $this->query($sql, $params) > 0;
     }
-
-
 }

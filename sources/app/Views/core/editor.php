@@ -93,19 +93,21 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
         <section class="thumbnails-scroll">
             <ul id="thumbnail-list" class="thumbnails-grid">
                 <?php if (!empty($thumbnails)): foreach($thumbnails as $tn): ?>
-                <li>
+                <li class="thumbnail-item">
                     <img src="<?php echo $previewFolder . basename($tn); ?>" alt="Thumbnail" class="preview">
+                    <button type="button" class="thumbnail-del-btn" title="Eliminar" aria-label="Eliminar">&times;</button>
                 </li>
                 <?php endforeach; endif; ?>
             </ul>
         </section>
         <dialog id="preview-dialog" class="editor-dialog">
+            <button type="button" class="dialog-close-btn" id="dialog-close" title="Cerrar" aria-label="Cerrar">&times;</button>
             <div class="dialog-content">
                 <img src="" alt="Preview" id="dialog-img">
             </div>
             <footer class="dialog-footer">
-                <button class="btn-secondary" id="dialog-download"><?= Lang::t('btn.download') ?></button>
-                <button class="btn-cancel" id="dialog-close"><?= Lang::t('btn.thumbnail') ?></button>
+                <button type="button" class="btn-secondary" id="dialog-download"><?= Lang::t('btn.download') ?? 'Descargar' ?></button>
+                <button type="button" class="btn-danger" id="dialog-delete"><?= Lang::t('btn.thumbnail') ?? 'Eliminar' ?></button>
             </footer>
         </dialog>
     </aside>

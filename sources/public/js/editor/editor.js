@@ -32,7 +32,9 @@ const i18n = {
         invalidResponse: "Respuesta inválida del servidor.",
         processError: "Error al procesar la imagen.",
         saveSuccess: "¡Foto guardada con éxito!",
-        uploadError: "Error al subir la imagen."
+        uploadError: "Error al subir la imagen.",
+        deleteSuccess: "Foto eliminada con éxito.",
+        deleteError: "Error al eliminar la foto."
     },
     ca: {
         noStickers: "Has de seleccionar com a mínim un adhesiu abans de desar.",
@@ -40,7 +42,9 @@ const i18n = {
         invalidResponse: "Resposta no vàlida del servidor.",
         processError: "Error en processar la imatge.",
         saveSuccess: "Foto desada amb èxit!",
-        uploadError: "Error en pujar la imatge."
+        uploadError: "Error en pujar la imatge.",
+        deleteSuccess: "Foto eliminada amb èxit.",
+        deleteError: "Error en eliminar la foto."
     },
     en: {
         noStickers: "You must select at least one sticker before saving.",
@@ -48,7 +52,9 @@ const i18n = {
         invalidResponse: "Invalid server response.",
         processError: "Error processing the image.",
         saveSuccess: "Photo saved successfully!",
-        uploadError: "Error uploading the image."
+        uploadError: "Error uploading the image.",
+        deleteSuccess: "Photo deleted successfully.",
+        deleteError: "Error deleting the photo."
     }
 };
 
@@ -241,6 +247,8 @@ document.addEventListener("pointerdown", (e) => {
 
 capture.addEventListener("click", takePhoto);
 upload.addEventListener("click", uploadPhoto);
+
+Thumbnail.init({ showMessage, t });
 
 
 /* 

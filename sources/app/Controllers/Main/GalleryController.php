@@ -1,13 +1,14 @@
 <?php
 
-class EditorController extends BaseController
+class GalleryController extends BaseController
 {
     public function __invoke()
     {
-        $data =
-        [
-        ];
+        $page = $_SESSION['page'] ?? 'gallery';
 
-        $this->render('/core/gallery', $data);
+        if ($page === 'private-gallery') $page = 'private';
+        echo $page;
+        
+        $this->render("/core/$page");
     }
 }

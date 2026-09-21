@@ -222,4 +222,38 @@ class ImageController
         
         return "/uploads/$folder/media/$filename";
     }
+
+    /* Delete photo from editor / private gallery */
+    public function deletePhoto(string $srcOrFilename): void
+    {
+        $filename = basename(parse_url($srcOrFilename, PHP_URL_PATH));
+        if (empty($filename))
+            throw new FormException(400, Lang::t('400.data'));
+
+        $folder = $this->folder;
+        $userId = (int)$_SESSION['user']['id'];
+        $path = PUBLIC_PATH . "/uploads/$folder/media/$filename";
+
+        $pdo = Database::getConnection();
+        try
+        {
+            $pdo->beginTransaction();
+
+            $media = new MediaModel();
+            $deleted = $media->removeImage($userId, $filename);
+
+            if (!$deleted)
+                throw new FormException(404, Lang::t('404.no_file'));
+
+            if (file_exists($path))
+                @unlink($path);
+
+            $pdo->commit();
+        }
+        catch (Throwable $e)
+        {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            throw $e;
+        }
+    }
 }

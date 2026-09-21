@@ -249,7 +249,8 @@ $lang =
         'pass' => 'La contraseña se ha actualizado con exito.',
         'noti' => 'Preferencias actualizadas con exito.',
         'avatar' => 'Avatar actualizado con éxito.',
-        'image_uploaded' => 'Foto subida con exito.'
+        'image_uploaded' => 'Foto subida con exito.',
+        'image_deleted' => 'Foto eliminada con éxito.'
     ],
     // Bad request
     '400' =>

@@ -5,7 +5,7 @@ return
     // App core
     'gallery' =>
     [
-        'controller' => 'HomeController', 
+        'controller' => 'GalleryController', 
         'access' => 'public'
     ],
     
@@ -43,13 +43,13 @@ return
     
     'private-gallery' => 
     [
-        'controller' => 'PrivateController', 
+        'controller' => 'GalleryController', 
         'access' => 'private'
     ],
 
     'favorites' => 
     [
-        'controller' => 'FavoriteController', 
+        'controller' => 'GalleryController', 
         'access' => 'private'
     ],
     

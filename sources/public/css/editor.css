@@ -477,8 +477,10 @@ input[type="range"]::-moz-range-thumb
     padding: var(--space-xs) 0;
 }
 
-.thumbnails-grid li
+.thumbnails-grid li,
+.thumbnail-item
 {
+    position: relative;
     width: 100%;
 }
 
@@ -488,6 +490,59 @@ input[type="range"]::-moz-range-thumb
     background-color: var(--bg-main);
     object-fit: cover;
     padding: 0;
+    width: 100%;
+    display: block;
+}
+
+/* Thumbnail Delete 'X' Button */
+.thumbnail-del-btn
+{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-full);
+    background-color: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 15px;
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.85;
+    transition: background-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+    padding: 0;
+}
+
+/* Expanded touch target for mobile */
+.thumbnail-del-btn::before
+{
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+}
+
+.thumbnail-del-btn:hover
+{
+    opacity: 1;
+    background-color: var(--btn-danger);
+    border-color: var(--btn-danger);
+    transform: scale(1.15);
+}
+
+.thumbnail-item.fade-out
+{
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 /* ==========================================================================
@@ -495,6 +550,7 @@ input[type="range"]::-moz-range-thumb
    ========================================================================== */
 .editor-dialog
 {
+    position: relative;
     margin: auto;
     padding: var(--space-lg);
     max-width: 600px;
@@ -509,8 +565,39 @@ input[type="range"]::-moz-range-thumb
 
 .editor-dialog::backdrop
 {
-    background-color: rgba(0, 0, 0, 0.65);
+    background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px);
+}
+
+.dialog-close-btn
+{
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface-hover);
+    color: var(--text-subtitle);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    padding: 0;
+}
+
+.dialog-close-btn:hover
+{
+    background-color: var(--btn-danger);
+    color: #ffffff;
+    border-color: var(--btn-danger);
+    transform: scale(1.08);
 }
 
 .dialog-content
@@ -519,6 +606,7 @@ input[type="range"]::-moz-range-thumb
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: var(--space-sm);
     margin-bottom: var(--space-md);
 }
 
@@ -529,6 +617,7 @@ input[type="range"]::-moz-range-thumb
     border-radius: var(--radius-lg);
     object-fit: contain;
     border: 1px solid var(--border-color);
+    background-color: #0b0f19;
 }
 
 .dialog-footer
@@ -563,6 +652,12 @@ input[type="range"]::-moz-range-thumb
 
 @media (max-width: 768px)
 {
+    .editor-container
+    {
+        padding: var(--space-md) var(--space-sm) var(--space-lg);
+        gap: var(--space-md);
+    }
+
     .editor-main-col
     {
         grid-template-columns: 1fr;
@@ -576,6 +671,62 @@ input[type="range"]::-moz-range-thumb
 
     .stickers-grid
     {
-        max-height: 200px;
+        max-height: 180px;
+    }
+
+    .thumbnails-panel
+    {
+        max-height: 280px;
+    }
+
+    .thumbnails-grid
+    {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+        gap: var(--space-xs);
+    }
+
+    .editor-dialog
+    {
+        padding: var(--space-md);
+        width: 94%;
+        max-width: 480px;
+    }
+
+    .dialog-content img
+    {
+        max-height: 52vh;
+    }
+
+    .dialog-footer
+    {
+        width: 100%;
+        gap: var(--space-sm);
+    }
+
+    .dialog-footer button
+    {
+        flex: 1;
+        min-height: 42px;
+        font-size: var(--text-sm);
+    }
+}
+
+@media (max-width: 480px)
+{
+    .camera-actions
+    {
+        gap: var(--space-sm);
+    }
+
+    .btn-capture
+    {
+        font-size: var(--text-sm);
+        height: 44px;
+    }
+
+    .btn-action
+    {
+        width: 44px;
+        height: 44px;
     }
 }
