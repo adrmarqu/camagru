@@ -101,8 +101,18 @@ $loginUrl = ViewHelper::url('login');
     </div>
 
     <!-- Empty Gallery State -->
-    <div id="gallery-empty" class="gallery-msg <?= empty($photoData) ? '' : 'hidden' ?>">
-        <p><?= Lang::t('gallery.empty') ?></p>
+    <div id="gallery-empty" class="gallery-empty-card <?= empty($photoData) ? '' : 'hidden' ?>">
+        <div class="empty-icon" aria-hidden="true">📷</div>
+        <p class="empty-title"><?= Lang::t('gallery.empty') ?></p>
+        <?php if ($isLoggedIn): ?>
+            <a href="<?= ViewHelper::url('photo-editor') ?>" class="btn-empty-action">
+                <?= Lang::t('header.editor') ?>
+            </a>
+        <?php else: ?>
+            <a href="<?= $loginUrl ?>" class="btn-empty-action">
+                <?= Lang::t('header.login') ?>
+            </a>
+        <?php endif; ?>
     </div>
 
     <!-- Load More Pagination -->

@@ -8,8 +8,19 @@ class ImageController
     {
         if (!isset($_SESSION['user']['id']))
             throw new FormException(401);
-        if (!isset($_SESSION['user']['folder']))
-            throw new FormException(500, Lang::t('500.no_folder'));
+
+        if (empty($_SESSION['user']['folder']))
+        {
+            $folder = bin2hex(random_bytes(16));
+            $_SESSION['user']['folder'] = $folder;
+            try
+            {
+                $db = Database::getInstance();
+                $stmt = $db->prepare("UPDATE users SET folder = :folder WHERE id = :id");
+                $stmt->execute(['folder' => $folder, 'id' => $_SESSION['user']['id']]);
+            }
+            catch (Throwable $e) {}
+        }
 
         $this->folder = $_SESSION['user']['folder'];
     }
@@ -24,7 +35,7 @@ class ImageController
 
     private function getImageType(string $route): string
     {
-        $info = getimagesize($route);
+        $info = @getimagesize($route);
         if ($info === false)
             throw new FormException(400, Lang::t('400.not_image'));
 
@@ -36,9 +47,18 @@ class ImageController
         if (!file_exists($route))
             throw new FormException(400, Lang::t('400.not_image'));
 
-        $data = file_get_contents($route);
-        // Suppress warnings on invalid image content
-        $image = @imagecreatefromstring($data);
+        $data = @file_get_contents($route);
+        $image = ($data !== false) ? @imagecreatefromstring($data) : false;
+
+        // Fallbacks for various image formats if imagecreatefromstring fails
+        if ($image === false)
+            $image = @imagecreatefromjpeg($route);
+        if ($image === false)
+            $image = @imagecreatefrompng($route);
+        if ($image === false)
+            $image = @imagecreatefromwebp($route);
+        if ($image === false)
+            $image = @imagecreatefromgif($route);
 
         if ($image === false)
             throw new FormException(400, Lang::t('400.not_image'));
@@ -66,7 +86,13 @@ class ImageController
 
     private function saveImage(GdImage $image, string $path): void
     {
-        if (imagewebp($image, $path, 80) === false)
+        $dir = dirname($path);
+        if (!is_dir($dir))
+        {
+            @mkdir($dir, 0755, true);
+        }
+
+        if (imagewebp($image, $path, 85) === false)
             throw new FormException(500, Lang::t('500.save_image'));
         imagedestroy($image);
     }
@@ -130,12 +156,38 @@ class ImageController
         $image = $this->convertImage($tmpRoute);
 
         // Create directory if necessary
-        $this->createFolder();
+        $this->createFolder("avatar");
+
+        // Convert palette image to true color and handle alpha
+        if (!imageistruecolor($image))
+        {
+            imagepalettetotruecolor($image);
+        }
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
+
+        // Center-crop and scale to clean square 400x400 avatar
+        $srcW = imagesx($image);
+        $srcH = imagesy($image);
+        $minDim = min($srcW, $srcH);
+        $srcX = (int)(($srcW - $minDim) / 2);
+        $srcY = (int)(($srcH - $minDim) / 2);
+
+        $targetSize = 400;
+        $avatarCanvas = imagecreatetruecolor($targetSize, $targetSize);
+        imagealphablending($avatarCanvas, false);
+        imagesavealpha($avatarCanvas, true);
+
+        $transparent = imagecolorallocatealpha($avatarCanvas, 0, 0, 0, 127);
+        imagefilledrectangle($avatarCanvas, 0, 0, $targetSize, $targetSize, $transparent);
+
+        imagecopyresampled($avatarCanvas, $image, 0, 0, $srcX, $srcY, $targetSize, $targetSize, $minDim, $minDim);
+        imagedestroy($image);
 
         $folder = $this->folder;
         $path = PUBLIC_PATH . "/uploads/$folder/avatar/avatar.webp";
 
-        $this->saveImage($image, $path);
+        $this->saveImage($avatarCanvas, $path);
 
         return "/uploads/$folder/avatar/avatar.webp?v=" . time();
     }

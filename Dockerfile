@@ -16,7 +16,7 @@ RUN docker-php-ext-install pdo pdo_mysql \
 
 # Configure PHP to use msmtp and set upload limits
 RUN echo "sendmail_path = /usr/bin/msmtp -t" > /usr/local/etc/php/conf.d/mail.ini \
-    && echo "upload_max_filesize = 25M\npost_max_size = 25M\nmemory_limit = 256M" > /usr/local/etc/php/conf.d/uploads.ini
+    && printf "upload_max_filesize = 25M\npost_max_size = 25M\nmemory_limit = 256M\n" > /usr/local/etc/php/conf.d/uploads.ini
 
 # Copy initialization script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

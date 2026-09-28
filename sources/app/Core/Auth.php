@@ -42,8 +42,20 @@ final class Auth
     }
 
     /* Set session data */
-    public static function login(int $id, string $user, string $email, string $folder): void
+    public static function login(int $id, string $user, string $email, ?string $folder = null): void
     {
+        if (empty($folder))
+        {
+            $folder = bin2hex(random_bytes(16));
+            try
+            {
+                $db = Database::getInstance();
+                $stmt = $db->prepare("UPDATE users SET folder = :folder WHERE id = :id AND (folder IS NULL OR folder = '')");
+                $stmt->execute(['folder' => $folder, 'id' => $id]);
+            }
+            catch (Throwable $e) {}
+        }
+
         session_regenerate_id(true);
         $_SESSION['user'] =
         [

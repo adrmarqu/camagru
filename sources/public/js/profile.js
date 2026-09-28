@@ -135,7 +135,10 @@ const changeAvatar = async () =>
     {
         const response = await fetch("/api/avatar.php", {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
         });
 
         const data = await response.json();
@@ -144,7 +147,7 @@ const changeAvatar = async () =>
         {
             avatar.src = data.src;
             document.querySelectorAll(".header-avatar").forEach(img => img.src = data.src);
-            if (successAvatar) successAvatar.textContent = data.message || "Avatar actualizado con éxito.";
+            if (successAvatar) successAvatar.textContent = data.message || "Avatar updated successfully.";
         }
         else
         {
@@ -154,6 +157,10 @@ const changeAvatar = async () =>
     catch (error)
     {
         if (errorAvatar) errorAvatar.textContent = error.message || error || "Error";
+    }
+    finally
+    {
+        avatarInput.value = "";
     }
 };
 

@@ -281,6 +281,7 @@ $lang =
         'message' => 'La solicitud no pudo ser procesada o es inválida.',
         'corrupt_url' => 'Camagru no puede leer esa URL (URL corrupta)',
         'not_image' => 'El archivo no es una imagen válida.',
+        'size_image' => 'La imagen supera el tamaño máximo permitido (máx 10 MB).',
         'data' => 'Faltan datos de la imagen o stickers.'
     ],
     // Not authenticated
