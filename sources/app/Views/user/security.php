@@ -1,4 +1,4 @@
-<!-- Seguridad -->
+<!-- Security -->
 <section class="profile-card" id="card-security">
     <div class="card-header">
         <h3><?= Lang::t('profile.security.title') ?></h3>
@@ -13,7 +13,7 @@
         <span id="error-global-security" class="error-message"></span>
     </div>
 
-    <!-- Modo normal -->
+    <!-- Normal mode -->
     <div id="security-view" class="info-display">
         <div class="info-group">
             <span class="info-label"><?= Lang::t('form.label.pass') ?></span>
@@ -21,11 +21,11 @@
         </div>
     </div>
     
-    <!-- Modo edición -->
+    <!-- Edit mode -->
     <form id="form-security" class="ajax-form hidden" action="/api/form.php" method="POST" novalidate>
         <input type="hidden" name="action" value="password">
 
-        <!-- Contraseña actual -->
+        <!-- Current password -->
         <div class="form-group">
             <label for="password"><?= Lang::t('profile.security.curr') ?></label>
             <div class="password-wrapper">
@@ -38,12 +38,12 @@
                     aria-describedby="error-password"
                     required
                 >
-                <button type="button" class="btn-toggle-pass" aria-label="Mostrar u ocultar contraseña">🙈</button>
+                <button type="button" class="btn-toggle-pass" aria-label="Toggle password visibility">🙈</button>
             </div>
             <span id="error-password" class="field-error" aria-live="polite"></span>
         </div>
 
-        <!-- Nueva contraseña -->
+        <!-- New password -->
         <div class="form-group">
             <label for="new"><?= Lang::t('profile.security.new') ?></label>
             <div class="password-wrapper">
@@ -56,12 +56,12 @@
                     aria-describedby="error-new"
                     required
                 >
-                <button type="button" class="btn-toggle-pass" aria-label="Mostrar u ocultar contraseña">🙈</button>
+                <button type="button" class="btn-toggle-pass" aria-label="Toggle password visibility">🙈</button>
             </div>
             <span id="error-new" class="field-error" aria-live="polite"></span>
         </div>
 
-        <!-- Confirmar nueva contraseña -->
+        <!-- Confirm new password -->
         <div class="form-group">
             <label for="confirm"><?= Lang::t('profile.security.conf') ?></label>
             <div class="password-wrapper">
@@ -74,7 +74,7 @@
                     aria-describedby="error-confirm"
                     required
                 >
-                <button type="button" class="btn-toggle-pass" aria-label="Mostrar u ocultar contraseña">🙈</button>
+                <button type="button" class="btn-toggle-pass" aria-label="Toggle password visibility">🙈</button>
             </div>
             <span id="error-confirm" class="field-error" aria-live="polite"></span>
         </div>

@@ -18,7 +18,7 @@ export default class Webcam
         } 
         catch (error) 
         {
-            console.warn("No se pudo acceder a la cámara:", error.message);
+            console.warn("Could not access camera:", error.message);
             return false;
         }
     }

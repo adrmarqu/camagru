@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE)
 
 Lang::setLang($_SESSION['lang'] ?? 'en');
 
-// Check if its POST
+// Check if request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 {
     http_response_code(405);
@@ -26,7 +26,7 @@ if (!isset($_SESSION['user']['id']) || !isset($_SESSION['user']['folder']))
     exit;
 }
 
-// Check if you have the image
+// Check if avatar image file was uploaded
 if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK)
 {
     http_response_code(400);

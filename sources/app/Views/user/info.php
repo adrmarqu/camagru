@@ -1,4 +1,4 @@
-<!-- Información -->
+<!-- User Information -->
 <section class="profile-card" id="card-info">
     <div class="card-header">
         <h3><?= Lang::t('profile.info.title') ?></h3>
@@ -13,7 +13,7 @@
         <span id="error-global-info" class="error-message"></span>
     </div>
 
-    <!-- Modo normal -->
+    <!-- Display Mode -->
     <div id="info-view" class="info-display">
         <div class="info-group">
             <span class="info-label"><?= Lang::t('profile.info.user') ?></span>
@@ -25,7 +25,7 @@
         </div>
     </div>
     
-    <!-- Modo edición -->
+    <!-- Edit Mode -->
     <form id="form-info" class="ajax-form hidden" action="/api/form.php" method="POST" novalidate>
         <input type="hidden" name="action" value="user">
 

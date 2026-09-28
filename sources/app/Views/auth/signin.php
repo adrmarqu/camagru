@@ -70,8 +70,13 @@
 
         <!-- Terms -->
         <div class="form-group form-checkbox">
-            <input type="checkbox" name="terms" id="terms" value="1" aria-describedby="error-terms">
-            <label for="terms"><?= Lang::t('signin.terms') ?></label>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" name="terms" id="terms" value="1" aria-describedby="error-terms">
+                <label for="terms">
+                    <?= Lang::t('signin.accept') !== 'signin.accept' ? Lang::t('signin.accept') : 'Acepto los' ?>
+                    <button type="button" id="btn-open-terms" class="terms-link"><?= Lang::t('signin.terms') ?></button>
+                </label>
+            </div>
             <span id="error-terms" class="field-error" aria-live="polite"></span>
         </div>
 
@@ -83,6 +88,27 @@
             </button>
         </div>
     </form>
+
+    <!-- Terms and Conditions Modal Dialog -->
+    <dialog id="dialog-terms" class="terms-dialog">
+        <div class="terms-modal-header">
+            <h3><?= Lang::t('signin.terms') ?></h3>
+            <button type="button" class="dialog-close-btn" id="dialog-close-terms" title="Cerrar" aria-label="Cerrar">&times;</button>
+        </div>
+        <div class="terms-modal-body">
+            <h4>1. Uso del servicio</h4>
+            <p>Camagru es una plataforma educativa de compartición de fotos y fotomontajes. El usuario es el único responsable de las imágenes y comentarios que publique.</p>
+            
+            <h4>2. Respeto y moderación</h4>
+            <p>No se permite el contenido ofensivo, violento o que vulnere la privacidad de terceros. Las fotos o comentarios inapropiados podrán ser eliminados sin previo aviso.</p>
+            
+            <h4>3. Protección de datos</h4>
+            <p>Tus datos (usuario y correo electrónico) se utilizan exclusivamente con fines de autenticación y notificaciones dentro de la aplicación. Puedes eliminar tu cuenta y todas tus fotos en cualquier momento desde tu perfil.</p>
+        </div>
+        <div class="terms-modal-footer">
+            <button type="button" id="btn-accept-terms" class="btn-primary"><?= Lang::t('btn.accept') !== 'btn.accept' ? Lang::t('btn.accept') : 'Aceptar términos' ?></button>
+        </div>
+    </dialog>
 
     <!-- Links -->
     <footer class="form-footer">

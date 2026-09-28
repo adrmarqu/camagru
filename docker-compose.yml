@@ -1,5 +1,5 @@
 services:
-  # Servidor Web / Reverse Proxy (Nginx)
+  # Web Server / Reverse Proxy (Nginx)
   webserver:
     image: nginx:alpine
     container_name: camagru_webserver
@@ -14,7 +14,7 @@ services:
     networks:
       - camagru-network
 
-  # Procesador PHP (PHP-FPM) con librerías nativas para imágenes (GD)
+  # PHP Processor (PHP-FPM) with native image libraries (GD)
   app:
     build:
       context: .
@@ -30,7 +30,7 @@ services:
     depends_on:
       - db
 
-  # Base de Datos (MySQL)
+  # Database (MySQL)
   db:
     image: mysql:8.0
     container_name: camagru_db
@@ -50,14 +50,14 @@ services:
     networks:
       - camagru-network
 
-  # Interfaz Web para BBDD (phpMyAdmin)
+  # Web Database Interface (phpMyAdmin)
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: camagru_phpmyadmin
     restart: always
     env_file:
       - .env
-    # Auto login
+    # Auto login
     environment:
       PMA_HOST: db
       PMA_PORT: 3306

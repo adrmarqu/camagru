@@ -331,3 +331,124 @@
 .shake {
     animation: shake 0.45s ease-in-out;
 }
+
+/* ==========================================================================
+   TERMS & CONDITIONS MODAL & CHECKBOX
+   ========================================================================== */
+.form-checkbox .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--text-body);
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--btn-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.form-checkbox label {
+    margin-bottom: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular);
+    color: var(--text-body);
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.terms-link {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--link-color);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.terms-link:hover {
+    color: var(--link-hover);
+}
+
+/* Terms Modal */
+.terms-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: var(--space-lg);
+    max-width: 500px;
+    width: 90%;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-body);
+    transition: var(--theme-transition);
+}
+
+.terms-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+}
+
+.terms-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terms-modal-header h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--text-title);
+    margin: 0;
+}
+
+.terms-modal-body {
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: var(--space-xs);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    margin-bottom: var(--space-lg);
+}
+
+.terms-modal-body h4 {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--text-title);
+    margin: var(--space-sm) 0 var(--space-xs);
+}
+
+.terms-modal-body h4:first-child {
+    margin-top: 0;
+}
+
+.terms-modal-body p {
+    color: var(--text-body);
+    margin-bottom: var(--space-xs);
+    font-size: var(--text-sm);
+}
+
+.terms-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.terms-modal-footer button {
+    width: 100%;
+}
+

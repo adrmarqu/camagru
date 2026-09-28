@@ -4,6 +4,8 @@ class ResultController extends BaseController
 {
     public function __invoke()
     {
-        $this->render('/others/result');
+        $data = [ 'css' => [ '/result.css' ]];
+
+        $this->render('/others/result', $data);
     }
 }

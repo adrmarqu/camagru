@@ -1,6 +1,6 @@
 FROM php:8.2-fpm-alpine
 
-# Instalar dependencias necesarias para la extensión GD (Manipulación de imágenes)
+# Install dependencies required for the GD extension (image manipulation)
 RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
@@ -9,20 +9,20 @@ RUN apk add --no-cache \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd
 
-# Instalar PDO MySQL para la conexión segura a la base de datos
-# Instalar msmtp para enviar correos electrónicos
+# Install PDO MySQL for database connectivity
+# Install msmtp for sending emails
 RUN docker-php-ext-install pdo pdo_mysql \
     && apk add --no-cache msmtp
 
-# Configurar PHP para usar msmtp y limites de subida
+# Configure PHP to use msmtp and set upload limits
 RUN echo "sendmail_path = /usr/bin/msmtp -t" > /usr/local/etc/php/conf.d/mail.ini \
     && echo "upload_max_filesize = 25M\npost_max_size = 25M\nmemory_limit = 256M" > /usr/local/etc/php/conf.d/uploads.ini
 
-# Copiar script de inicialización
+# Copy initialization script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Configurar el directorio de trabajo
+# Set working directory
 WORKDIR /var/www/html
 
 EXPOSE 9000

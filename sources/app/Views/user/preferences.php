@@ -1,4 +1,4 @@
-<!-- Preferencias -->
+<!-- Preferences -->
 <section class="profile-card" id="card-preferences">
     <h3><?= Lang::t('profile.noti.title') ?></h3>
     <hr>

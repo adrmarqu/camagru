@@ -77,13 +77,13 @@ class Router
         // Convert path into an array
         $segments = $cleanPath !== '' ? array_values(array_filter(explode('/', $cleanPath))) : [];
 
-        // Has language
+        // Route has language prefix
         if (!empty($segments) && in_array($segments[0], $this->allowedLangs))
         {
             $lang = array_shift($segments);
             $page = !empty($segments) ? array_shift($segments) : $this->defaultPage;
         }
-        // Do not has language
+        // Route does not have language prefix
         else
         {
             $lang = $this->defaultLang;

@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------- */
-/*  notification_active: si el usuario recibe emails al       */
-/*  recibir un comentario en sus fotos                        */
+/*  notification_active: whether the user receives emails     */
+/*  upon receiving a comment on their photos                  */
 /* ---------------------------------------------------------- */
 CREATE TABLE users
 (
@@ -15,13 +15,13 @@ CREATE TABLE users
 
 /* ---------------------------------------------------------- */
 /*  type:                                                     */
-/*    account  → activar la cuenta tras el registro           */
-/*    email    → verificar el nuevo email al cambiarlo        */
-/*    password → resetear la password con forgot-password     */
-/*    remember → conectarse automaticamente                   */
+/*    account  → activate account after sign up               */
+/*    email    → verify new email when updated                */
+/*    password → reset password from forgot-password          */
+/*    remember → automatic persistent login                   */
 /*                                                            */
-/*  new_email: guarda el nuevo email sin confirmar            */
-/*  (solo se rellena cuando type = 'email')                   */
+/*  new_email: holds pending unconfirmed new email            */
+/*  (only populated when type = 'email')                      */
 /* ---------------------------------------------------------- */
 CREATE TABLE tokens
 (
@@ -39,15 +39,15 @@ CREATE TABLE tokens
 CREATE INDEX idx_tokens_expires_at ON tokens(expires_at);
 
 /* ---------------------------------------------------------- */
-/*  filename: hash random de 16 bytes (32 chars hex) +        */
-/*  extension. Se genera en PHP con:                          */
-/*    bin2hex(random_bytes(16)) . '.jpg'                      */
-/*                                                             */
-/*  La ruta completa en disco es:                             */
-/*    uploads/{user_id}/{filename}                            */
-/*                                                             */
-/*  Al borrar la cuenta se elimina la carpeta uploads/{id}/   */
-/*  y el CASCADE se encarga del resto en la BD                */
+/*  filename: random 16-byte hash (32 hex chars) + extension. */
+/*  Generated in PHP with:                                    */
+/*    bin2hex(random_bytes(16)) . '.webp'                     */
+/*                                                            */
+/*  Full disk path:                                           */
+/*    uploads/{folder}/media/{filename}                       */
+/*                                                            */
+/*  When account is deleted, the upload folder is deleted     */
+/*  and foreign key CASCADE handles the database cleanup      */
 /* ---------------------------------------------------------- */
 CREATE TABLE photos
 (
@@ -60,17 +60,16 @@ CREATE TABLE photos
     UNIQUE KEY unique_user_photo (user_id, filename)
 );
 
-/* Galería pública: ORDER BY created_at DESC */
+/* Public gallery: ORDER BY created_at DESC */
 CREATE INDEX idx_photos_created_at     ON photos(created_at);
 
-/* Galería privada: WHERE user_id = ? ORDER BY created_at DESC */
+/* Private gallery: WHERE user_id = ? ORDER BY created_at DESC */
 CREATE INDEX idx_photos_user_created   ON photos(user_id, created_at);
 
 /* ---------------------------------------------------------- */
-/*  Sin campo id propio: la PK es compuesta (user_id,         */
-/*  photo_id), lo que garantiza que un usuario solo pueda     */
-/*  dar like una vez a cada foto.                             */
-/*  Si das like → apareces. Si lo quitas → desapareces.       */
+/*  No dedicated id field: Composite PK (user_id, photo_id)   */
+/*  guarantees a user can only like each photo once.          */
+/*  Like added → row exists. Like removed → row deleted.      */
 /* ---------------------------------------------------------- */
 CREATE TABLE likes
 (
@@ -82,9 +81,9 @@ CREATE TABLE likes
 );
 
 /* ---------------------------------------------------------- */
-/*  comment: máx 255 chars                                     */
-/*  ON DELETE CASCADE: si se borra la foto o el usuario,      */
-/*  sus comentarios desaparecen también                        */
+/*  comment: max 255 chars                                    */
+/*  ON DELETE CASCADE: if photo or user is deleted,           */
+/*  associated comments are deleted automatically             */
 /* ---------------------------------------------------------- */
 CREATE TABLE comments
 (
@@ -97,11 +96,11 @@ CREATE TABLE comments
     FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
 );
 
-/* Comentarios de una foto: WHERE photo_id = ? ORDER BY created_at ASC */
+/* Photo comments: WHERE photo_id = ? ORDER BY created_at ASC */
 CREATE INDEX idx_comments_photo_created ON comments(photo_id, created_at);
 
 
-/* Eliminar tokens automaticamente */
+/* Clean expired tokens automatically */
 SET GLOBAL event_scheduler = ON;
 
 CREATE EVENT IF NOT EXISTS clean_expired_tokens

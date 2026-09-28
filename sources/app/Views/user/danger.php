@@ -1,4 +1,4 @@
-<!-- Zona de peligro -->
+<!-- Danger Zone -->
 <section class="profile-card danger-card" id="card-danger">
     <h3><?= Lang::t('profile.danger.title') ?></h3>
     <hr>
@@ -12,7 +12,7 @@
     </div>
 </section>
 
-<!-- Modal de confirmación para eliminar cuenta -->
+<!-- Account Deletion Confirmation Modal -->
 <dialog id="dialog-del">
     <form id="form-del" action="/api/delete.php" method="POST" novalidate>
         <input type="hidden" name="action" value="delete">

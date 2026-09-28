@@ -2,17 +2,16 @@
 
 // Path to glob
 $stickerDir = PUBLIC_PATH . '/assets/stickers/';
-$folderName = $_SESSION['user']['folder'] ?? '';
-$thumbnailDir = PUBLIC_PATH . "/uploads/$folderName/media/";
-
 // Path to frontend
 $stickerFolder = URL_ASSETS . '/stickers/';
-$previewFolder = URL_UPLOAD . "/$folderName/media/";
 
 // Stickers
 $stickers = glob($stickerDir . "*.webp") ?? [];
-$thumbnails = glob($thumbnailDir . "*.webp") ?? [];
 
+// User photo thumbnails from database
+$userId = (int)($_SESSION['user']['id'] ?? 0);
+$mediaModel = new MediaModel();
+$thumbnails = $userId > 0 ? ($mediaModel->getUserPhotos($userId) ?: []) : [];
 ?>
 
 <div class="editor-container">
@@ -94,7 +93,7 @@ $thumbnails = glob($thumbnailDir . "*.webp") ?? [];
             <ul id="thumbnail-list" class="thumbnails-grid">
                 <?php if (!empty($thumbnails)): foreach($thumbnails as $tn): ?>
                 <li class="thumbnail-item">
-                    <img src="<?php echo $previewFolder . basename($tn); ?>" alt="Thumbnail" class="preview">
+                    <img src="<?= htmlspecialchars($tn['src']) ?>" alt="Thumbnail" class="preview">
                     <button type="button" class="thumbnail-del-btn" title="Eliminar" aria-label="Eliminar">&times;</button>
                 </li>
                 <?php endforeach; endif; ?>

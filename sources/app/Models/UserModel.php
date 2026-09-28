@@ -25,14 +25,14 @@ class UserModel extends BaseModel
         return $this->select($sql, ['id' => $userid]);
     } 
 
-    /* Check if a email exists */
+    /* Check if a username exists */
     public function userExists(string $user): bool
     {
         $sql = "SELECT 1 FROM users WHERE username = :user LIMIT 1";
         return $this->select($sql, ['user' => $user]) !== false;
     }
 
-    /* Check if a email exists */
+    /* Check if an email exists */
     public function emailExists(string $email): bool
     {
         $sql = "SELECT 1 FROM users WHERE email = :email LIMIT 1";
@@ -58,7 +58,7 @@ class UserModel extends BaseModel
     /* Activate account */
     public function activate(int $id): bool
     {
-        // Folder name where user upload photos
+        // Unique upload folder name for user
         $folder = TokenHelper::generateToken(16);
 
         $sql = "UPDATE users SET is_active = TRUE, folder = :folder WHERE id = :id LIMIT 1";

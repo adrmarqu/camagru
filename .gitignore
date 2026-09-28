@@ -1,22 +1,23 @@
-# Archivos del Sistema Operativo
+# Operating System files
 .DS_Store
 Thumbs.db
 .ipynb_checkpoints/
 
-# Configuración y Credenciales
+# Configuration and Credentials
 .env
 !.env.example
 
-# Archivos temporales de editores (Vim, VSCode, etc.)
+# Temporary editor files (Vim, VSCode, etc.)
 *.swp
 *~
 .vscode/
 .idea/
 
-# Contenido dinámico (Fotos de prueba de los usuarios)
-# Esto ignora las imágenes subidas pero mantendrá la estructura de carpetas limpia
+# Dynamic content (User uploads)
+# Ignores uploaded user images while preserving folder structure
 sources/public/uploads/*
 !.gitkeep
 
-# Logs de error de Nginx, PHP o MySQL en local
+# Error logs
 *.log
+

@@ -21,7 +21,7 @@ else
         <div class="avatar-wrapper">
             <img id="avatar-preview" src="<?= $avatarUrl ?>" alt="Avatar" title="avatar">
 
-            <form id="form-avatar" class="avatar-form" action="/api/form.php" method="POST" enctype="multipart/form-data">
+            <form id="form-avatar" class="avatar-form" action="/api/avatar.php" method="POST" enctype="multipart/form-data">
 
                 <input type="hidden" name="action" value="avatar">
                 <label for="avatar-input" class="btn-avatar-change" title="Cambiar foto de perfil">

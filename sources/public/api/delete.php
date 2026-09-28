@@ -31,12 +31,22 @@ try
     if (!password_verify($inputPass, $pass['password_hash']))
         throw new FormException(422, null, ['password' => Lang::t('422.pass')]);
 
+    // Get folder before deleting account
+    $userFolder = $_SESSION['user']['folder'] ?? null;
+    if (empty($userFolder))
+    {
+        $userData = $model->getUser((string)$userId);
+        $userFolder = $userData['folder'] ?? null;
+    }
+
     // Delete account in db
     if (!$model->deleteAccount($userId))
         throw new FormException(500, Lang::t('500.delete'));
 
-    // Delete user folder
-    Utils::removeFolder();
+    // Delete user folder recursively
+    if (!empty($userFolder))
+        Utils::removeFolder($userFolder);
+
     // Logout and clear session/cookie
     Auth::logout();
     

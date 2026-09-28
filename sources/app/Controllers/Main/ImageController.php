@@ -37,7 +37,7 @@ class ImageController
             throw new FormException(400, Lang::t('400.not_image'));
 
         $data = file_get_contents($route);
-        // @ to remove warnings
+        // Suppress warnings on invalid image content
         $image = @imagecreatefromstring($data);
 
         if ($image === false)
@@ -48,7 +48,7 @@ class ImageController
 
     private function convertBase64(string $base64String): GdImage
     {
-        // Remove header
+        // Strip data URI scheme prefix
         $data = explode(',', $base64String)[1] ?? $base64String;
         $binaryData = base64_decode($data);
 
@@ -56,7 +56,7 @@ class ImageController
             throw new FormException(400, Lang::t('400.not_image'));
 
         // Convert to GdImage
-        $image = imagecreatefromstring($binaryData);
+        $image = @imagecreatefromstring($binaryData);
 
         if ($image === false)
             throw new FormException(400, Lang::t('400.not_image'));
@@ -129,7 +129,7 @@ class ImageController
     {
         $image = $this->convertImage($tmpRoute);
 
-        // Create directory if its necesary
+        // Create directory if necessary
         $this->createFolder();
 
         $folder = $this->folder;
@@ -167,7 +167,7 @@ class ImageController
             $stickerPath = $this->getImage($name);
             // Convert to GdImage
             $sticker = $this->convertImage($stickerPath);
-            // Transparence
+            // Enable transparency
             $this->activateTransparence($sticker);
             // Scale image
             $scaled = $this->scaleImage($sticker, $size, $scaleRatio, $baseWidth);
@@ -178,7 +178,7 @@ class ImageController
             $posX = ($stageW / 2 + $x) * $scaleRatio - (imagesx($rotated) / 2);
             $posY = ($stageH / 2 + $y) * $scaleRatio - (imagesy($rotated) / 2);
 
-            // Fuse images
+            // Merge sticker onto base image
             imagecopy(
                 $image, 
                 $rotated, 
@@ -189,12 +189,12 @@ class ImageController
                 imagesx($rotated), 
                 imagesy($rotated)
             );
-            // Clean memory
+            // Free memory
             imagedestroy($rotated);
         }
 
         $this->createFolder('media');
-        // Generate new unique name
+        // Generate unique random filename
         $filename = bin2hex(random_bytes(16)) . '.webp';
 
         $pdo = Database::getConnection();
@@ -202,12 +202,12 @@ class ImageController
         {
             $pdo->beginTransaction();
 
-            // Save image in server
+            // Save image to disk
             $folder = $this->folder;
             $path = PUBLIC_PATH . "/uploads/$folder/media/$filename";
             $this->saveImage($image, $path);
             
-            // Insert image to db
+            // Record image in database
             $media = new MediaModel();
             if (!$media->addImage($_SESSION['user']['id'], $filename))
                 throw new FormException(500, Lang::t('500.db'));

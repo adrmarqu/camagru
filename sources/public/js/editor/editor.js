@@ -249,19 +249,3 @@ capture.addEventListener("click", takePhoto);
 upload.addEventListener("click", uploadPhoto);
 
 Thumbnail.init({ showMessage, t });
-
-
-/* 
-
-Subir foto
-
-Boton de captura
-
-Enviar al backend, fusionar imagen, subir imagen
-
-Aside -> thumbnail
-
-Modal -> big thumbnail
-
-
-*/

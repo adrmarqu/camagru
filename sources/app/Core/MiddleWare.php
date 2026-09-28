@@ -12,17 +12,17 @@ class MiddleWare
 
         switch ($access)
         {
-            // Only for no logged users
+            // Only for unauthenticated users
             case 'guest':
                 if (Auth::check())
                     Navigator::redirect('gallery', 302);
                 break ;
-            // Only for logged users
+            // Only for authenticated users
             case 'private':
                 if (!Auth::check())
                     throw new HttpException(401, null, '/login');
                 break ;
-            // Only with token
+            // Only with valid token
             case 'token':
                 $this->handleToken($token);
                 break ;
@@ -61,11 +61,11 @@ class MiddleWare
         if (!isset($_GET['token']) || empty($_GET['token']))
             throw new HttpException(400);
 
-        // Check if you have the user id
+        // Check if user id exists in session
         if (isset($_SESSION['reset_user_id']))
             return ;
 
-        // If you do not have the session then error
+        // If session is missing, throw unauthorized or forbidden
         if (Auth::check())
             throw new HttpException(403, Lang::t('403.no_token'));
         else
@@ -103,14 +103,14 @@ class MiddleWare
 
     private function result()
     {
-        // If no exists get type
+        // If type parameter is missing
         if (!isset($_GET['type']))
         {
             if (Auth::check()) throw new HttpException(403);
             throw new HttpException(401);
         }
 
-        // If exists but is wrong
+        // If type parameter is invalid
         $type = $_GET['type'];
         if ($type !== 'account' && $type !== 'email' && $type !== 'reset')
             throw new HttpException(404, Lang::t('404.get'));

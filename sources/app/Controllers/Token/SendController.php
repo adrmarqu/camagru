@@ -46,7 +46,11 @@ class SendController extends BaseController
     /* FORM PART */
     public function init(array $data): void
     {
-        $this->userid = $_SESSION['send']['id'];
+        if (empty($_SESSION['send']['id']) || empty($_SESSION['send']['email']) || empty($_SESSION['send']['action']))
+        {
+            throw new FormException(403, Lang::t('403.no_token'));
+        }
+        $this->userid = (int)$_SESSION['send']['id'];
         $this->email = $_SESSION['send']['email'];
         $this->token = TokenHelper::generateToken();
         $this->type = $_SESSION['send']['action'];

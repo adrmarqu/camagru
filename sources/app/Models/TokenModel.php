@@ -93,7 +93,7 @@ class TokenModel extends BaseModel
                 $time = 10 * 60; // 10 minutes
                 break ;
             case 'remember':
-                $time = 30 * 24 * 60 * 60; // 1 mounth
+                $time = 30 * 24 * 60 * 60; // 30 days
                 break ;
             default: 
                 return null;

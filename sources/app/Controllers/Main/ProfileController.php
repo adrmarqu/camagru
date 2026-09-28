@@ -139,7 +139,7 @@ class ProfileController extends BaseController
         // Get pass
         $pass = $model->getPass($userid);
         if (empty($pass) || $pass === false)
-            throw new Exception(500);
+            throw new FormException(500, Lang::t('500.db'));
         // Check if password is correct
         if (!password_verify($this->pass, $pass['password_hash']))
         {

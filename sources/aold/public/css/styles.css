@@ -1,9 +1,0 @@
-.flex { display: flex; }
-.row { flex-direction: row; }
-.col { flex-direction: column; }
-
-.h-center { justify-content: center; }
-.h-around { justify-content: space-around; }
-.h-between { justify-content: space-between; }
-
-.v-center { align-items: center; }

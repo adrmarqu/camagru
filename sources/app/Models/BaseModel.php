@@ -1,31 +1,27 @@
 <?php
 
-/* PDO metodos
-
-# Conexion 
-$pdo = new PDO($dsn, $user, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-# Consultas
-$stmt = query(string $sql): PDOStatement|false 
-(SELECT * FROM users)
-$stmt = prepare(string $sql): PDOStatement|false
-(SELECT * FROM users WHERE username = :name)
-execute(array $params = null): bool ['name' => "Juan", ...]
-fetch(): array|false
-fetchAll(): array
-fetchColumn(): mixed
-rowCount(): int
-lastInsertId(): string
-
-# Grupos
-beginTransaction(): bool -> Inicia
-(Realizar consultas en la bbdd)
-commit(): bool -> Sube los cambios realizados en la bbdd
-rollBack(): bool -> Deshace los cambios de beginTransaction() si no se ha hecho commit()
-
-*/
+/* PDO methods reference:
+ *
+ * # Connection
+ * $pdo = new PDO($dsn, $user, $password);
+ * $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ * $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+ *
+ * # Queries
+ * $stmt = query(string $sql): PDOStatement|false (SELECT * FROM users)
+ * $stmt = prepare(string $sql): PDOStatement|false (SELECT * FROM users WHERE username = :name)
+ * execute(array $params = null): bool ['name' => "John", ...]
+ * fetch(): array|false
+ * fetchAll(): array
+ * fetchColumn(): mixed
+ * rowCount(): int
+ * lastInsertId(): string
+ *
+ * # Transactions
+ * beginTransaction(): bool -> Starts a transaction
+ * commit(): bool -> Commits the transaction
+ * rollBack(): bool -> Rolls back the active transaction
+ */
 
 abstract class BaseModel
 {

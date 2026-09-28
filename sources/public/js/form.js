@@ -211,4 +211,45 @@ document.addEventListener('DOMContentLoaded', () =>
             if (btnSpinner) btnSpinner.classList.add('hidden');
         }
     });
+
+    /* ==========================================================================
+       TERMS AND CONDITIONS MODAL HANDLER
+       ========================================================================== */
+    const btnOpenTerms = document.getElementById('btn-open-terms');
+    const dialogTerms = document.getElementById('dialog-terms');
+    const btnCloseTerms = document.getElementById('dialog-close-terms');
+    const btnAcceptTerms = document.getElementById('btn-accept-terms');
+    const termsCheckbox = document.getElementById('terms');
+
+    if (btnOpenTerms && dialogTerms)
+    {
+        btnOpenTerms.addEventListener('click', (e) =>
+        {
+            e.preventDefault();
+            e.stopPropagation();
+            dialogTerms.showModal();
+        });
+
+        if (btnCloseTerms)
+        {
+            btnCloseTerms.addEventListener('click', () => dialogTerms.close());
+        }
+
+        if (btnAcceptTerms)
+        {
+            btnAcceptTerms.addEventListener('click', () =>
+            {
+                if (termsCheckbox) termsCheckbox.checked = true;
+                dialogTerms.close();
+            });
+        }
+
+        dialogTerms.addEventListener('click', (e) =>
+        {
+            const rect = dialogTerms.getBoundingClientRect();
+            const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
+                && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+            if (!isInDialog) dialogTerms.close();
+        });
+    }
 });

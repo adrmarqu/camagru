@@ -5,10 +5,10 @@ final class Navigator
     private function __construct() {}
     
     /* 
-        Codes:
+        HTTP Status Codes:
         - 200: Normal links
-        - 301: Router (clean Url)
-        - 302: Temporal redirect (not logged, logged in guest pages)
+        - 301: Permanent redirect (clean sanitized URL)
+        - 302: Temporary redirect (auth / guest protection)
     */
     public static function redirect(string $page, int $code = 200): void
     {

@@ -9,7 +9,7 @@ function closeAll()
     mobileMenu?.classList.remove('show');
 }
 
-// ---- Clicks dentro del burger no cierran el menú ----
+// ---- Clicks inside dropdown do not close the menu ----
 mobileMenu?.addEventListener('click', (e) => {
     e.stopPropagation();
 });
@@ -52,7 +52,7 @@ document.querySelectorAll('.nav-pc button.nav-item').forEach(btn =>
     });
 });
 
-// ---- Click fuera → cerrar todo ----
+// ---- Click outside → close all ----
 document.addEventListener('click', closeAll);
 
 // ---- Logout ----

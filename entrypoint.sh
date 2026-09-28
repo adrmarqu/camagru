@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Crear configuración de msmtp a partir de las variables de entorno
+# Create msmtp configuration from environment variables
 cat <<EOF > /etc/msmtprc
 defaults
 auth           on
@@ -18,14 +18,14 @@ password       ${MAIL_PASSWORD}
 account default : gmail
 EOF
 
-# Permisos estrictos requeridos por msmtp
+# Strict permissions required by msmtp
 chmod 600 /etc/msmtprc
 chown www-data:www-data /etc/msmtprc
 
-# Archivo de log
+# Log file setup
 touch /var/log/msmtp.log
 chmod 666 /var/log/msmtp.log
 chown www-data:www-data /var/log/msmtp.log
 
-# Iniciar PHP-FPM
+# Start PHP-FPM
 exec docker-php-entrypoint php-fpm

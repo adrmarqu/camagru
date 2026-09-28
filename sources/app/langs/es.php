@@ -75,7 +75,8 @@ $lang =
             'conf' => 'Repetir contraseña',
             'new' => 'Nueva contraseña',
             'confi' => 'Repetir contraseña nueva',
-            'curr' => 'Contraseña actual'
+            'curr' => 'Contraseña actual',
+            'comment' => 'Escribir comentario'
         ],
         // Errors
         'error' =>
@@ -104,6 +105,7 @@ $lang =
     [
         'title' => 'Registrar usuario',
         'intro' => 'Bienvenido a Camagru',
+        'accept' => 'Acepto los ',
         'terms' => 'Terminos y condiciones',
         'account' => '¿Ya tienes cuenta? ',
         'log' => 'Inicia sesión',
@@ -194,6 +196,16 @@ $lang =
         ]
     ],
 
+    'gallery' =>
+    [
+        'empty' => 'Actualmente no hay imagenes en el servidor.',
+        'load' => 'No hay más imagenes en el servidor.',
+        'error' => 'Fallo al cargar las imagenes del servidor.',
+        'no_comment' => 'Aún no hay comentarios. ¡Sé el primero!',
+        'do' => 'para comentar o dar like',
+        'sure' => '¿Estás seguro de que quieres eliminar esta publicación? Se borrarán permanentemente sus likes y comentarios.'
+    ],
+
     'btn' =>
     [
         'send' => 'Enviar',
@@ -209,7 +221,9 @@ $lang =
         'sticker' => 'Eliminar sticker',
         'download' => 'Descargar',
         'thumbnail' => 'Eliminar',
-        'capture' => 'Hacer foto'
+        'capture' => 'Hacer foto',
+
+        'more' => 'Cargar más'
     ],
 
     'email' =>
@@ -236,6 +250,14 @@ $lang =
             'title' => 'Recuperar contraseña',
             'link' => 'Restablecer contraseña',
             'body' => 'No te preocupes, nos pasa a todos. Haz clic en el botón de abajo para elegir una nueva contraseña de forma segura. Ten en cuenta que, por motivos de seguridad, este enlace caducará en 5 minutos. Para generar un nuevo enlace, simplemente vuelve a la página de /forgot-password y envia otro correo.'
+        ],
+
+        'comment' =>
+        [
+            'subject' => 'Nuevo comentario en tu foto',
+            'title' => '¡Nuevo comentario!',
+            'body' => 'ha comentado en una de tus fotos:',
+            'link' => 'Ver foto'
         ],
 
         'footer' => "Este es un correo automático, por favor no respondas a este mensaje. Si tienes problemas o no has solicitado este correo, ponte en contacto con soporte. © $year Camagru. Todos los derechos reservados."
